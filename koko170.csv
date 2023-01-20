@@ -1,0 +1,1285 @@
+BIK,Signatur Anfang,Signatur Ende,Nr,Standort
+Inf,"Eintragungen für Textsignaturen dürfen maximal 20 Zeichen lang sein!!!  Umlaute sind nicht erlaubt.                                                  Die Tasten ‚Enter’ und ‚Return’ (Absatzmarke) sind nicht erlaubt, auch nicht im Info-Text. Die Konkordanz wird sonst als fehlerhaft abgewiesen.                                           15.10.2004",,,
+Inf,"Bisher eingetragene Abteilungscodes:            Stand 07.06.2013                                               000 = UB                                                               001 = StUB/SeB Retro-Umsetzung                                         003 = BZNU                                                           006 = BSP                                                            013 = ZENAF                                                          021 = MedHB                                                                                         034 = RuW                                                            094 = Inst. F. Sportwissenschaft                                      095 = Mathematisches Seminar                                           098 = Didaktik der Mathematik                                        109, 200, 301, 302 = Psychologie                                       171 = Josef-Popper-Stiftungsbibliothek                               189 = BGE DZ                                                            201 = BGE GesWi                                                       202 = BGE ErzWi                                                       205 = TZB                                                             212 = FBB Informatik                                                    219 = Südostasienwissenschaften                                      220 = Japanologie                                                    319 = Korea                                                           321 = Arbeitslehre                                                   322 = Sinologie                                                      330 = BzG                                                             s. auch ‚Inf’ nach der Signatur ‚Z’",,,
+Inf,"Für jede dezentrale Bibliothek ist im OUS bereits ein ‚geschlossener Standort‘ definiert. In die Konkordanz soll er aber erst eingetragen werden, wenn Bedarf besteht. Dazu muessen dann die Signaturenbereiche genau definiert werden.     7.3.2001  Das BzG (330) hat jetzt diverse offene Standorte.     17.10.2003",,,
+Inf,Sogenannte ‚…’(Folgepunkte) im Signatureintrag sollen zukuenftig mit ‚@@@’ dargestellt werden!                6.10.2006          ,,,
+,,,,
+0,00 1,00 99999,8,ZEPC30
+,,,,
+330,01 AA,01 CZ,438,BZG438
+330,01 DA,01 EW,400,BZG400
+330,01 EX 1,01 EX 898,400,BZG400
+330,01 EX 899,01 EX 970,401,BZG401
+330,01 EX 971,01 EX 999,402,BZG402
+330,01 EY 1,01 EY 999,402,BZG402
+330,01 EZ 1,01 EZ 9999,402,BZG402
+330,01 FA,01 GK,402,BZG402
+330,01 GL,01 GL,439,BZG439
+330,01 GM,01 GV,403,BZG403
+330,01 GW,01 GZ,404,BZG404
+,,,,
+Inf,Reihenfolge beachten:,,,
+330,01 H Ang,01 H Ang,405,BZG405
+330,01 H Ling,01 H Ling,405,BZG405
+,,,,
+330,01 HA,01 HZ,405,BZG405
+330,01 IA,01 IZ,406,BZG406
+330,01 KA,01 MZ,406,BZG406
+330,01 NA,01 ZZ,407,BZG407
+330,02 AA,02 BN ,408,BZG408
+330,02 BO 1,02 BO 1159,408,BZG408
+330,02 BO 1160 A,02 BO 1160 M,408,BZG408
+330,02 BO 1160 N,02 BO 1160 Z,419,BZG419
+330,02 BO 1160 @@@,02 BO 1160 @@@,408,BZG408
+330,02 BO 1161,02 BO 9999,419,BZG419
+330,02 BP,02 BW,424,BZG424
+330,02 CA,02 CB,430,BZG430
+330,02 CC,02 KZ,409,BZG409
+330,02 LA,02 LG,410,BZG410
+330,02 LH,02 LH,419,BZG419
+330,02 LI 1,02 LI 23550,419,BZG419
+330,02 LI 23700,02 LI 99999,424,BZG424
+330,02 LJ,02 LO,424,BZG424
+330,02 LP,02 LY,410,BZG410
+330,02 MA,02 MZ,429,BZG429
+330,02 NA,02 NO,411,BZG411
+330,02 NP 1000,02 NP 9999,435,BZG435
+330,02 NQ 1,02 NQ 1069,435,BZG435
+330,02 NQ 1070,02 NQ 6060,436,BZG436
+330,02 NQ 6070,02 NQ 9999,420,BZG420
+330,02 NR,02 NT,420,BZG420
+330,02 NU 1500,02 NU 2000,433,BZG433
+330,02 NU 2100,02 NU 9999,420,BZG420
+330,02 NV,02 NV,420,BZG420
+330,02 NW,02 NY,420,BZG420
+330,02 PA,02 ZZ,420,BZG420
+,,,,
+6,4,4,240,BSP006
+,,,,
+21,7,7,39,OMF21
+,,,,
+0,10 1,10 999,8,ZEPC30
+,,,,
+330,10 00 0,10 99 9,460,BZG460
+330,10 00 00,10 99 99,460,BZG460
+330,10 Aa@@@,10 Zz@@@,460,BZG460
+,,,,
+0,11 000 00,11 999 99,8,ZEPC30
+,,,,
+,,,,
+Inf,Reihenfolge beachten:,,,
+330,11 H Nelk,11 H Nelk,432,BZG432
+330,11 AA,11 ZZ,432,BZG432
+,,,,
+0,12 000 00,12 999 99,11,OM30
+0,12 A,12 Z,110,MENSLS
+Inf,12 A: Schleiermacher-Signaturen im Duodezformat (aufgetaucht im SeB-Handschriften-AK),,,
+0,13 000 00,13 999 99,11,OM30
+0,14 000 00,14 999 99,11,OM30
+Inf,Für Zuwachs der Signaturen im Offenen Magazin  bis 14 999 99. Seit Mai 2008 wurde die Signatur ‚13’ abgebrochen (letzte Signatur etwa bei 13.583.32) 7.7.2008.,,,
+,,,,
+330,12 AA,12 ZZ,412,BZG412
+,,,,
+Inf,Reihenfolge beachten,,,
+330,13 H Am,13 H Am,413,BZG413
+,,,,
+330,13 AA,13 ZZ,413,BZG413
+Inf,"Die 14er Signaturen sind teils echte RVK-Signaturen, teils folgen sie einer eigenen Systematik und stehen jeweils in einem eigenen Raum. Der zusammenfassende Standort 414 für beide Räume wird in zwei getrennte Standorte aufgeteilt. hn 30.03.2009",,,
+330,14 AA,14 ZZ,414,BZG414
+330,14 TFM,14 TFM,414,BZG414
+330,14 A,14 D,414,BZG414
+330,14 E,14 Z,423,BZG423
+,,,,
+0,15 1,15 9999,107,OG3LS
+,,,,
+330,15 E AVL,15 E AVL,415,BZG415
+330,15 AA,15 ZZ,415,BZG415
+,,,,
+0,16 1,18 99999,108,ZC30LS
+,,,,
+Inf,Reihenfolge beachten:,,,
+330,16 H Did,16 H Did,416,BZG416
+330,16 AA 1,16 ZZ 99999,416,BZG416
+330,16 Aaa,16 Zzz,460,BZG460
+330,17 Aa@@@,17 Zz@@@,460,BZG460
+330,18 Aa@@@,18 Zz@@@,460,BZG460
+330,19 Aa@@@,19 Zz@@@,460,BZG460
+,,,,
+58,19,19,437,BZG437
+Inf,Bestand der Bibliotheca Catalana im BzG               22.06.2005,,,
+,,,,
+0,20 1,20 9999,8,ZEPC30
+,,,,
+330,20 00 00,20 99 99,460,BZG460
+330,20 Aa@@@,20 Zz@@@,460,BZG460
+0,21 000 00,21 999 99,8,ZEPC30
+,,,,
+Inf,Bei den Signaturen ‚16 Aaa‘ – ‚20 Zzz‘ handelt es sich um MEDEA Aufnahmen der Anglisten. 22.3.2004,,,
+330,21 AA,21 AJ,417,BZG417
+330,21 AK,21 AL,418,BZG418
+330,21 AM,21 AW,417,BZG417
+330,21 AX,21 AZ,418,BZG418
+330,21 BA,21 BA,418,BZG418
+330,21 BB,21 BZ,417,BZG417
+330,21 CA,21 CA,418,BZG418
+330,21 CB,21 CZ,417,BZG417
+330,21 DA,21 DA,418,BZG418
+330,21 DB,21 DZ,417,BZG417
+330,21 EA,21 EA,418,BZG418
+330,21 EB,21 EK,417,BZG417
+330,21 EL,21 EL,418,BZG418
+330,21 EM,21 EP,417,BZG417
+330,21 EQ,21 EQ,418,BZG418
+330,21 ER,21 EZ,417,BZG417
+330,21 FA,21 FA,418,BZG418
+330,21 FB,21 FZ,417,BZG417
+330,21 GA,21 JZ,417,BZG417
+330,21 KA,21 KA,418,BZG418
+330,21 KB,21 KZ,417,BZG417
+330,21 LA,21 LA,418,BZG418
+330,21 LB,21 LC,421,BZG421
+330,21 LD,21 LD,418,BZG418
+330,21 LE,21 LZ,421,BZG421
+330,21 MA,21 MA,418,BZG418
+330,21 MB,21 MM,417,BZG417
+330,21 MN,21 MN,418,BZG418
+330,21 MO,21 MW,417,BZG417
+330,21 MX,21 MX,418,BZG418
+330,21 MY,21 MZ,417,BZG417
+330,21 NA,21 NA,418,BZG418
+330,21 NB,21 NE,417,BZG417
+330,21 NF 1040,21 NF 1760,428,BZG428
+330,21 NF 1765,21 NF 9999,426,BZG426
+330,21 NG,21 NG,425,BZG425
+330,21 NH 1010,21 NH 6890,425,BZG425
+330,21 NH 7000,21 NH 9999,431,BZG431
+330,21 NK,21 NZ,431,BZG431
+Inf,"„A“ an zweiter Stelle bedeutet Zeitschrift; diese stehen zusammen an einem Standort (418). Bei verschiedenen Signaturengruppen existieren allerdings keine Zeitschriften, dort kann also zusammengefasst werden.",,,
+330,21 PA,21 PA,418,BZG418
+330,21 PB,21 QZ,426,BZG426
+330,21 RA,21 RA,418,BZG418
+330,21 RB,21 TZ,426,BZG426
+330,21 UA,21 UA,418,BZG418
+330,21 UB,21 VX,426,BZG426
+330,21 WA,21 WX,426,BZG426
+330,21 XA,21 ZZ,426,BZG426
+330,23,23,421,BZG421
+330,24,24,418,BZG418
+330,25,25,433,BZG433
+330,26,26,422,BZG422
+Inf,LKZ 26 ist neu fuer LBS Geschichte im BzG.             16.01.2008,,,
+,,,,
+21,28 000 00,29 999 99,39,OMF21
+,,,,
+0,33 000 00,33 699 99,12,OMF1
+0,34 000 00,34 699 99,5,MR
+0,2 1,2 999999,103,UG1LS
+0,2 Bild,2 Bild,3,UG1
+0,2 Hs,2 Hs,3,UG1
+0,2 A,2 Z,3,UG1
+,,,,
+0,30 1,30 99999,8,ZEPC30 
+0,40 1,44 99999,8,ZEPC30
+,,,,
+330,305,305,460,BZG460
+Inf,Neue Signaturengruppe für Altbestand Romanistik im BzG. hn 30.03.2009,,,
+,,,,
+Inf,Testsammlung der BSP mit Lokalkennzeichen 41 ab 04/2013,,,
+6,41,41,244,BSPTST
+,,,,
+Inf,Magazinbestand (Alt-)Signaturen BSP – LKZ 42 ab 04/2013,,,
+6,42,42,245,BSPMAG
+109,42,42,245,BSPMAG
+189,42,42,245,BSPMAG
+200,42,42,245,BSPMAG
+201,42,42,245,BSPMAG
+202,42,42,245,BSPMAG
+301,42,42,245,BSPMAG
+302,42,42,245,BSPMAG
+321,42,42,245,BSPMAG
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,45 000 00,46 549 99,8,ZEPC30
+0,45 550 00,46 999 99,1,UG3
+Inf,Neue Signatur fuer monographische Abgaben aus anderen Bereichen ohne Unterscheidung nach Abt.Codes.                11.05.2004,,,
+,,,,
+0,60 000 00,69 999 99,90,RESTE
+Inf,"Vermutlich via Skript werden gelegentlich 60er Signaturen erzeugt, obwohl die 60er Nummern nur Verbuchungsnummern sind. Wegen des folgenden Eintrags Reihenfolge beachten – sonst fallen diese falschen Signaturen nicht auf! Meldung Dinges 2019-10",,,
+0,45 1,70 99999,8,ZEPC30
+Inf,Die Vergabe von Numerus Currens Signaturen wurde bei 70 ... und Q 70 (Erwerbungjahr 1970) abgebrochen. Danach beginnt in der UB die Signatur 80 200 00. ,,,
+,,,,
+0,4 1,4 99999,5,MR
+Inf ,"Die Signaturen 4 2000 - 4 2145 sind ""Sammlung Lorey"" (nur fuer den Lesesaal) ",,,
+,,,,
+0,4 Bild,4 Bild,3,UG1
+0,4 Hs,4 Hs,3,UG1
+0,4 Kl Schr,4 Kl Schr,109,ZF1LS
+0,4 A,4 Z,2,UG2
+Inf,In der MENSA stehen nur Monographien,,,
+Inf," - 4° ""Zeitschriften"" stehen im UG2",,,
+Inf," - 4° ""Zeitschriften ab Jg 1991  stehen OG2 (ausleihbar), die neusten 10 Jahre sind Praesenzbestand.",,,
+,,,,
+330,51 00 00,51 99 99,460,BZG460
+330,51 00 000,51 99 999,460,BZG460
+,,,,
+34,52,52,221,RUWGM
+Inf,Die Signaturengruppe steht in BRuW im Kompaktmagazin und muss vor Ort bestellt werden. 21.04.2009 hn/co,,,
+,,,,
+330,53 00 00,53 99 99,460,BZG460
+330,53 00 000 ,53 99 999,460,BZG460
+330,55 00 00,55 99 99,460,BZG460
+330,55 00 000,55 99 999,460,BZG460
+330,57 00 00 ,57 99 99,460,BZG460
+330,57 00 000,57 99 999,460,BZG460
+330,58 00 00,58 99 99,460,BZG460
+330,58 00 000,58 99 999,460,BGZ460
+330,60 00 00,66 99 99,460,BZG460
+330,60 00 000,66 99 999,460,BZG460
+330,61 Aa@@@,66 Zz@@@,460,BZG460
+330,69 Aa@@@,69 Zz@@@,460,BZG460
+330,70 00 0,77 99 9,460,BZG460
+330,70 00 00,77 99 99,460,BZG460
+330,70 00 000,77 99 999,460,BZG460
+330,72 Aa@@@,77 Zz@@@,460,BZG460
+,,,,
+0,80 200 00,80 999 99,8,ZEPC30 
+,,,,
+Inf,"ZB-Bestand, der an SKW abgegeben und im UG2 zwischengelagert wird (derzeit nur HB 23), soll das LKZ 87 erhalten und bestellbar sein. 11.11.2020 hn",,,
+0,87 Aa@@@,87 Zz@@@,2,UG2
+,,,,
+,,,,
+330,81 00 0,89 99 9,460,BZG460
+330,81 00 00,89 99 99,460,BZG460
+330,81 00 000,89 99 999,460,BZG460
+,,,,
+0,81 000 00,84 999 99,8,ZEPC30
+0,85 000 00,89 999 99,85,UG285
+0,90 000 00,99 999 99,85,UG285
+Inf,Für Zuwachs der Signaturen bis 99 999 99 in der C-Ebene,,,
+Inf,"Damit Bestellungen für die Signaturengruppe auf einem anderen Drucker gedruckt werden können als der Rest für UG2, wurde ein weiterer Standort eingeführt und in die interne Koko eingetragen. 27.04.2009 hn",,,
+,,,,
+Inf,Ab November 2003 stellt SeB Dissertationen aus anderen Staedten zu der Signatur 87....,,,
+0,8 1 0,8 99 9999,9,ZEPF1
+Inf,"Die Signaturen 8 20 000 - 8 21 112 gehoeren zur ""Sammlung Lorey"" (nur fuer den Lesesaal)",,,
+,,,,
+0,8 1,8 999999,9,ZEPF1
+Inf,"Die Signaturen 8 20000 - 8 21112 gehoeren zur ""Sammlung Lorey"" (nur fuer den Lesesaal)",,,
+,,,,
+0,8 Bild,8 Bild,3,UG1
+0,8 Hs,8 Hs,3,UG1
+0,8 Kl Schr,8 Kl Schr,9,ZEPF1
+0,8 A,8 Z,2,UG2
+Inf,"8° A  -  8° Z   Zeitschriften stehen im UG1 (ausleihbar ), ab Jahrgang 1981 bis 1990 im UG 2 (ausleihbar), ab 1991 im OG 2 (ausleihbar), die neusten 10 Jahrgänge sind Praesenzbestand.",,,
+Inf,Ausnahme: 8° Q  Jahrgaenge 1931 – 1980 stehen im ZEPF1 (ausleihbar). ,,,
+Inf,Dieses Problem laesst sich über die Konkordanz nicht loesen. Deshalb werden alle Bestellzettel auf dem Magazindrucker gedruckt. Sie muessen von Hand sortiert werden.,,,
+,,,,
+330,90 00 0,96 99 9,460,BZG460
+330,90 00 00,96 99 99,460,BZG460
+330,90 00 000,96 99 999,460,BZG460
+330,91 Aa@@@,91 Zz@@@,460,BZG460
+330,92 Aa@@@,96 Zz@@@,460,BZG460
+,,,,
+,,,,
+330,100 00 0,109 99 9,460,BZG460
+330,100 00 00,109 99 99,460,BZG460
+330,100 00 000,109 99 999,460,BZG460
+330,101 Aa@@@,104 Zz@@@,460,BZG460
+,,,,
+Inf,Reihenfolge beachten:,,,
+330,Dienstzimmer,Dienstzimmer,450,BZG450
+330,Infotheke,Infotheke,451,BZG451
+330,Schuetzenswerter ,Schuetzenswerter ,454,BZG454
+0,Semesterapparat,Semesterapparat,120,SABZG
+205,Semesterapparat,Semesterapparat,120,SABZG
+330,Semesterapparat,Semesterapparat,452,BZG452
+330,Sonderstandort,Sonderstandort,453,BZG453
+,,,,
+58,Dienstzimmer,Dienstzimmer,450,BZG450
+58,Semesterapparat,Semesterapparat,452,BZG452
+,,,,
+Inf,Reihenfolge beachten:,,,
+330,Q1,Q1,461,BZG461
+330,Q6,Q6,461,BZG461
+330,Ä@@@,Ä@@@,460,BZG460
+330,Ö@@@,Ö@@@,460,BZG460
+330,Ü@@@,Ü@@@,460,BZG460
+330,A@@@,Z@@@,460,BZG460
+Inf,Sogenannte ‚...’(Folgepunkte) im Signatureintrag sollen zukuenftig mit ‚@@@’ dargestellt werden!                6.10.2006           Der Standort 460 beinhaltet die MEDEA Katalogisate (Altbestand). ,,,
+,,,,
+0,A obstr,A obstr,4,ZEPB30
+Inf,"darin enthalten ""A.obstr"" und ""A. obstr"" ",,,
+,,,,
+0,AB Zs@@@,AB Zs@@@,11,OM30
+Inf,"betrifft den Altbestand Zeitschriften, der nicht nach Marburg ausgelagert wurde (Bestand vor 1871). Zsf steht aber ohnehin der ZB. 30.11.2021 hn",,,
+0,Aeul,Aeul,108,ZC30LS
+0,Ak,Ak,8,ZEPC30  
+0,Amer,Amer,104,ZB30LS
+0,Anat,Anat,4,ZEPB30
+6,Arbeitslehre 42,Arbeitslehre 42,245,BSPMAG
+6,Arbeitslehre,Arbeitslehre,243,BSP321
+0,Art Ff,Art Ff,7,OG3GM
+Inf,"darin enthalten ""Art.Ff"" und ""Art. Ff"" ",,,
+0,Auct Med,Auct Med,4,ZEPB30
+Inf,"darin enthalten ""Auct.Med"" und ""Auct. Med"" ",,,
+0,Ausst,Ausst@@@,107,OG3LS
+0,Autogr,Autogr@@@,7,OG3GM
+,,,,
+0,AV 4,AV 4,7,OG3GM
+0,AV 9,AV 10,2,UG2
+0,AV 11,AV 11,7,OG3GM
+0,AV 12,AV 19,107,OG3LS
+0,AV 21,AV 22,7,OG3GM
+0,AV 34,AV 35,101,UG3LS
+0,AV 32,AV 36,107,OG3LS
+0,AV 42,AV 46,107,OG3LS
+0,AV 52,AV 56,107,OG3LS
+0,AV 62,AV 99,102,UG2LS
+,,,,
+0,AvB,AvB,9,ZEPF1
+0,AVM 10 ,AVM 10,102,UG2LS
+0,AVM 14,AVM 14,102,UG2LS
+0,AVM 24,AVM 24,102,UG2LS
+0,AVM 32,AVM 35,102,UG2LS
+0,AVM 42,AVM 44,102,UG2LS
+0,AVM 62,AVM 64,102,UG2LS
+0,AVM 75,AVM 75,102,UG2LS
+0,AVM 82,AVM 84,102,UG2LS
+0,AVM 98,AVM 98,102,UG2LS
+0,AVM,AVM,2,UG2
+,,,,
+Inf,"SeB benutzt ab Juni 2002 die Sign. AV ... und AVM ... für Frankfurter Dissertationen, die als CD-Rom oder Mischform erscheinen, ab Februar 2003 auch fuer alle anderen Non-Book-Materialien.",,,
+,,,,
+0,AVPM 1,AVPM 1,102,UG2LS
+0,AVP@@@ 11,AVP@@@ 11,2,UG2
+0,AVP@@@ 21,AVP@@@ 21,2,UG2
+0,AVP@@@ 32,AVP@@@ 32,95,OG3HB
+0,AVP@@@,AVP@@@,2,UG2
+Inf,Ab Februar 2003 wird die Signatur AVP ... u. AVPM ... auch von SeB benutzt.,,,
+,,,,
+0,B S,B S,109,ZF1LS
+,,,,
+0,Bbl,Bbl,108,ZC30LS
+0,Bestand,Bestand,90,RESTE
+,,,,
+0,Bibl G@@@,Bibl H@@@,7,OG3GM
+,,,,
+0,Bibl S,Bibl S,4,ZEPB30
+,,,,
+0,Bibliol,Bibliol,4,ZEPB30
+0,Biblioth ,Biblioth ,107,OG3LS
+0,Bio,Bio,108,ZC30LS
+,,,,
+0,Bundesbibl,Bundesbibl@@@,108,ZC30LS
+,,,,
+0,Cat libr Ff,Cat libr Ff,7,OG3GM
+0,Chem,Chir,8,ZEPC30 
+0,Congr Ff,Congr Ff@@@,7,OG3GM
+,,,,
+0,Cz,Cz,9,ZEPF1
+,,,,
+0,D 1,D 100,5,MR
+0,D 101,D 199,8,ZEPC30
+Inf,Für die Frankfurter Diss. wird die Signatur D 100 ... von StUB und SeB weitergeführt. 24.5.2002                                  Alle Dissertationen mit der Signatur D... und Dq... erhalten ab sofort 30-Buchnummern. 17.11.2003,,,
+0,D 200,D 209,5,MR
+Inf,Ab D 209 wird diese Signatur nicht weitergeführt. Die auswärtigen Diss. kommen jetzt zur Signatur 86 ...  22.9.2000.         Dasselbe gilt jetzt auch für Senckenberg-Bestand. 17.11.2003,,,
+0,DA,DA,108,ZC30LS
+Inf,Die MedHB verbucht jetzt Dauerschließfächer (Konditionen wie Lehrbuchsammlung) 11.06.2019 hn,,,
+21,Dauer@@@,Dauer@@@,38,LBF21B
+0,Decis,Decis,4,ZEPB30
+0,Deductiones,Deductiones,4,ZEPB30
+0,Df,Df,104,ZB30LS
+0,Dia,Dia@@@,107,OG3LS
+6,DidZentrum 42,DidZentrum 42,245,BSPMAG
+6,DidZentrum,DidZentrum,237,FBB3DZ
+0,DigiAuftr@@@,DigiAuftr@@@,90,RESTE
+,,,,
+Inf,Reihenfolge beachten!,,,
+0,Dienstzimmer HB 20,Dienstzimmer HB 21,140,DIZIM3
+0,Dienstzimmer HB 22,Dienstzimmer HB 22,140,DIZIM3
+0,Dienstzimmer HB 23,Dienstzimmer HB 26,140,DIZIM3
+0,Dienstzimmer,Dienstzimmer,136,HABZG
+,,,,
+0,Disk,Disk@@@,107,OG3LS
+,,,,
+21,Diss Ffm,Diss Ffm,40,GMF21
+,,,,
+0,Dl,Dl,108,ZC30LS
+0,Dombibl,Dombibl,107,OG3LS
+0,Dq 1 1,Dq 13 1000,5,MR
+Inf,Ab Dq 13 wird diese Signatur nicht weitergeführt. Die auswärtigen Diss. kommen jetzt zur Signatur Q 86 ... 22.9.2000,,,
+,,,,
+0,Dq 100,Dq 100,5,MR
+0,Dq 101,Dq 300,4,ZEPB30
+Inf,Für die Frankfurter Dissertationen wird die Signatur Dq 100 ... für StUB und SeB weitergeführt.  24.5.2002                                    Alle Dissertationen mit der Signatur D... und Dq... erhalten ab sofort 30-Buchnummern. 17.11.2003,,,
+0,Einband,Einband@@@,107,OG3LS
+0,Einblattdr,Einblattdr@@@,107,OG3LS
+0,Einzel,Einzel@@@,90,RESTE
+,,,,
+21,Einzel,Einzel@@@,90,RESTE
+,,,,
+3,Einzel,Einzel@@@,90,RESTE
+,,,,
+0,El,El,108,ZC30LS
+0,Enc,Enc,108,ZC30LS
+0,Eph pol Ff,Eph pol Ff,7,OG3GM
+6,Erzwiss 42,Erzwiss 42,245,BSPMAG
+6,Erzwiss,Erzwiss,239,BSP202
+0,Europeana@@@,Europeana@@@,90,RESTE
+0,Ex,Ex,7,OG3GM
+,,,,
+201,EXAM,EXAM,240,BSP006
+6,EXAM,EXAM,240,BSP006
+Inf,Geschlossener Bestand der FBB3.                     16.11.2006,,,
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,F 15,F 15,113,RARA
+0,F 16,F 16,113,RARA
+0,F 00,F 70,4,ZEPB30
+0,F 80,F 99,4,ZEPB30
+,,,,
+0,Fernl,Fernl@@@,99,FERNL
+,,,,
+21,Fernl,Fernl@@@,88,FERNL3
+,,,,
+3,Fernl,Fernl@@@,89,FERNL6
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,Ffm F,Ffm F,1,UG3
+0,Ffm Kf,Ffm Kf,1,UG3
+0,Ffm K,Ffm K,11,OM30
+0,Ffm Kq,Ffm Kq,11,OM30
+0,Ffm Kt,Ffm Kt,107,OG3LS
+0,Ffm Mapp,Ffm Mapp,107,OG3LS
+0,Ffm Q,Ffm Q,11,OM30
+0,Ffm W,Ffm W@@@,107,OG3LS
+0,Ffm,Ffm,11,OM30
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,Flugschr,Flugschr@@@ ,107,OG3LS
+0,Fl,Fl,108,ZC30LS
+0,Fr,Fu@@@,7,OG3GM
+Inf,"enthalten ""Fragm germ"" bis ""Fund Ff""",,,
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,GB 23: S@@@,GB 23: S@@@,93,OG1
+0,GB 23: T@@@,GB 23: T@@@,93,OG1
+0,GB 23,GB 23,8,ZEPC30
+0,GB,GB,5,MR
+Inf,"Neue Signatur GB für HB-Signaturen, die ins geschlossene Magazin umgezogen werden. 21.01.2016",,,
+,,,,
+6,Geswiss 42,Geswiss 42,245,BSPMAG
+6,Geswiss,Geswiss,238,BSP201
+0,Gg,Gg,108,ZC30LS
+,,,,
+0,Gi 1,Gi 9999,109,ZF1LS
+Inf,Neue Signatur fuer die chemiehistorische Sammlung der SeB ohne Formatunterscheidung. 28.6.02,,,
+,,,,
+0,GM 23,GM 23,8,ZEPC30
+0,GM,GM,5,MR
+Inf,"Neue Signatur GM fuer HM-Signaturen, die ins geschlossene Magazin umgezogen werden. 21.09.2012",,,
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,Gr 2 A@@@,Gr 2 Z@@@,103,UG1LS
+0,Gr Sf,Gr Sf ,103,UG1LS
+0,Gr 1,Gr 99,1,UG3
+0,Gr 100,Gr 100,8,ZEPC30
+0,Gr,Gr,101,UG3LS
+0,Gs,Gs,108,ZC30LS
+0,Gw,Gw,108,ZC30LS
+0,Gymn,Gymn,108,ZC30LS
+,,,,
+21,H 29 000 00,H 29 999 99,39,OMF21
+Inf,Diese Signatur wurde ab Januar 1999 abgebrochen. Bestand jetzt bei 29 ...  ,,,
+,,,,
+0,H 47,H 85,5,MR
+21,H 47,H 85,40,GMF21
+21,H 86,H 90,39,OMF21
+,,,,
+0,H litt Hebr,H litt Hebr,107,OG3LS
+0,H nat,H nat,4,ZEPB30
+,,,,
+34,HA 05,HA 05,222,RUWHA
+21,HAV,HAV,39,OMF21
+21,HAVM,HAVM,39,OMF21
+21,HAVP,HAVP,39,OMF21
+,,,,
+0,HB 0,HB 0,91,EGHB
+Inf,HB 0 = Präsenzbestand Halle für StUB und SeB gemeinsam. 9.1.2003 ,,,
+Inf,Reihenfolge beachten:,,,
+0,HB 1: Bc 8,HB 1: Bc 8,92,ZGEHB
+0,HB 1: A,HB 1: B@@@,91,EGHB
+0,HB 1: C 11,HB 1: C 11,91,EGHB
+0,HB 1: C 14,HB 1: C 14,91,EGHB
+0,HB 1: C 19,HB 1: C 19,91,EGHB
+0,HB 1: C 22,HB 1: C 22,91,EGHB
+0,HB 1: C 65,HB 1: C 65,91,EGHB
+0,HB 1: H 8,HB 1: H 8,91,EGHB
+0,HB 1: H 10,HB 1: H 10,91,EGHB
+0,HB 1: H 20,HB 1: H 20,91,EGHB
+0,HB 1: H 28,HB 1: H 30,91,EGHB
+0,HB 1: H 36,HB 1: H 36,91,EGHB
+0,HB 1: H 45,HB 1: H 45,91,EGHB
+0,HB 1: H 105,HB 1: H 105 ,91,EGHB
+0,HB 1: Ja 27,HB 1: Ja 28,91,EGHB
+0,HB 1: Jb 136,HB 1: Jb 136,91,EGHB
+0,HB 1: Jb 735,HB 1: Jb 735,91,EGHB
+0,HB 1: Jb 1118,HB 1: Jb 1118,91,EGHB
+0,HB 1: Jb 1136,HB 1: Jb 1136,91,EGHB
+0,HB 1: Jb 1729,HB 1: Jb 1729,91,EGHB
+0,HB 1: Jb 1750,HB 1: Jb 1750,91,EGHB
+0,HB 1: Jb 1790,HB 1: Jb 1790,91,EGHB
+0,HB 1: Jb 2320,HB 1: Jb 2320,91,EGHB
+0,HB 1: Jb 3307,HB 1: Jb 3307,91,EGHB
+0,HB 1: Jd 540,HB 1: Jd 541,91,EGHB
+0,HB 1: L 36,HB 1: L 36,91,EGHB
+0,HB 1: L 40,HB 1: L 40,91,EGHB
+0,HB 1: Mb 6,HB 1: Mb 6,91,EGHB
+0,HB 1: P 24,HB 1: P 24,91,EGHB
+0,HB 1: P 45,HB 1: P 45,91,EGHB
+0,HB 1: P 200,HB 1: P 200,91,EGHB
+0,HB 1: P 202,HB 1: P 202,91,EGHB
+0,HB 1: Qa 215,HB 1: Qa 216,92,ZGEHB
+0,HB 1: Qa 610,HB 1: Qa 610,92,ZGEHB
+0,HB 1: Q@@@,HB 1: Q@@@,91,EGHB
+0,HB 1: Ta 12,HB 1: Ta 12,91,EGHB
+0,HB 1: Ta 15,HB 1: Ta 15,91,EGHB
+0,HB 1: Ta 264,HB 1: Ta 264,91,ÊGHB
+0,HB 1: Ta 267,HB 1: Ta 269,91,EGHB
+0,HB 1: Ta 950,HB 1: Ta 950,91,EGHB
+0,HB 1: Tb 10,HB 1: Tb 10,91,EGHB
+0,HB 1: Tb 24,HB 1: Tb 24,91,EGHB
+0,HB 1: Tb 37 2,HB 1: Tb 37 2,91,EGHB
+0,HB 1: Tb 40,HB 1: Tb 40,91,EGHB
+0,HB 1: Tb 45,HB 1: Tb 45,91,EGHB
+0,HB 1: Tb 51,HB 1: Tb 51,91,EGHB
+0,HB 1: Tb 150,HB 1: Tb 150,91,EGHB
+0,HB 1: Tc 100,HB 1: Tc 100,91,EGHB
+0,HB 1: Z@@@,HB 1: Z@@@,91,EGHB
+0,HB 1,HB 1,92,ZGEHB
+,,,,
+0,HB 11,HB 11,93,OG1  
+0,HB 12,HB 12,92,ZGEHB 
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,HB 13: Hc 22,HB 13: Hc 22,91,EGHB
+0,HB 13,HB 13,92,ZGEHB
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,HB 14: Ab 1,HB 14: Ab 1,91,EGHB
+0,HB 14,HB 14,92,ZGEHB
+,,,,
+Inf,HB 15 wird jetzt für RVK-Bestand im LS Geisteswissenschaften vergeben. 13.02.2014,,,
+0,HB 15,HB 15,91,EGHB
+,,,,
+0,HB 16,HB 19,92,ZGEHB
+0,HB 2,HB 2,97,DIENST
+0,HB 20,HB 21,16,OG3FHM
+0,HB 22,HB 22,96,OG3MSS
+0,HB 23: H@@@,HB 23: H@@@,93,OG1
+0,HB 23: LE@@@,HB 23: LE@@@,93,OG1
+0,HB 23: M@@@,HB 23: M@@@,93,OG1
+0,HB 23: N@@@,HB 23: N@@@,93,OG1
+0,HB 23: O@@@,HB 23: O@@@,93,OG1
+0,HB 23: P@@@,HB 23: P@@@,93,OG1
+0,HB 23: R@@@,HB 23: R@@@,93,OG1
+0,HB 23,HB 26,17,OG3FHA
+0,HB 28,HB 29,97,DIENST
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,HB 3: A 272,HB 3: A 272,91,EGHB
+0,HB 3: Bd 90,HB 3: Bd 90,91,EGHB
+0,HB 3: C 174,HB 3: C 174,91,EGHB
+0,HB 3: E 117,HB 3: E 118,91,EGHB
+0,HB 3: Gb 1,HB 3: GB 2,91,EGHB
+0,HB 3: Ja 19,HB 3: Ja 19,91,EGHB
+0,HB 3: Ja 32,HB 3: Ja 32,91,EGHB
+0,HB 3: Jc 7,HB 3: Jc 7,91,EGHB
+0,HB 3: Je 6,HB 3: Je 6,91,EGHB
+0,HB 3: Je 13,HB 3: Je 13,91,ÊGHB
+0,HB 3: Je 105,HB 3: Je 105,91,ÊGHB
+0,HB 3: Je 301,HB 3: Je 301,91,EGHB
+0,HB 3: Je 530,HB 3: Je 530,91,EGHB
+0,HB 3: Jh 2,HB 3: Jh 2,91,EGHB
+0,HB 3: Ka 430,HB 3: Ka 430,91,EGHB
+0,HB 3: Mb 30,HB 3: Mb 30,91,EGHB
+0,HB 3: Na 103,HB 3: Na 103,91,EGHB
+0,HB 3: Ne 7,HB 3: Ne 7,91,EGHB
+0,HB 3: Ng 10,HB 3: Ng 10,91,EGHB
+0,HB 3: O 610,HB 3: O 610,91,EGHB
+0,HB 3: Q 213,HB 3: Q 213,91,EGHB
+0,HB 3: Q 218,HB 3: Q 218,91,EGHB
+0,HB 3: U@@@,HB 3: U@@@,95,OG3HB
+0,HB 3: Vh 2806,HB 3: Vh 2806,91,EGHB
+0,HB 3: X 60,HB 3: X 60,91,EGHB
+0,HB 3: X 72,HB 3: X 72,91,EGHB
+0,HB 3,HB 3,92,ZGEHB
+,,,,
+0,HB 30,HB 30,91,EGHB
+0,HB 31,HB 31,97,DIENST
+Inf,"HB 31 steht bei IntFort (Schulungsraum) im 1. UG, Vorderbau.     12.11.2001",,,
+0,HB 32,HB 32,112,ZGE88
+Inf,Bestand der Dienstexemplare im Archivzentrum EG. 16.11.2006 Handbibliothek jetzt im Büro ZGE88. 19.07.2019,,,
+0,HB 4,HB 4,91,EGHB
+,,,,
+0,HB 40,HB 43,94,OG2
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,HB 5: Aa,HB 5: Az,92,ZGEHB
+0,HB 5: A,HB 5: T@@@,91,EGHB
+0,HB 5: U,HB 5: U@@@,2,UG2
+0,HB 5: V,HB 5: Z@@@,91,EGHB
+,,,,
+0,HB 50,HB 52,94,OG2
+0,HB 55,HB 55,94,OG2
+0,HB 57,HB 59,94,OG2
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,HB 6: D@@@,HB 6: D@@@,102,UG2LS
+0,HB 6: F@@@,HB 6: G@@@,102,UG2LS
+0,HB 6,HB 6,91,EGHB
+Inf,"HB 6 wurde in den Lesesaal im 2. OG umgeräumt. 25.08.2008              Ausnahme: HB 6: D,F,G",,,
+,,,,
+21,HB 60,HB 60,39,OMF21
+,,,,
+0,HB 7,HB 7,5,MR
+0,HB 9,HB 9,92,ZGEHB
+0,HB MF,HB MF,93,OG1
+0,HB Mss,HB Mss,95,OG3HB
+,,,,
+0,HD 75,HD 100,5,MR
+21,HD 73,HD 100,40,GMF21
+0,HDq 100,HDq 100,5,MR
+21,HDq 100,HDq 100,40,GMF21
+,,,,
+0,Hf,Hf,4,ZEPB30
+Inf,Hf scheint nicht katalogisiert zu sein; es gibt aber lt. J. Stolle Bestand in der Morsestrasse. 03.12.18 hn,,,
+,,,,
+0,Hist Ff,Hist Ff,7,OG3GM
+,,,,
+21,HK,HK,39,OMF21
+21,HKQ,HKQ,39,OMF21
+,,,,
+Inf,HM 16 – HM 19 werden jetzt zu GM umgearbeitet. Standort UMZUG fuer Monos in der Uebergangszeit. 21.09.2012,,,
+0,HM 16,HM 16,199,UMZUG
+0,HM 17,HM 17,199,UMZUG
+0,HM 18,HM 18,199,UMZUG
+0,HM 19,HM 19,199,UMZUG
+0,HM 20 ,HM 21,16,OG3FHM
+0,HM 22 ,HM 22,96,OG3MSS
+0,HM 23: H@@@,HM 23: H@@@,93,OG1
+0,HM 23: LE@@@,HM 23: LE@@@,93,OG1
+0,HM 23: M@@@,HM 23: M@@@,93,OG1
+0,HM 23: N@@@,HM 23: N@@@,93,OG1
+0,HM 23: O@@@,HM 23: O@@@,93,OG1
+0,HM 23: P@@@,HM 23: P@@@,93,OG1
+0,HM 23: R@@@,HM 23: R@@@,93,OG1
+0,HM 23,HM 23,8,ZEPC30
+0,HM 24,HM 25,17,OG3FHA
+0,HM 5: A,HM 5: B,92,ZGEHB
+Inf,HM 5: A und HM 5: B wurde heute in das ZGE umgeräumt. 25.08.2008,,,
+0,HM 5: C,HM 5: T,91,EGHB
+Inf,HM 5: U (095 / OG3HB) geloescht; keine Exemplare mehr. 03.12.18 hn,,,
+0,HM 5: V,HM 5: Z,91,EGHB
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,HM 6: D@@@,HM 6: D@@@,102,UG2LS
+0,HM 6: F@@@,HM 6: G@@@,102,UG2LS
+0,HM 6 ,HM 6 ,91,EGHB
+Inf,"HM 6 wurde in den Lesesaal im 2. OG umgeräumt.           25.03.2013              Ausnahme: HM 6: D,F,G ",,,
+,,,,
+21,HM 60,HM 60,39,OMF21
+,,,,
+0,HM 7,HM 7,5,MR
+,,,,
+21,Hq 29 000 00,Hq 29 999 99,39,OMF21
+Inf,Diese Signatur wurde ab Januar 1999 abgebrochen. Bestand jetzt bei Q 29 ...,,,
+,,,,
+0,Hq 47,Hq 85,5,MR
+21,Hq 86,Hq 90,39,OMF21
+21,Hr,Hr,39,OMF21
+,,,,
+0,HRAF,HRAF,5,MR
+6,Humangeo DID 42,Humangeo DID 42,245,BSPMAG
+6,Humangeo KSR 42,Humangeo KSR 42,245,BSPMAG
+6,Humangeo WSG 42,Humangeo WSG 42,245,BSPMAG
+6,Humangeo,Humangeo,233,BSP028
+0,Hs,Hs,7,OG3GM
+0,Hx,Hx,5,MR
+0,Hxf,Hxf,4,ZEPB30
+0,Hxq,Hxq,5,MR
+0,Hyg publ Ff,Hyg publ Ff,7,OG3GM
+,,,,
+0,HZ,HZ,5,MR
+21,HZ,HZ,39,OMF21
+0,HZf,HZf,4,ZEPB30
+21,HZF,HZF,39,OMF21
+0,HZq,HZq,5,MR
+21,HZQ,HZQ,39,OMF21
+Inf,HZq 444 steht zum Teil unabhaengig vom Jahrgang in der MedHB. 03.12.18 hn,,,
+Inf,Jahrgaenge ab 2011 ff stehen in der MedHB (HZf: alles MedHB). – lt. J. Stolle steht HZf in MORSE. 03.12.18 hn,,,
+,,,,
+0,IL,IL,108,ZC30LS
+0,INC,INC@@@,107,OG3LS
+6,ISW,ISW,245,BSPMAG
+,,,,
+0,J A@@@,J R@@@,104,ZB30LS
+0,Jordan@@@,Jordan@@@,107,OG3LS
+6,JPNStiftung,JPNStiftung,235,BSP171
+,,,,
+Inf,Reihenfolge beachten,,,
+0,Jud germ,Jud germ,107,OG3LS
+0,Jud,Jud@@@,107,OG3LS
+,,,,
+0,Jur Ff,Jur Ff,7,OG3GM
+0,Jur op,Jur op,4,ZEPB30
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,Kf,Kf,104,ZB30LS
+0,Kl,Kl,108,ZC30LS
+0,Klrl,Klrl,108,ZC30LS
+0,Kq 50,Kq 50,11,OM30
+0,Kq,Kq,11,OM30
+0,Kt K,Kt K,104,ZB30LS
+0,Kt Kf,Kt Kf,104,ZB30LS
+0,Kt Kq,Kt Kq,104,ZB30LS
+0,KtK,KtK,104,ZB30LS
+0,KtKf,KtKf,104,ZB30LS
+0,KtKq,KtKq,104,ZB30LS
+,,,,
+0,Kt S 7,Kt S 7,104,ZB30LS
+0,Kt,Kt,104,ZB30LS
+Inf,"Ab Nov. 2003 wird die Signatur Kt auch von SeB benutzt. Die Standorte bleiben getrennt, ehemaliger SeB-Bestand im UG1, ehemaliger StUB-Bestand in ZEPB30! Die Sig. Kt 1 – Kt 317 ist doppelt (bei StUB und SeB) besetzt. Bei dem StUB Bestand wurde deswegen in der TA hinter die Signatur das Sigel ”(30)” eingetragen, die Signaturenschilder wurden mit dem Stempel 30 versehen.",,,
+,,,,
+0,Ku,Ku,108,ZC30LS
+0,K 50,K 50,2,UG2
+0,K,K,2,UG2
+,,,,
+201,Kass,Kass,245,BSPMAG
+,,,,
+34,LA 05,LA 05,145,RUWLA
+,,,,
+Inf,"In der Lehrbuchsammlung der UB werden nach und nach alle Faecher auf RVK-Signaturen umgearbeitet. Umarbeitungsreihenfolge unbedingt einhalten!!                                        1)‚D’(Soziologie alt) zu Mn - Mw (RVK Soziologie)umarbeiten                     2)wenn fertig, Koko aendern ‚D’ ist RVK-Paedagogik                          3)Cg - Cp (Paedagogik alt) zu D umarbeiten                       4)wenn fertig, Koko aendern  CL - CZ ist RVK-Psychologie       5)Ca - Cf (Psychologie alt) umarbeiten zu CL - CZ              Die naturwissenschaftlichen Faecher koennen folgen, ist noch zu klaeren.",,,
+0,Lb: Ca,Lb: Cf,17,LBC1
+0,Lb: Cg,Lb: Cz,18,LBC2
+0,Lb: D,Lb: D,19,LBD
+Inf,          Soziologie alt,,,
+0,Lb: E,Lb: E,20,LBE
+Inf,          Recht alt,,,
+0,Lb: F,Lb: F,21,LBF
+Inf,          Geschichte alt,,,
+0,Lb: MA,Lb: ML,25,LBM
+Inf,          RVK: Politik.                                      Dieses Fach wird in der UB uebergangsweise wiederbelebt. Die Baende kommen spaeter in den Neubau zu Herrn Voigt.   10.9.2007,,,
+0,Lb: MN,Lb: MW,19,LBD
+Inf,          RVK: Soziologie,,,
+0,Lb: NA,Lb: NZ,21,LBF
+Inf,          RVK: Geschichte,,,
+0,Lb: PA,Lb: PZ,20,LBE
+Inf,          RVK: Recht,,,
+0,Lb: QA,Lb: QZ,29,LBY
+Inf,          RVK: Wirtschaft,,,
+0,Lb: RA,Lb: RZ,27,LBS
+Inf,          RVK: Geographie,,,
+,,,,
+Inf,Reihenfolge beachten,,,
+0,LB: SQ,LB: SU,28,LBX
+,           RVK: Informatik,,,
+0,LB: S 1,LB: S 9999,27,LBS
+Inf,           Geographie alt,,,
+0,Lb: Xa,Lb: Xz@@@,28,LBX
+Inf,           Informatik alt ,,,
+0,Lb: Y,Lb: Y,29,LBY
+Inf,           Wirtschaft alt,,,
+,,,,
+95,LB: SA,LB: SA,372,DIMAT
+0,LB: SB 1,LB: SB 349  ,32,LBSB
+0,LB: SE,LB: SE,34,LBSE
+3,LB: SC,LB: SC,50,LBSCNU
+Inf,Signatur fuer Abgaben aus dem FB Physik und dem ehemaligen LBS-Bestand (Fach Physik) aus der UB.                   22.03.2004,,,
+3,LB: SD 1,LB: SD 9999,44,LBSD
+Inf,Neue Signaturengruppe fuer Umarbeitung von SNE und neue LB im BZNU 19.04.2011,,,
+3,LB: SE,LB: SE,45,LBSNE
+3,LB: SF,LB: SF,43,LBSFNU
+Inf,Zusammenfuehrung aus LB: SF (ehem. UB) mit LB: SNF und Bestand des FB Geowissenschaften.                           23.02.2007,,,
+3,LB: SNA,LB: SNA,41,LBSNA
+3,LB: SNB,LB: SNB,42,LBSNB
+3,LB: SNE,LB: SNE,45,LBSNE
+3,LB: SNP,LB: SNP,47,LBSNP
+Inf,Neue Signaturengruppe fuer Umarbeitung von SNP im BZNU 11.01.2011,,,
+3,LB: SP,LB: SP,47,LBSNP
+Inf,Alle anderen Signaturen des BZNU werden durch den neuen allgemeinen Eintrag bezüglich BIK 003 dem Standort 048 = BZNU  zugeordnet. Dadurch kann die Einzelauflistung der restlichen Signaturen entfallen.                                20.12.2004,,,
+,,,,
+0,Lesesaal 1,Lesesaal 1,91,EGHB
+0,Lesesaal Geistesw@@@,Lesesaal Geistesw@@@,91,EGHB
+0,Lesesaal im 1 Obe@@@,Lesesaal im 1 Obe@@@,93,OG1
+Inf,"Sind keine echten Signaturen, sondern Ablage-Signaturen in den beiden Lesesälen",,,
+,,,,
+Inf,Reihenfolge beachten:,,,
+21,L 1,L 1000,37,LBF21A
+21,L 1001,L 9999,37,LBF21A
+21,LB: L 1,LB: L 1000,37,LBF21A
+21,LB: L 1001,LB: L 9999,37,LBF21A
+21,LB: 1,LB: 1000,37,LBF21A
+21,LB: 1001,LB: 9999,37,LBF21A
+Inf,"Ab Juni 2002 wird die Signatur L ... und LB: L ... in der MedHB        nicht weitergeführt, nur noch LB: <Ziffer>",,,
+,,,,
+21,LS H,LS H,39,OMF21
+21,LS Hq,LS Hq,39,OMF21
+0,LS Spez,LS Spez,15,LSSPEZ
+,,,,
+0,Lg,Lg,108,ZC30LS
+0,L Hebr Gen,L Hebr Gen,107,OG3LS
+0,L Hebr Gramm,L Hebr Gramm,107,OG3LS
+0,L Hebr Lex,L Hebr Lex,107,OG3LS
+0,Lithol,Lithol,4,ZEPB30
+0,Lx,Lx,108,ZC30LS
+,,,,
+0,Mapp,Mapp,101,UG3LS
+0,Mat,Mat,4,ZEPB30
+0,MC,MC,106,ZG1LS
+0,Md ,Md ,108,ZC30LS
+0,Med f,Med v,104,ZB30LS
+0,Med,Med,108,ZC30LS
+0,Mess,Mess,7,OG3GM
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,MFA,MFA,108,ZC30LS
+0,MF,MF ,108,ZC30LS
+Inf,"Die Signatur MF wird ab Februar 2003 auch von der SeB benutzt, SMF wird abgebrochen. - Die Signatur MFA ... ist neu fuer Abgaben aus Dezentralen Bibliotheken.                          24.10.2008",,,
+,,,,
+0,Mili ,Misc,7,OG3GM
+0,Mnw,Mnw,108,ZC30LS
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,MP FFM,MP FFM,107,OG3LS
+0,MPq,MPq,104,ZB30LS
+0,MP ,MP@@@ ,108,ZC30LS
+Inf,"Enthält auch MPR ...                                            Ab Juni 2002 werden verfilmte Frankfurter Dissertationen vom SeB  unter der Signatur MP ... archiviert, ab Februar 2003 auch alle anderen Filmmaterialien. - Die Signatur MPA ... ist neu fuer Abgaben aus Dezentralen Bibliotheken.                 24.10.2008",,,
+,,,,
+0,Ms,Ms@@@,107,OG3LS
+0,Mus 46 1,Mus 70 9999,6,ZG1
+0,Mus 1,Mus 9999,107,OG3LS
+0,Mus A,Mus H@@@,107,OG3LS
+0,Mus K,Mus K,6,ZG1
+0,Mus Kq,Mus Kq,6,ZG1
+0,Mus pr,Mus pr,106,ZG1LS
+0,Mus Q,Mus Q,6,ZG1
+0,Mus R,Mus R,6,ZG1
+0,Mus Rq,Mus Rq,106,ZG1LS
+0,Mus S,Mus W@@@,107,OG3LS
+0,Mus Z,Mus Z@@@,106,ZG1LS
+0,M,M,4,ZEPB30
+0,N 1,N 999    ,8,ZEPC30
+0,N libr 1,N libr 9999,104,ZB30LS
+0,N libr F 1,N libr F 9999,104,ZB30LS
+0,N libr Ff,N libr Fg ,107,OG3LS
+0,N libr Q,N libr R,104,ZB30LS
+0,N Mus,N Mus,5,MR
+0,Nachl,Nachl@@@,107,OG3LS
+0,Na,Na,86,ARCHIV
+0,NiL,NiL,108,ZC30LS
+0,NL,NL,108,ZC30LS
+0,Nq,Nq,4,ZEPB30
+0,NS 1,NS 99999,8,ZEPC30
+0,Nsf,Nsf,4,ZEPB30
+0,Nsq,Nsq,104,ZB30LS
+6,NZ,NZ,245,BSPMAG
+0,Occ,Occ,107,OG3LS
+0,Oet,Oet,108,ZC30LS
+Inf,März 2012: Die Daten zu den Katalogkarten aus dem Retro-Bestand werden mit falschen bzw. ohne Signaturen mit Abteilungscode 000 eingespielt.,,,
+0,ohne Signatur,ohne Signatur,81,RETROL
+6,PaedPsych 42,PaedPsych 42,245,BSPMAG
+6,PaedPsych,PaedPsych,236,BSP200
+0,Path,Path,4,ZEPB30
+0,Pd,Pd,108,ZC30LS
+0,Phll,Phll,108,ZC30LS
+0,Phl,Phs,108,ZC30LS
+0,Phy,Phy,4,ZEPB30
+0,Pk,Pk,90,RESTE
+,,,,
+3,Pk,Pk,90,RESTE
+,,,,
+21,Pk,Pk,90,RESTE
+,,,,
+0,Portr.Slg. Holz@@@,Portr.Slg. Holz@@@,107,OG3LS
+0,Portr,Portr,3,UG1
+0,Programmheft-Archiv,Programmheft-Archiv,87,PROGAR
+6,PsyAnalyse 42,PsyAnalyse 42,245,BSPMAG
+6,PsyAnalyse,PsyAnalyse,242,BSP302
+6,PsyKettenhofweg 42,PsyKettenhofweg 42,245,BSPMAG
+6,PsyKettenhofweg,PsyKettenhofweg,241,FBB4GM
+6,PsyMertonstr 42,PsyMertonstr 42,245,BSPMAG
+6,PsyMertonstr,PsyMertonstr,234,BSP109
+Inf,"Neue Signatur. Standort ist z.Zt. die B-Ebene, B1. Bestand ist aber NICHT online bestellbar. Die Hefte werden bei Bedarf von Kollegen der Musik- und Theaterabteilung aus dem Magazin geholt. 4.10.2006",,,
+,,,,
+0,Q 00 1,Q 10 9999,4,ZEPB30
+0,Q 15 1,Q 15 999,107,OG3LS
+0,Q 16 1,Q 18 9999,104,ZB30LS
+0,Q 21 000 00,Q 21 999 99,4,ZEPB30
+0,Q 20 1,Q 30 9999,4,ZEPB30
+0,Q 33 700 00,Q 33 999 99,12,OMF1
+0,Q 34 700 00,Q 34 999 99,5,MR
+0,Q 40 1,Q 44 9999,4,ZEPB30
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,Q 45 000 00,Q 46 999 99,4,ZEPB30
+Inf,Neue Signatur fuer monographische Abgaben aus anderen Bereichen ohne Unterscheidung nach Abt.Codes.                 11.05.2004,,,
+,,,,
+0,Q 45 1,Q 49 9999,4,ZEPB30
+0,Q 50 1,Q 70 9999,5,MR
+0,Q 80 200 00,Q 80 999 99,4,ZEPB30
+0,Q 81 000 00,Q 89 999 99,4,ZEPB30
+0,Q 90 000 00,Q 99 999 99,4,ZEPB30
+Inf,Ab November 2003 stellt SeB die auswärtigen Dissertationen auch zu der Signatur 87.... bezw. Q 87 ....,,,
+,,,,
+21,Q 28 000 00,Q 29 999 99,39,OMF21
+Inf,Signatur Q 28 000 00 eingefuehrt f. ausgeschiedene Exemplare der Lehrbuchsammlung. 24.3.2003,,,
+,,,,
+0,R 1,R 9999,5,MR
+0,Retro,Retro,81,RETROL
+,,,,
+0,Rf,Rf,104,ZB30LS
+0,Rh,Rh,7,OG3GM
+0,Rq 1,Rq 999,5,MR
+0,Rw,Rw,108,ZC30LS
+,,,,
+0,S 2 1   ,S 4 9999,8,ZEPC30
+0,S 5 C,S 5 W,107,OG3LS
+152,S 5 1,S 5 708,474,ZBINJB
+0,S 5 709,S 5 1499,111,OM30LS
+152,S 5 1500,S 5 1833,474,ZBINJB
+0,S 5 1834,S 5 9999,111,OM30LS
+0,S 6,S 7,8,ZEPC30
+0,S 9 ,S 9 ,107,OG3LS
+0,S 10,S 10,107,OG3LS
+0,S 11,S 11,108,ZC30LS
+Inf,Die Sammlung Diergart wurde wieder an die UB zurueckgegeben. Laut Index gibt es keinen Bestand mit Sq 11 oder Sf 11. 27.9.2007,,,
+0,S 12,S 13,108,ZC30LS
+0,S 14,S 16,8,ZEPC30
+0,S 17,S 17,107,OG3LS
+0,S 18,S 19,108,ZC30LS
+0,S 20,S 20,8,ZEPC30
+0,S 21,S 21,8,ZEPC30
+Inf,Reihenfolge beachten,,,
+0,S 23,S 23,108,ZC30LS
+0,S 25,S 26,108,ZC30LS
+0,S 28,S 28,108,ZC30LS
+0,S 22,S 30,8,ZEPC30
+0,S 31,S 31,7,OG3GM
+0,S 33,S 33,8,ZEPC30
+0,S 35,S 35,108,ZC30LS
+0,S 32,S 36,8,ZEPC30
+0,S 37,S 37,4,ZEPB30
+0,S 38,S 38,104,ZB30LS
+Inf,Reihenfolge beachten,,,
+0,S 39 W,S 39 W,107,OG3LS
+0,S 39,S 39,108,ZC30LS
+0,S 40,S 40,111,OM30LS
+0,S 41,S 41,103,UG1LS
+0,S 42 W,S 42 W,7,OG3GM
+0,S 42,S 42,1,UG3
+0,S 43,S 43,8,ZEPC30
+Inf,"S 43 wird derzeit nach und nach in die Morsestrasse umgezogen, soll aber wieder zurueck in die ZB, wenn MORSE aufgegeben wird. 03.12.18 hn",,,
+Inf,S 44 (010 / MORSE) geloescht – Signaturengruppe wurde nicht genutzt (ist jetzt S 100) 03.12.18 hn,,,
+,,,,
+Inf,S 40 – S 46 ist für Zuwachs der Sondersammlungen gedacht. 10.09.2007,,,
+,,,,
+0,S 47 ,S 85 ,5,MR
+0,S 86,S 99,12,OMF1
+,,,,
+0,S 100,S 100,5,MR
+,,,,
+Inf,"S 101 - Programmhefte, S 102 - Oper Ffm, S 103 - Schauspiel Ffm",,,
+0,S 101,S 101,104,ZB30LS
+0,S 102,S 102,104,ZB30LS
+0,S 103,S 103,104,ZB30LS
+0,S 150,S 150,108,ZC30LS
+,,,,
+0,Samml Lorey@@@,Samml Lorey@@@,109,ZF1LS
+0,S Lorey@@@,S Lorey@@@,109,ZF1LS
+0,SAV,SAV,9,ZEPF1
+0,SAVM,SAVM,9,ZEPF1
+Inf,"Die Signatur SAV ... u. SAVM ... werden im Februar 2003 ganz abgebrochen, Fortsetzung nur noch bei AV ... u. AVM ...",,,
+,,,,
+0,Schop 1,Schop 1,113,RARA
+0,Schop 2,Schop 500,8,ZEPC30
+0,Schop 501,Schop 603,113,RARA
+0,Schop 604,Schop 9999,8,ZEPC30
+0,Schop H 1,Schop H 9999,112,ZGE88
+0,Schop Hq,Schop Hq,112,ZGE88
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,SD 1 0,SD 999 999,5,MR
+0,SD 1,SD 999 ,5,MR
+0,SDF,SDF,103,UG1LS
+0,SDMF,SDMF,5,MR
+,,,,
+0,SDQ,SDQ,5,MR
+Inf,Ab November 2003 werden die Signaturen SD und SDQ abgebrochen. Die auswärtigen Dissertationen kommen zu 87 ...               19.Juli 2005: Die Signatur SDQ wird noch einmal benutzt fuer ein Katalogisierungsprojekt von etwa 5000 Dissertationen.           ,,,
+,,,,
+0,Sf 2 1,Sf 4 999,104,ZB30LS
+0,Sf 5 C,Sf 5 C,107,OG3LS
+0,Sf 5 W,Sf 5 W,107,OG3LS
+152,Sf 5 1,Sf 5 6,474,ZBINJB
+0,Sf 5 7,Sf 5 999,107,OG3LS
+0,Sf 6,Sf 7,104,ZB30LS
+0,Sf 9,Sf 10,107,OG3LS
+0,Sf 16,Sf 17,107,OG3LS
+0,Sf 18,Sf 20,104,ZB30LS
+0,Sf 21,Sf 21,4,ZEPB30
+0,Sf 22,Sf 25,104,ZB30LS
+0,Sf 26,Sf 26,108,ZC30LS
+0,Sf 31,Sf 31,107,OG3LS
+0,Sf 33,Sf 33,4,ZEPB30
+0,Sf 32,Sf 38,104,ZB30LS
+Inf,Reihenfolge beachten:,,,
+0,Sf 39 W,Sf 39 W,107,OG3LS
+0,Sf 39,Sf 39,108,ZC30LS
+0,Sf 40,Sf 40,111,OM30LS
+0,Sf 41,Sf 41,103,UG1LS
+0,Sf 42 W,Sf 42 W,107,OG3LS
+0,Sf 42,Sf 42,4,ZEPB30
+0,Sf 43,Sf 43,4,ZEPB30
+Inf,"Sf 43 wird derzeit nach und nach in die Morsestrasse umgezogen, soll aber wieder zurueck in die ZB, wenn MORSE aufgegeben wird. 03.12.18 hn",,,
+Inf,Sf 44 (010 / MORSE) geloescht – Signaturengruppe wurde nicht genutzt (ist jetzt Sf 100) 03.12.18 hn,,,
+,,,,
+Inf,Sf 40 – Sf 46 ist für Zuwachs der Sondersammlungen.   10.09.2007,,,
+,,,,
+0,Sf 47 1,Sf 99 9999,103,UG1LS
+,,,,
+Inf,"Sf 101 - Programmhefte, Sf 102 - Oper Ffm, Sf 103 - Schauspiel Ffm",,,
+0,Sf 101,Sf 101,104,ZB30LS
+0,Sf 102,Sf 102,104,ZB30LS
+0,Sf 103,Sf 103,104,ZB30LS
+0,Sf 150,Sf 150,104,ZB30LS
+0,Sg H,Sg M@@@,107,OG3LS
+0,S gr f 9,S gr f 9,7,OG3GM
+0,S gr f 39,S gr f 39,7,OG3GM
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,Skf,Skf,103,UG1LS
+0,Sk,Sk,9,ZEPF1
+0,Skq,Skq,9,ZEPF1
+Inf,"Die Signaturen Sk, Skq und Skf werden am 30.12.2004 abgebrochen. Neuzugang kommt zu 87 ... bezw. Q 87 ...",,,
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,Slg G@@@,Slg G@@@,7,OG3GM
+0,Slg H@@@,Slg M@@@,107,OG3LS
+0,SLL,SLL,108,ZC30LS
+0,SL,SL,98,LEIHG
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,SMF,SMF,9,ZEPF1
+Inf,"Die Signatur SMF ... wird ab Februar 2003 abgebrochen, Fortsetzung unter MF ...",,,
+,,,,
+0,SM,SM,5,MR
+,,,,
+0,Soc Ff@@@,Soc Ff@@@,7,OG3GM
+,,,,
+0,SOF,SOF,9,ZEPF1
+0,SO,SO,9,ZEPF1
+,,,,
+0,SpL,SpL,108,ZC30LS
+,,,,
+Inf,Bestand der Sportbibliothek mit Altsignaturen wird im BSP-Magazin zwischengelagert und nach und nach umgearbeitet. 09/2022 hn,,,
+6,Sport,Sport,245,BSPMAG
+,,,,
+0,Sq 10,Sq 10,107,OG3LS
+0,Sq 12,Sq 12,104,ZB30LS
+0,Sq 13,Sq 13,111,OM30LS
+0,Sq 16,Sq 16,7,OG3
+0,Sq 17,Sq 17,107,OG3LS
+0,Sq 18,Sq 18,104,ZB30LS
+0,Sq 19,Sq 19,104,ZB30LS
+0,Sq 2 1,Sq 4 9999,4,ZEPB30
+0,Sq 20,Sq 20,4,ZEPB30
+0,Sq 21,Sq 21,4,ZEPB30
+0,Sq 23,Sq 23,104,ZB30LS
+0,Sq 22,Sq 24,4,ZEPB30
+0,Sq 25,Sq 25,104,ZB30LS
+0,Sq 26,Sq 26,108,ZC30LS
+0,Sq 27,Sq 29,4,ZEPB30
+0,Sq 30,Sq 30,104,ZB30LS
+0,Sq 31,Sq 31,7,OG3GM
+0,Sq 32,Sq 32,4,ZEPB30
+0,Sq 33,Sq 33,4,ZEPB30
+0,Sq 34,Sq 35,104,ZB30LS
+0,Sq 36,Sq 37,4,ZEPB30
+0,Sq 38,Sq 38,104,ZB30LS
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,Sq 39 W,Sq 39 W,107,OG3LS
+0,Sq 39,Sq 39,108,ZC30LS
+0,Sq 40,Sq 40,111,OM30LS
+0,Sq 41,Sq 41,103,UG1LS
+0,Sq 42 W,Sq 42 W,7,OG3GM
+0,Sq 42,Sq 42,4,ZEPB30
+0,Sq 43,Sq 43,8,ZEPC30
+Inf,"Sq 43 wird derzeit nach und nach in die Morsestrasse umgezogen, soll aber wieder zurueck in die ZB, wenn MORSE aufgegeben wird. 03.12.18 hn",,,
+Inf,Sq 44 (010 / MORSE) geloescht – Signaturengruppe wurde nicht genutzt (ist jetzt Sq 100) 03.12.18 hn,,,
+,,,,
+Inf,Sq 41 – Sq 46 für Zuwachs der Sondersammlungen.     10.09.2007,,,
+,,,,
+0,Sq 47 ,Sq 85 ,5,MR
+,,,,
+0,Sq 5 C,Sq 5 W,107,OG3LS
+152,Sq 5 1,Sq 5 37,474,ZBINJB
+0,Sq 5 38,Sq 5 599,107,OG3LS
+152,Sq 5 600,Sq 5 667,474,ZBINJB
+0,Sq 5 668,Sq 5 9999,107,OG3LS
+0,Sq 6 ,Sq 7,4,ZEPB30
+,,,,
+0,Sq 86,Sq 99,12,OMF1
+,,,,
+0,Sq 9,Sq 9,107,OG3LS
+,,,,
+0,Sq 100,Sq 100,5,MR
+,,,,
+Inf,"Sq 101 - Programmhefte, Sq 102 - Oper Ffm, Sq 103 - Schauspiel Ffm",,,
+0,Sq 101,Sq 101,104,ZB30LS
+0,Sq 102,Sq 102,104,ZB30LS
+0,Sq 103,Sq 103,104,ZB30LS
+0,Sq 150,Sq 150,104,ZB30LS
+Inf,Reihenfolge beachten:,,,
+0,SRF,SRF,3,UG1
+0,SRQ,SRQ,14,SRSRQ
+0,SR,SR,14,SRSRQ
+,,,,
+0,Stoltze,Stoltze,108,ZC30LS
+0,ST 5 ,ST 5 ,7,OG3GM
+,,,,
+Inf,Reihenfolge beachten:,,,
+3,SZC,SZC,48,BZNU
+3,SZCQ,SZCQ,48,BZNU
+,,,,
+0,SZF,SZF,103,UG1LS
+0,SZQ,SZQ,94,OG2
+0,SZ,SZ,94,OG2
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,Tape,Tape,7,OG3GM
+0,Theaterzettel@@@,Theaterzettel@@@,95,OG3HB
+0,Theol Ff,Theol Ff,7,OG3GM
+0,Th,Th,108,ZC30LS
+0,Tp,Tp,108,ZC30LS
+0,T,T,101,UG3LS
+,,,,
+205,TZB @@@,TZB @@@,60,TZB
+205,TZBf @@@,TZBf @@@,60,TZB
+Inf,Neue Signatur fuer in der UB aufgestellte und ausleihbare Bestaende der TZB (Theologische Zentralbibliothek). Es gibt keine Formatunterscheidung. 14.10.04                                                     Ab 19.07.2005 eigener Standort ‚TZB’. Die Baende stehen derzeit in der DDB. ,,,
+,,,,
+0,U,U,5,MR
+0,Uq,Uq,5,MR
+,,,,
+0,Var 1,Var 9999,103,UG1LS
+Inf,Neue Signatur fuer Sonderbestaende der SeB ohne Formatunterscheidung. 28.6.02,,,
+,,,,
+Inf,Reihenfolge beachten:,,,
+0,Vq,Vq,5,MR
+0,V 1,V 999,5,MR
+,,,,
+0,W,W@@@,107,OG3LS
+Inf,"Die Signaturen:  Wm 2000 - Wm 2999 stehen im Zimmer Dr. Schmidt,                 Wm 3000 - Wm 3999 stehen im Zimmer Dugall und müssen dort geholt werden.",,,
+,,,,
+Inf,Reihenfolge beachten:,,,
+6,X,X,245,BSPMAG
+201,X,X,245,BSPMAG
+6,Y,Y,245,BSPMAG
+,,,,
+Inf,Geschlossener Bestand des FBB3 ohne Bestellbutton. 16.11.2006,,,
+,,,,
+,,,,
+0,ZAVM@@@,ZAVM@@@,102,UG2LS
+Inf,"Neue Signatur fuer Zs-Mischformen, enthaelt auch Quart- und Folioformat. 20.11.2006",,,
+,,,,
+0,Zeit,Zeit,7,OG3GM
+6,Zenaf 42,Zenaf 42,245,BSPMAG
+6,Zenaf,Zenaf,232,BSP013
+0,Zool,Zool,4,ZEPB30
+,,,,
+0,ZsA,ZsA,5,MR
+0,ZsAf,ZsAf,4,ZEPB30
+0,ZsAq,ZsAq,5,MR
+Inf,"ZsA, ZsAf und ZsAq sind neue Signaturen fuer Abgaben von Zeitschriften aus anderen Bereichen, alles mit Abt.Code 000.                                       11.05.2004. Umzug 2013/14 ins Ausweichmagazin Morsestr. 29.01.2014",,,
+,,,,
+0,ZSF,ZSF,4,ZEPB30
+,,,,
+0,ZsN,ZsN,5,MR
+0,ZsNf,ZsNf,4,ZEPB30
+0,ZsNq,ZsNq,5,MR
+Inf,"ZsN, ZsNf und ZsNq sind neue Signaturen fuer Abgaben von Zeitschriften aus naturwissenschaftlichen Bereichen, aber mit Abt.Code 000. Bestand ist ausleihbar. 11.05.2004 – Im Juli 2012 umgezogen von MENSA nach DDBUB. 16.07.2012 – 2013/14 ZsNf und ZsNq umgezogen von DDBUB nach MORSE. ZsN steht noch in DDB. 29.01.2014. – ZsN umgezogen nach MORSE April 2015.",,,
+,,,,
+0,ZSQ 1,ZSQ 99999,5,MR
+0,ZS,ZS,5,MR
+6,Zs 10000,Zs 99999,245,BSPMAG
+0,Z,Z,108,ZC30LS
+,,,,
+Inf,"Für folgende Abteilungscodes gilt die Regel: Hat das Programm bisher keinen passenden Signaturbereich gefunden, dann soll der hier definierte Standort gesetzt werden. (Ausnahme: bei 201 wird die Signatur ‚Exam’ dem geschlossenen Standort 231=FBB3GM zugeordnet.) Achtung: Durch diese Regel fallen falsch eingegebene Signaturen nicht auf!",,,
+1,,,80,RETRO
+3,,,48,BZNU
+6,,,231,FBB3GM
+13,,,232,BSP013
+34,,,220,RUWOM
+94,,,250,SPORT
+95,,,371,MATSEM
+98,,,372,DIMAT
+109,,,234,BSP109
+152,B 2,B 4,470,KJBMAG
+152,JBd,JBq,471,KJBZB
+152,JB 2018 1,JB 2018 3157,471,KJBZB
+152,JB 2019 1,JB 2019 1616,471,KJBZB
+152,JB,JB,470,KJBMAG
+152,K 1,K 5,470,KJBMAG
+152,K JB@@@,K JB@@@,470,KJBMAG
+152,A,E,472,KJBLSA
+152,F I 1 1,F I 999 999,472,KJBLSA
+152,F II@@@,F II@@@,472,KJBLSA
+152,F IV 1 1,F IV 85 1,472,KJBLSA
+152,F,Z,473,KJBLSB
+171,,,235,BSP171
+189,,,237,BSP189
+200,,,236,BSP200
+201,,,238,BSP201
+202,,,239,BSP202
+212,,,212,FB12OM
+219,84,84,184,ASIENS
+220,M 82,M 82,2,UG2
+220,82,82,182,ASIENJ
+301,,,241,BSP301
+302,,,242,BSP302
+319,81,81,181,ASIENK
+321,,,243,BSP321
+322,83,83,183,ASIENC
+,,,,
+Inf,Standortregeln für BSKW,,,
+50,AV-Wand,AV-Wand,300,SKWMAG
+50,Sammlungsraum,Sammlungsraum,301,SKWSAM
+50,M 03,M 03,300,SKWMAG
+50,M 08,M 08,300,SKWMAG
+50,M 34,M 34,300,SKWMAG
+50,M 36,M 36,300,SKWMAG
+50,M 80,M 80,300,SKWMAG
+50,M 81,M 81,300,SKWMAG
+50,M 82,M 82,300,SKWMAG
+50,M 83,M 83,300,SKWMAG
+50,M 84,M 84,300,SKWMAG
+50,M 85,M 85,300,SKWMAG
+50,M 86,M 86,300,SKWMAG
+50,M 87,M 87,300,SKWMAG
+50,M 88,M 88,300,SKWMAG
+50,3,3,320,SKW03
+50,8,8,321,SKW08
+50,34,34,322,SKW34
+50,36,36,323,SKW36
+50,80,80,324,SKW80
+50,81,81,325,SKW81
+50,82,82,326,SKW82
+50,83,83,327,SKW83
+50,84,84,328,SKW84
+50,85,85,329,SKW85
+50,86,86,330,SKW86
+50,87,87,331,SKW87
+50,88,88,332,SKW88
+Inf,Dauerleihgaben der Städel-Bibliothek werden im Magazin aufgestellt.,,,
+50,Städel,Städel,300,SKWMAG
+,,,,
+END,BIK,,,
