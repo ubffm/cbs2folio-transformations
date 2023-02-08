@@ -12,7 +12,7 @@
   </xsl:template>
 
   <!-- Global settings -->
-  <xsl:variable name="debug-template-logic" select="0"></xsl:variable>
+  <xsl:param name="debug-template-logic" select="0"/>
 
   <!-- ILN 204 UB Gießen: holding-items-hebis-iln204.xsl -->
   <!-- ================================================= -->
