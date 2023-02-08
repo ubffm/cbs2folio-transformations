@@ -654,6 +654,13 @@
     <xsl:param name="range-end"/>
     <xsl:param name="i" select="1"/>
     <xsl:param name="o" select="1"/>
+    <xsl:if test="$debug-template-logic" >
+      <xsl:message>Debug:
+        Check range for Triple <xsl:value-of select="$range-start" />,<xsl:value-of
+                    select="$token" />,<xsl:value-of
+                    select="$range-end" /> at <xsl:value-of
+                    select="$i" /> and <xsl:value-of select="$o"></xsl:value-of></xsl:message>
+    </xsl:if>
     <xsl:variable name="sortChar">'0123456789aäbcdefghijklmnoöpqrsßtuüvwxyz'</xsl:variable>
     <xsl:variable name="frmFrst">
       <xsl:value-of select="substring($range-start, $i, 1)"/>
@@ -665,11 +672,13 @@
       <xsl:value-of select="
           string-length(
           substring-before($sortChar, $frmFrst))"/>
+      <!-- get index of frmFrst in sortChar => get the sort value -->
     </xsl:variable>
     <xsl:variable name="befTmp">
       <xsl:value-of select="
           string-length(
           substring-before($sortChar, $befFrst))"/>
+      <!-- get index of befTmp in sortChar => get the sort value -->
     </xsl:variable>
     <xsl:variable name="befCmp">
       <xsl:choose>
@@ -679,18 +688,45 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+    <xsl:if test="$debug-template-logic">
+      <xsl:message>Debug: 
+          Check range for Triple <xsl:value-of select="$range-start" />,<xsl:value-of
+          select="$token" />,<xsl:value-of
+          select="$range-end" /> at <xsl:value-of
+          select="$i" /> and <xsl:value-of select="$o"></xsl:value-of>
+      </xsl:message>
+    </xsl:if>
 
+    <!-- 
+      Cases:
+      
+        A) len(range-start) < len(range-end)
+        B) len(range-start) = len(range-end)
+
+        A: TODO
+
+        B: Cases:
+            a) len(token) < len(range-start)=len(range-end) => not in range
+            b) len(token) = len(range-start)=len(range-end) => range-start[i] <= token[i] <= range-end[i]
+            c) len(token) > len(range-start)=len(range-end) => not in range
+
+        TODO evaluate checking for '@@@' in ramge limits
+    -->
     <xsl:choose>
       <xsl:when
         test="$i > string-length($token) and $o > string-length($token)">
+        <!-- Pointer out of range for token -->
+        <!-- TODO Evaluate if this can happen -->
         <xsl:value-of select="1"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="idFrst">
           <xsl:value-of select="substring($token, $i, 1)"/>
+          <!-- get next char -->
         </xsl:variable>
         <xsl:variable name="idCmp">
           <xsl:value-of select="string-length(substring-before($sortChar, $idFrst))"/>
+          <!-- get index of idFrst in sortChar => get the sort value -->
         </xsl:variable>
         <xsl:choose>
           <xsl:when test="$idCmp >= $frmCmp and $befCmp >= $idCmp">
@@ -700,10 +736,12 @@
               <xsl:with-param name="range-end" select="$range-end"/>
               <xsl:with-param name="i" select="$i + 1"/>
               <xsl:with-param name="o" select="$o + 1"/>
+              <!-- Recursive call -->
             </xsl:call-template>
           </xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="0"/>
+            <!-- Not between limits-->
           </xsl:otherwise>
         </xsl:choose>
       </xsl:otherwise>
@@ -716,6 +754,12 @@
     <xsl:param name="range-to"/>
     <xsl:param name="in-range"/>
 
+    <xsl:if test="$debug-template-logic">
+      <xsl:message>Debug: 
+        Running comparison for Triple <xsl:value-of select="$range-from" />,<xsl:value-of
+          select="$signature-lowercase-trimmed" />,<xsl:value-of
+          select="$range-to" /></xsl:message>
+    </xsl:if>
     <xsl:variable name="range-from-tokens">
       <xsl:call-template name="tokenize">
         <xsl:with-param name="text" select="translate($range-from, ' /.', '|||')"/>
@@ -754,6 +798,21 @@
       </xsl:call-template>
     </xsl:variable>
 
+    <xsl:if test="$debug-template-logic">
+      <xsl:message> Debug: 
+        Identical Prefix: <xsl:value-of select="$identical-prefix" /> 
+        Signature Prefix: <xsl:value-of select="$signature-prefix" /> 
+        
+        comparison-token-position <xsl:value-of
+          select="$comparison-token-position" /> 
+        comparison-tokens <xsl:value-of
+          select="count(exsl:node-set($signature-tokens))" /> 
+        from-token: <xsl:value-of
+          select="exsl:node-set($range-from-tokens)/item[position() = $comparison-token-position]" />
+        to-token: <xsl:value-of
+          select="exsl:node-set($range-to-tokens)/item[position() = $comparison-token-position]" />
+      </xsl:message>
+  </xsl:if>
     <xsl:choose>
       <xsl:when test="
           $identical-prefix = $signature-prefix or
@@ -768,6 +827,23 @@
             select="exsl:node-set($range-to-tokens)/item[position() = $comparison-token-position]"/>
         </xsl:variable>
         <xsl:variable name="signature-comparison-token">
+          <xsl:if test="$debug-template-logic">
+            <xsl:message>Debug: 
+              POSITION: <xsl:value-of select="$comparison-token-position" /> TOKENS: <xsl:value-of
+                select="$signature-tokens" /> VALUE: <xsl:value-of
+                select="
+              substring(string(number(exsl:node-set($signature-tokens)/item[position() = $comparison-token-position])),
+              1, string-length($range-to-comparison-token))" />
+              TEST: <xsl:value-of
+                select="string(number(exsl:node-set($signature-tokens)/item[position() = $comparison-token-position])) != 'NaN'" />
+              VALUE AS STRING: <xsl:value-of
+                select="
+              substring(exsl:node-set($signature-tokens)/item[position() = $comparison-token-position],
+              1, string-length($range-to-comparison-token))" />
+              VALUE AS NUMBER: <xsl:value-of
+                select="number(exsl:node-set($signature-tokens)/item[position() = $comparison-token-position])" />
+            </xsl:message>
+          </xsl:if>
           <xsl:choose>
             <xsl:when
               test="string(number(exsl:node-set($signature-tokens)/item[position() = $comparison-token-position])) != 'NaN'">
@@ -791,6 +867,12 @@
             <!-- The current signature token and the comparison tokens, e.g. the from token and the to token
               can be converted to a number. Therefore a numeric comparison decides whether the signature
               token fits in the range. -->
+              <xsl:if test="$debug-template-logic">
+                <xsl:message>Debug:
+                  Running numeric comparison for Triple <xsl:value-of select="$range-from-comparison-token" />,<xsl:value-of
+                  select="$signature-comparison-token" />,<xsl:value-of
+                  select="$range-to-comparison-token" /></xsl:message>
+              </xsl:if>
             <xsl:choose>
               <xsl:when test="
                   number($range-from-comparison-token) &lt;= number($signature-comparison-token) and
@@ -803,6 +885,12 @@
             </xsl:choose>
           </xsl:when>
           <xsl:otherwise>
+            <xsl:if test="$debug-template-logic">
+              <xsl:message>Debug: Running string comparison for Triple <xsl:value-of
+                  select="$range-from-comparison-token" />,<xsl:value-of
+                  select="$signature-comparison-token" />,<xsl:value-of
+                  select="$range-to-comparison-token" /></xsl:message>
+            </xsl:if>
             <xsl:call-template name="check-range">
               <xsl:with-param name="token" select="$signature-comparison-token"/>
               <xsl:with-param name="range-start" select="$range-from-comparison-token"/>
@@ -856,6 +944,7 @@
   <xsl:template name="get-location-by-prefix">
     <xsl:param name="signature-lowercase"/>
     <xsl:param name="prefix-list"/>
+    <!-- get first matching prefix -->
     <xsl:if test="$prefix-list">
       <xsl:variable name="prefix-zeroless">
         <xsl:value-of select="$prefix-list[1]"/>
@@ -887,6 +976,8 @@
       <xsl:otherwise>
         <xsl:choose>
           <xsl:when test="$range-list">
+            <!-- if there are unchecked ranges, check the first range and pass it, the evaluation
+            and the non checked ranges to a recursive call -->
             <xsl:call-template name="get-location-by-range">
               <xsl:with-param name="signature-lowercase" select="$signature-lowercase"/>
               <xsl:with-param name="last-range" select="$range-list[1]"/>
@@ -911,6 +1002,7 @@
             </xsl:call-template>
           </xsl:when>
           <xsl:otherwise>
+            <!-- range-list has been exhausted -->
             <xsl:value-of select="$default-location"/>
           </xsl:otherwise>
         </xsl:choose>
@@ -962,6 +1054,12 @@
       <xsl:otherwise>
         <item>
           <xsl:value-of select="normalize-space(substring-before($text, $separator))"/>
+          <xsl:if test="$debug-template-logic">
+            <xsl:message>Debug: 
+              ITEM: <xsl:value-of
+                select="normalize-space(substring-before($text, $separator))" />
+            </xsl:message>
+        </xsl:if>
         </item>
         <xsl:call-template name="tokenize">
           <xsl:with-param name="text" select="substring-after($text, $separator)"/>
