@@ -24,6 +24,11 @@
         translate($signature,
         'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
         'abcdefghijklmnopqrstuvwxyz')"/>
+    <xsl:variable
+      name="signature-lowercase-normalized"
+      select="normalize-space(translate($signature-lowercase,
+        ' /.:',
+        '    '))" />
     <permanentLocationId>
       <xsl:variable name="ranges-list">
         <ranges>
