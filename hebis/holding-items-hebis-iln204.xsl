@@ -16,6 +16,7 @@
 
   <!-- ILN 204 UB Gießen: holding-items-hebis-iln204.xsl -->
   <!-- ================================================= -->
+  <xsl:variable name="global-default-location" select="'Unbekannter Standort'"></xsl:variable>
 
   <xsl:template match="permanentLocationId">
     <xsl:variable name="i" select="key('original', .)"/>
@@ -968,7 +969,7 @@
     <xsl:param name="range-list"/>
     <xsl:param name="last-range"/>
     <xsl:param name="in-range"/>
-    <xsl:param name="default-location" select="'Unbekannter Standort'"/>
+    <xsl:param name="default-location" select="$global-default-location"/>
     <xsl:choose>
       <xsl:when test="$in-range = 1">
         <xsl:value-of select="$last-range/@location"/>
