@@ -783,6 +783,7 @@
             <xsl:with-param name="text" select="$range-from"/>
           </xsl:call-template>
         </xsl:with-param>
+        <xsl:with-param name="separator" select="' '"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="range-to-tokens">
@@ -792,6 +793,7 @@
             <xsl:with-param name="text" select="$range-to"/>
           </xsl:call-template>
         </xsl:with-param>
+        <xsl:with-param name="separator" select="' '"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="signature-tokens">
@@ -801,6 +803,7 @@
             <xsl:with-param name="text" select="$signature-lowercase-trimmed"/>
           </xsl:call-template>
         </xsl:with-param>
+        <xsl:with-param name="separator" select="' '"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="comparison-token-position">
