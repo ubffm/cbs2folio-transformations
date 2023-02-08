@@ -772,9 +772,11 @@
 
     <xsl:if test="$debug-template-logic">
       <xsl:message>Debug: 
-        Running comparison for Triple <xsl:value-of select="$range-from" />,<xsl:value-of
-          select="$signature-lowercase-trimmed" />,<xsl:value-of
-          select="$range-to" /></xsl:message>
+        Running comparison for Triple 
+          <xsl:value-of select="$range-from" />,
+          <xsl:value-of select="$signature-lowercase-trimmed" />,
+          <xsl:value-of select="$range-to" />
+      </xsl:message>
     </xsl:if>
     <xsl:variable name="range-from-tokens">
       <xsl:call-template name="tokenize">
