@@ -646,7 +646,7 @@
       Inspired by https://weinert-automation.de/pub/XSLT1.0RangeFilter.pdf        
     -->
 
-    <xsl:param name="signature-short-lowercase"/>
+    <xsl:param name="token"/>
     <xsl:param name="range-start"/>
     <xsl:param name="range-end"/>
     <xsl:param name="i" select="1"/>
@@ -679,12 +679,12 @@
 
     <xsl:choose>
       <xsl:when
-        test="$i > string-length($signature-short-lowercase) and $o > string-length($signature-short-lowercase)">
+        test="$i > string-length($token) and $o > string-length($token)">
         <xsl:value-of select="1"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="idFrst">
-          <xsl:value-of select="substring($signature-short-lowercase, $i, 1)"/>
+          <xsl:value-of select="substring($token, $i, 1)"/>
         </xsl:variable>
         <xsl:variable name="idCmp">
           <xsl:value-of select="string-length(substring-before($sortChar, $idFrst))"/>
@@ -692,7 +692,7 @@
         <xsl:choose>
           <xsl:when test="$idCmp >= $frmCmp and $befCmp >= $idCmp">
             <xsl:call-template name="check-range">
-              <xsl:with-param name="signature-short-lowercase" select="$signature-short-lowercase"/>
+              <xsl:with-param name="token" select="$token"/>
               <xsl:with-param name="range-start" select="$range-start"/>
               <xsl:with-param name="range-end" select="$range-end"/>
               <xsl:with-param name="i" select="$i + 1"/>
@@ -801,7 +801,7 @@
           </xsl:when>
           <xsl:otherwise>
             <xsl:call-template name="check-range">
-              <xsl:with-param name="signature-short-lowercase" select="$signature-comparison-token"/>
+              <xsl:with-param name="token" select="$signature-comparison-token"/>
               <xsl:with-param name="range-start" select="$range-from-comparison-token"/>
               <xsl:with-param name="range-end" select="$range-to-comparison-token"/>
             </xsl:call-template>
