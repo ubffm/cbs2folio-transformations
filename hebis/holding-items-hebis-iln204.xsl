@@ -11,6 +11,9 @@
     </xsl:copy>
   </xsl:template>
 
+  <!-- Global settings -->
+  <xsl:variable name="debug-template-logic" select="0"></xsl:variable>
+
   <!-- ILN 204 UB Gießen: holding-items-hebis-iln204.xsl -->
   <!-- ================================================= -->
 
