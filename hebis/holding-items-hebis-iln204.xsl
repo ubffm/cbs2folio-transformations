@@ -873,6 +873,33 @@
         </xsl:variable>
         <xsl:choose>
           <xsl:when test="
+          $identical-prefix = $signature-prefix
+          and
+          not(exsl:node-set($range-from-tokens)/item[position() = $comparison-token-position])
+          and
+          not(exsl:node-set($range-to-tokens)/item[position() = $comparison-token-position])
+          and
+          exsl:node-set($signature-tokens)/item[position() = $comparison-token-position]
+          ">
+          <!--
+
+            Unsure if this is needed in this detail
+            TODO: Evaluate
+
+            Prefixes match
+            and neither an upper nor a lower limit is defined at this token position,
+            but the signature has another token
+          -->
+          <xsl:if test="$debug-template-logic">
+            <xsl:message>
+              Debug:
+              Ranges are shorter then signature.
+              comparison-token-position <xsl:value-of select="$comparison-token-position"/>
+            </xsl:message>
+          </xsl:if>
+          <xsl:value-of select="1"/>
+        </xsl:when>
+          <xsl:when test="
               string(number($signature-comparison-token)) != 'NaN' and
               string(number($range-from-comparison-token)) != 'NaN' and
               string(number($range-to-comparison-token)) != 'NaN'">
