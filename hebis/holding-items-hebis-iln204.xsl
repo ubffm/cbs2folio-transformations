@@ -30,9 +30,12 @@
         'abcdefghijklmnopqrstuvwxyz')"/>
     <xsl:variable
       name="signature-lowercase-normalized"
-      select="normalize-space(translate($signature-lowercase,
-        ' /.:',
-        '    '))" />
+      >
+      <xsl:call-template name="normalize-signature-or-range">
+        <xsl:with-param name="text" select="$signature-lowercase"/>
+      </xsl:call-template>
+    </xsl:variable>
+
     <permanentLocationId>
       <xsl:variable name="ranges-list">
         <ranges>
@@ -775,17 +778,29 @@
     </xsl:if>
     <xsl:variable name="range-from-tokens">
       <xsl:call-template name="tokenize">
-        <xsl:with-param name="text" select="translate($range-from, ' /.:', '||||')"/>
+        <xsl:with-param name="text">
+          <xsl:call-template name="normalize-signature-or-range">
+            <xsl:with-param name="text" select="$range-from"/>
+          </xsl:call-template>
+        </xsl:with-param>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="range-to-tokens">
       <xsl:call-template name="tokenize">
-        <xsl:with-param name="text" select="translate($range-to, ' /.:', '||||')"/>
+        <xsl:with-param name="text">
+          <xsl:call-template name="normalize-signature-or-range">
+            <xsl:with-param name="text" select="$range-to"/>
+          </xsl:call-template>
+        </xsl:with-param>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="signature-tokens">
       <xsl:call-template name="tokenize">
-        <xsl:with-param name="text" select="translate($signature-lowercase-trimmed, ' /.:', '||||')"/>
+        <xsl:with-param name="text">
+          <xsl:call-template name="normalize-signature-or-range">
+            <xsl:with-param name="text" select="$signature-lowercase-trimmed"/>
+          </xsl:call-template>
+        </xsl:with-param>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="comparison-token-position">
@@ -1077,6 +1092,13 @@
         </xsl:if>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+  <!-- Normalize a signature or range -->
+  <xsl:template name="normalize-signature-or-range">
+    <xsl:param name="text"/>
+      <xsl:value-of 
+        select="translate($text, ' /.:', '||||')" />
   </xsl:template>
 
   <!-- Tokenize a string that's pipe separated -->
