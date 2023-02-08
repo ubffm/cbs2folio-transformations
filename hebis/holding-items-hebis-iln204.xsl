@@ -775,17 +775,17 @@
     </xsl:if>
     <xsl:variable name="range-from-tokens">
       <xsl:call-template name="tokenize">
-        <xsl:with-param name="text" select="translate($range-from, ' /.', '|||')"/>
+        <xsl:with-param name="text" select="translate($range-from, ' /.:', '||||')"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="range-to-tokens">
       <xsl:call-template name="tokenize">
-        <xsl:with-param name="text" select="translate($range-to, ' /.', '|||')"/>
+        <xsl:with-param name="text" select="translate($range-to, ' /.:', '||||')"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="signature-tokens">
       <xsl:call-template name="tokenize">
-        <xsl:with-param name="text" select="translate($signature-lowercase-trimmed, ' /.', '|||')"/>
+        <xsl:with-param name="text" select="translate($signature-lowercase-trimmed, ' /.:', '||||')"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="comparison-token-position">
