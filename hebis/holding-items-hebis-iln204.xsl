@@ -526,7 +526,7 @@
             exsl:node-set($ranges-list)/ranges/department[@code = $abt]/range">
           <xsl:variable name="location-prefix-match">
             <xsl:call-template name="get-location-by-prefix">
-              <xsl:with-param name="signature-lowercase" select="$signature-lowercase"/>
+              <xsl:with-param name="signature-lowercase" select="$signature-lowercase-normalized"/>
               <xsl:with-param name="prefix-list"
                 select="exsl:node-set($ranges-list)/ranges/department[@code = $abt]/prefix"/>
             </xsl:call-template>
@@ -534,7 +534,7 @@
           <xsl:choose>
             <xsl:when test="$location-prefix-match = ''">
               <xsl:call-template name="get-location-by-range">
-                <xsl:with-param name="signature-lowercase" select="$signature-lowercase"/>
+                <xsl:with-param name="signature-lowercase" select="$signature-lowercase-normalized"/>
                 <xsl:with-param name="range-list"
                   select="exsl:node-set($ranges-list)/ranges/department[@code = $abt]/range"/>
                 <xsl:with-param name="default-location"
