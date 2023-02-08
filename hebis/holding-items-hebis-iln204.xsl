@@ -714,6 +714,18 @@
         TODO evaluate checking for '@@@' in ramge limits
     -->
     <xsl:choose>
+      <xsl:when test="not(string-length($range-start)=string-length($token) and string-length($token)=string-length($range-end))" >
+      <!-- Case a or c -->
+      <xsl:if test="$debug-template-logic">
+        <xsl:message> Debug: 
+          len(range-start) = len(token): <xsl:value-of
+            select="string-length($range-start)=string-length($token)" />
+          len(token) = len(range-end): <xsl:value-of
+            select="string-length($token)=string-length($range-end)" />
+        </xsl:message>
+      </xsl:if>
+      <xsl:value-of select="0"/>
+      </xsl:when>
       <xsl:when
         test="$i > string-length($token) and $o > string-length($token)">
         <!-- Pointer out of range for token -->
