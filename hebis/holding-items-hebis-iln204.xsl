@@ -1124,6 +1124,7 @@
         </item>
         <xsl:call-template name="tokenize">
           <xsl:with-param name="text" select="substring-after($text, $separator)"/>
+          <xsl:with-param name="separator" select="$separator"/>
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
