@@ -1098,7 +1098,7 @@
   <xsl:template name="normalize-signature-or-range">
     <xsl:param name="text"/>
       <xsl:value-of 
-        select="translate($text, ' /.:', '||||')" />
+        select="normalize-space(translate($text, ' /.:', '    '))" />
   </xsl:template>
 
   <!-- Tokenize a string that's pipe separated -->
