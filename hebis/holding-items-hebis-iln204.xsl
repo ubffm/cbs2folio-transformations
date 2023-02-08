@@ -860,9 +860,8 @@
           <xsl:choose>
             <xsl:when
               test="string(number(exsl:node-set($signature-tokens)/item[position() = $comparison-token-position])) != 'NaN'">
-              <xsl:value-of select="
-                  substring(string(number(exsl:node-set($signature-tokens)/item[position() = $comparison-token-position])),
-                  1, string-length($range-to-comparison-token))"/>
+              <!-- Token as number is not 'NaN' => Token can be cast to number => Compare as number-->
+              <xsl:value-of select="number(exsl:node-set($signature-tokens)/item[position() = $comparison-token-position])"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:value-of select="
