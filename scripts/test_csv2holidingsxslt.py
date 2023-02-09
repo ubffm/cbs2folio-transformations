@@ -7,9 +7,9 @@ import logging
 from lxml import etree
 import pytest
 
-from csv2holidingsxslt import create_holdings_items_xsl_from_csv
-from csv2holidingsxslt import create_holdings_items_xsl_from_csv
-from csv2holidingsxslt import EXAMPLE_XSL
+from csv2holdingsxslt import create_holdings_items_xsl_from_csv
+from csv2holdingsxslt import create_holdings_items_xsl_from_csv
+from csv2holdingsxslt import EXAMPLE_XSL
 from test_generation_holding_items import check_permanentLocationId
 
 logger = logging.getLogger()
