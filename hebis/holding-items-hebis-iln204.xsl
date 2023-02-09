@@ -1032,39 +1032,35 @@
       <xsl:when test="$in-range = 1">
         <xsl:value-of select="$last-range/@location"/>
       </xsl:when>
-      <xsl:otherwise>
-        <xsl:choose>
-          <xsl:when test="$range-list">
-            <!-- if there are unchecked ranges, check the first range and pass it, the evaluation
-            and the non checked ranges to a recursive call -->
-            <xsl:call-template name="get-location-by-range">
-              <xsl:with-param name="signature-lowercase" select="$signature-lowercase"/>
-              <xsl:with-param name="last-range" select="$range-list[1]"/>
-              <xsl:with-param name="range-list" select="$range-list[position() != 1]"/>
-              <xsl:with-param name="in-range">
-                <xsl:call-template name="compare-tokens">
-                  <xsl:with-param name="signature-lowercase-trimmed">
-                    <!--<xsl:value-of
-                      select="substring($signature-lowercase, 1, string-length($range-list[1]/@to))"
-                    />-->
-                    <xsl:value-of select="$signature-lowercase"/>
-                  </xsl:with-param>
-                  <xsl:with-param name="range-from">
-                    <xsl:value-of select="$range-list[1]/@from"/>
-                  </xsl:with-param>
-                  <xsl:with-param name="range-to">
-                    <xsl:value-of select="$range-list[1]/@to"/>
-                  </xsl:with-param>
-                </xsl:call-template>
+      <xsl:when test="$range-list">
+        <!-- if there are unchecked ranges, check the first range and pass it, the evaluation
+        and the non checked ranges to a recursive call -->
+        <xsl:call-template name="get-location-by-range">
+          <xsl:with-param name="signature-lowercase" select="$signature-lowercase"/>
+          <xsl:with-param name="last-range" select="$range-list[1]"/>
+          <xsl:with-param name="range-list" select="$range-list[position() != 1]"/>
+          <xsl:with-param name="in-range">
+            <xsl:call-template name="compare-tokens">
+              <xsl:with-param name="signature-lowercase-trimmed">
+                <!--<xsl:value-of
+                  select="substring($signature-lowercase, 1, string-length($range-list[1]/@to))"
+                />-->
+                <xsl:value-of select="$signature-lowercase"/>
               </xsl:with-param>
-              <xsl:with-param name="default-location" select="$default-location"/>
+              <xsl:with-param name="range-from">
+                <xsl:value-of select="$range-list[1]/@from"/>
+              </xsl:with-param>
+              <xsl:with-param name="range-to">
+                <xsl:value-of select="$range-list[1]/@to"/>
+              </xsl:with-param>
             </xsl:call-template>
-          </xsl:when>
-          <xsl:otherwise>
-            <!-- range-list has been exhausted -->
-            <xsl:value-of select="$default-location"/>
-          </xsl:otherwise>
-        </xsl:choose>
+          </xsl:with-param>
+          <xsl:with-param name="default-location" select="$default-location"/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+        <!-- range-list has been exhausted -->
+        <xsl:value-of select="$default-location"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
