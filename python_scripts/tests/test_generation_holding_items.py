@@ -3,7 +3,7 @@ import logging
 from typing import Optional
 
 import pytest
-from lxml import etree
+from lxml import etree  # nosec blacklist
 from xmldiff import main as xmldiffmain
 
 logger = logging.getLogger()
@@ -25,24 +25,24 @@ def test_create_record(department_code, signature, indicator, record):
         record, encoding="utf-8", pretty_print=True
     )
 
-    assert signature.encode("utf-8") in _record_string
-    assert (
+    assert signature.encode("utf-8") in _record_string  # nosec assert_used
+    assert (  # nosec assert_used
         record.find("metadata/item/datafield[@tag='209A']/subfield[@code='d']")
         is not None
     ), _record_string.decode("utf-8")
-    assert (
+    assert (  # nosec assert_used
         record.find(
             "metadata/item/datafield[@tag='209A']/subfield[@code='d']"
         ).text
         == indicator
     )
-    assert (
+    assert (  # nosec assert_used
         record.find(
             "metadata/item/datafield[@tag='209A']/subfield[@code='a']"
         ).text
         == signature
     )
-    assert (
+    assert (  # nosec assert_used
         record.find(
             "metadata/item/datafield[@tag='209A']/subfield[@code='f']"
         ).text
@@ -76,8 +76,8 @@ def test_create_record_initial(
         record_from_example, encoding="utf-8", pretty_print=True
     )
 
-    assert signature.encode("utf-8") in _record_string
-    assert (
+    assert signature.encode("utf-8") in _record_string  # nosec assert_used
+    assert (  # nosec assert_used
         _datafield := record_from_example.find(
             "metadata/item/datafield[@tag='209A']"
         )
@@ -85,12 +85,18 @@ def test_create_record_initial(
     _datafield_string = etree.tostring(
         _datafield, encoding="utf-8", pretty_print=True
     ).decode("utf-8")
-    assert (
+    assert (  # nosec assert_used
         _datafield.find('subfield[@code="d"]') is not None
     ), _datafield_string
-    assert _datafield.find("subfield[@code='d']").text == indicator
-    assert _datafield.find("subfield[@code='a']").text == signature
-    assert _datafield.find("subfield[@code='f']").text == department_code
+    assert (  # nosec assert_used
+        _datafield.find("subfield[@code='d']").text == indicator
+    )
+    assert (  # nosec assert_used
+        _datafield.find("subfield[@code='a']").text == signature
+    )
+    assert (  # nosec assert_used
+        _datafield.find("subfield[@code='f']").text == department_code
+    )
 
 
 @pytest.mark.xfail
@@ -134,6 +140,6 @@ def test_equiv(
         _record_b, initial_record, diff_options=diff_options
     )
 
-    assert diff_a_b
-    assert diff_a_orig
-    assert diff_b_orig
+    assert diff_a_b  # nosec assert_used
+    assert diff_a_orig  # nosec assert_used
+    assert diff_b_orig  # nosec assert_used
