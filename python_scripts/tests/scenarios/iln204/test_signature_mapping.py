@@ -1,7 +1,7 @@
 import pytest
 from cbs2folio_transformations.csv2holdingsxslt import EXAMPLE_XSL
 from defusedxml import ElementTree
-from lxml import etree
+from lxml import etree  # nosec blacklist
 
 
 class TestSimpleILN204:
@@ -38,4 +38,4 @@ class TestSimpleILN204:
     def xslt_fixture(
         self,
     ):
-        return etree.XSLT(ElementTree.parse(EXAMPLE_XSL))
+        return etree.XSLT(etree.parse(EXAMPLE_XSL))

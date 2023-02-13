@@ -1,24 +1,50 @@
+"""Module for test scenarios."""
 from collections.abc import Iterable
 from pathlib import Path
 from typing import Optional
 
 import pytest
-from defusedxml import ElementTree
-from lxml import etree
-
 from cbs2folio_transformations._helpers import reraise
+from defusedxml import ElementTree
+from lxml import etree  # nosec blacklist
 
 
 def logstring_for_xsl(xslt: etree.XSLT, result: etree.Element) -> str:
+    """Create logging information for transformation and data.
+
+    Args:
+        xslt (etree._XSLTProcessingInstruction): Transformation
+        result (etree.Element): Element of transformed data
+
+    Returns:
+        str: logging information
+    """
     return f"""
     XSLT: {xslt.error_log}
 
     XML RESULT:
-    { etree.tostring(result, encoding="utf-8", pretty_print=True).decode("utf-8") if False else "XML SUPPRESSED"}
+    {
+        etree
+        .tostring(result, encoding="utf-8", pretty_print=True)
+        .decode("utf-8")
+        if False
+        else "XML SUPPRESSED"
+    }
     """
 
 
-def logstring_for_department(ranges: etree.Element, department_code: str) -> str:
+def logstring_for_department(
+    ranges: etree.Element, department_code: str
+) -> str:
+    """Create logging information for mapping.
+
+    Args:
+        ranges (etree.Element): XML Element containing the ranges
+        department_code (str): Identifier of the department
+
+    Returns:
+        str: logging information
+    """
     _department = ranges.find(f"department[@code='{department_code}']")
     return (
         etree.tostring(
@@ -26,20 +52,20 @@ def logstring_for_department(ranges: etree.Element, department_code: str) -> str
             pretty_print=True,
             encoding="utf-8",
         ).decode("utf-8")
-        if not _department is None and len(_department)
+        if _department is not None and len(_department)
         else f"""No matching department for department code {department_code}.
 
-        Known departments are {[_range.attrib["code"] for _range in ranges.findall("department")]}"""
-        + """{etree.tostring(ranges, encoding="utf-8").decode("utf-8") if False else "SUPPRESSED RANGES"}"""
+        Known departments are {
+            [_range.attrib["code"] for _range in ranges.findall("department")]
+        }"""
+        + f"""{
+            etree
+            .tostring(ranges, encoding="utf-8")
+            .decode("utf-8")
+            if False
+            else "SUPPRESSED RANGES"
+            }"""
     )
-
-
-class MappingTestCase(dict):
-    department_code: str
-    epn: str
-    signature: str = "SIGNATURE"
-    indicator: str = "INDICATOR"
-    expected_location: str = "EXPECTED_LOCATION"
 
 
 @pytest.mark.usefixtures(
@@ -70,11 +96,23 @@ class Scenario:
         epn: int | str,
         expected_location: str,
         xsl: ElementTree,
-        create_example_and_apply,
-        xslt,
+        create_example_and_apply: etree.Element,
+        xslt: etree._XSLTProcessingInstruction,
         hrid: Optional[int],
     ):
+        """Test for existence of location.
 
+        Args:
+            department_code (str): Identifier of the department
+            signature (str): Signature of the record
+            indicator (str): Status indicator
+            epn (int | str): Indentifier of the "exemplar"
+            expected_location (str): expected location of the "exemplar"
+            xsl (ElementTree): XML tree containing the transformation
+            create_example_and_apply (etree.Element): transformed entry
+            xslt (etree._XSLTProcessingInstruction): Transformation
+            hrid (Optional[int]): HEBIS wide identifier. Defaults to None.
+        """
         try:
             _result = create_example_and_apply
             _location_node = _result.find(
@@ -82,9 +120,15 @@ class Scenario:
             )
 
             try:
-                assert not (
+                assert not (  # nosec assert_used
                     _location_node is None or _location_node.text is None
-                ), f"No location set for signature '{signature}' in department {department_code}. (Expected: {expected_location})"
+                ), f"""No location set for signature '{
+                    signature
+                    }' in department {
+                    department_code
+                    }. (Expected: {
+                    expected_location
+                    })"""
             except AssertionError as e:
                 reraise(
                     e=e,
@@ -94,7 +138,9 @@ class Scenario:
         except AssertionError as e:
             reraise(
                 e=e,
-                info=logstring_for_department(xsl.find("//ranges"), department_code),
+                info=logstring_for_department(
+                    xsl.find("//ranges"), department_code
+                ),
             )
 
     def test_correct_location_assigned(
@@ -109,18 +155,34 @@ class Scenario:
         hrid: Optional[int],
         xslt,
     ):
+        """Test for correctness of location.
 
+        Args:
+            department_code (str): Identifier of the department
+            signature (str): Signature of the record
+            indicator (str): Status indicator
+            epn (int | str): Indentifier of the "exemplar"
+            expected_location (str): expected location of the "exemplar"
+            xsl (ElementTree): XML tree containing the transformation
+            create_example_and_apply (etree.Element): transformed entry
+            xslt (etree._XSLTProcessingInstruction): Transformation
+            hrid (Optional[int]): HEBIS wide identifier. Defaults to None.
+        """
         _result: etree.Element = create_example_and_apply
         try:
             _location_node = _result.find(
                 "//record/holdingsRecords/arr/i/permanentLocationId"
             )
-            assert _location_node.text == expected_location
+            assert (  # nosec assert_used
+                _location_node.text == expected_location
+            )
 
         except AssertionError as e:
             reraise(
                 e=e,
                 info=logstring_for_xsl(xslt, _result)
                 if _result
-                else logstring_for_department(xsl.find("//ranges"), department_code),
+                else logstring_for_department(
+                    xsl.find("//ranges"), department_code
+                ),
             )

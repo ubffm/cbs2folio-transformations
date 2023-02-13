@@ -2,8 +2,7 @@
 import pathlib
 
 import pytest
-
-from lxml import etree
+from lxml import etree  # nosec blacklist
 
 from .. import Scenario
 
