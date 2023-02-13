@@ -1,9 +1,11 @@
 """Module for reusable codesnippets."""
-from typing import NoReturn, TypeVar
+from typing import NoReturn
+from typing import TypeVar
 
 _ExceptionType = TypeVar("_ExceptionType", bound=Exception)
 
-# Source: https://stackoverflow.com/questions/9157210/how-do-i-raise-the-same-exception-with-a-custom-message-in-python
+
+# Source: https://stackoverflow.com/questions/9157210/how-do-i-raise-the-same-exception-with-a-custom-message-in-python  # noqa: E501
 def reraise(e: _ExceptionType, info: str) -> NoReturn:
     """Reraise an exception after adding information.
 
