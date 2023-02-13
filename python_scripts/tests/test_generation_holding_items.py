@@ -21,7 +21,9 @@ logger = logging.getLogger()
     ],
 )
 def test_create_record(department_code, signature, indicator, record):
-    _record_string = etree.tostring(record, encoding="utf-8", pretty_print=True)
+    _record_string = etree.tostring(
+        record, encoding="utf-8", pretty_print=True
+    )
 
     assert signature.encode("utf-8") in _record_string
     assert (
@@ -29,15 +31,21 @@ def test_create_record(department_code, signature, indicator, record):
         is not None
     ), _record_string.decode("utf-8")
     assert (
-        record.find("metadata/item/datafield[@tag='209A']/subfield[@code='d']").text
+        record.find(
+            "metadata/item/datafield[@tag='209A']/subfield[@code='d']"
+        ).text
         == indicator
     )
     assert (
-        record.find("metadata/item/datafield[@tag='209A']/subfield[@code='a']").text
+        record.find(
+            "metadata/item/datafield[@tag='209A']/subfield[@code='a']"
+        ).text
         == signature
     )
     assert (
-        record.find("metadata/item/datafield[@tag='209A']/subfield[@code='f']").text
+        record.find(
+            "metadata/item/datafield[@tag='209A']/subfield[@code='f']"
+        ).text
         == department_code
     )
 
@@ -46,7 +54,13 @@ def test_create_record(department_code, signature, indicator, record):
     "department_code, signature, indicator, epn, hrid",
     [
         ("000", "BAp 27,Jünger 2003", "u", 184727820, 109962869),
-        ("000", "BAp 27,Calderon de la Barca-2,2", "u", "21028126X", 116105488),
+        (
+            "000",
+            "BAp 27,Calderon de la Barca-2,2",
+            "u",
+            "21028126X",
+            116105488,
+        ),
         ("000", "BAp 27,Kopernicus-3", "u", "34203166X", 122359909),
     ],
 )
@@ -64,12 +78,16 @@ def test_create_record_initial(
 
     assert signature.encode("utf-8") in _record_string
     assert (
-        _datafield := record_from_example.find("metadata/item/datafield[@tag='209A']")
+        _datafield := record_from_example.find(
+            "metadata/item/datafield[@tag='209A']"
+        )
     ) is not None, _record_string
     _datafield_string = etree.tostring(
         _datafield, encoding="utf-8", pretty_print=True
     ).decode("utf-8")
-    assert _datafield.find('subfield[@code="d"]') is not None, _datafield_string
+    assert (
+        _datafield.find('subfield[@code="d"]') is not None
+    ), _datafield_string
     assert _datafield.find("subfield[@code='d']").text == indicator
     assert _datafield.find("subfield[@code='a']").text == signature
     assert _datafield.find("subfield[@code='f']").text == department_code
@@ -80,7 +98,13 @@ def test_create_record_initial(
     "department_code, signature, indicator, epn, hrid",
     [
         ("000", "BAp 27,Jünger 2003", "u", 184727820, 109962869),
-        ("000", "BAp 27,Calderon de la Barca-2,2", "u", "21028126X", 116105488),
+        (
+            "000",
+            "BAp 27,Calderon de la Barca-2,2",
+            "u",
+            "21028126X",
+            116105488,
+        ),
         ("000", "BAp 27,Kopernicus-3", "u", "34203166X", 122359909),
     ],
 )
@@ -100,7 +124,9 @@ def test_equiv(
 
     diff_options = {"F": 0.5, "ratio_mode": "accurate"}
 
-    diff_a_b = xmldiffmain.diff_trees(_record_a, _record_b, diff_options=diff_options)
+    diff_a_b = xmldiffmain.diff_trees(
+        _record_a, _record_b, diff_options=diff_options
+    )
     diff_a_orig = xmldiffmain.diff_trees(
         _record_a, initial_record, diff_options=diff_options
     )
@@ -110,4 +136,4 @@ def test_equiv(
 
     assert diff_a_b
     assert diff_a_orig
-    # assert diff_b_orig
+    assert diff_b_orig
