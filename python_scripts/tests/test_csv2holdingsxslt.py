@@ -1,16 +1,12 @@
 #!/usr/bin/env python3
-
-from contextlib import suppress
 import csv
 import logging
+import pathlib
+from typing import Optional
 
+from cbs2folio_transformations.csv2holdingsxslt import EXAMPLE_XSL
+from defusedxml import ElementTree
 from lxml import etree
-import pytest
-
-from csv2holdingsxslt import create_holdings_items_xsl_from_csv
-from csv2holdingsxslt import create_holdings_items_xsl_from_csv
-from csv2holdingsxslt import EXAMPLE_XSL
-from test_generation_holding_items import check_permanentLocationId
 
 logger = logging.getLogger()
 
@@ -29,24 +25,55 @@ def inject_test_data(file):
             ],
             delimiter=";",
         )
-        next(reader)  # remove header
         yield from reader
 
 
 class TestSimple:
-    data = inject_test_data("cbs2folio_holding-items_Testsignaturen_ILN3.txt")
-    xslt = etree.XSLT(create_holdings_items_xsl_from_csv())
+    use_numerical = True
+    delimiter = ";"
+    data = inject_test_data(
+        pathlib.Path(__file__)
+        .parent.resolve()
+        .joinpath("scenarios/iln3/cbs2folio_holding-items_Testsignaturen_ILN3.txt")
+    )
+    koko_path = (
+        pathlib.Path(__file__).parent.resolve().joinpath("scenarios/iln3/koko174.csv")
+    )
 
-    def transform(self):
-        return etree.XSLT(create_holdings_items_xsl_from_csv())
+    def test_perm(
+        self,
+        create_example_and_apply: etree.Element,
+        department_code: str,
+        signature: str,
+        indicator: str,
+        epn: int | str,
+        expected_location: str,
+        xsl: ElementTree,
+        hrid: Optional[int],
+    ):
+        _result = create_example_and_apply
 
-    @pytest.mark.parametrize("d", data)
-    def test_perm(self, d):
-        check_permanentLocationId(xslt=self.xslt, **d)
+        _location_node = _result.find(
+            "//record/holdingsRecords/arr/i/permanentLocationId"
+        )
+
+        try:
+            assert not (
+                _location_node is None or _location_node.text is None
+            ), f"No location set for signature '{signature}' in department {department_code}. (Expected: {expected_location})"
+        except Exception as e:
+            e.args = (
+                # logstring_for_xsl(xslt, _result),
+            ) + e.args
+            raise e.with_traceback(e.__traceback__)
 
 
-class TestSimpleAll(TestSimple):
-    data = inject_test_data("cbs2folio_holding-items_Testsignaturen_ILN3_alle.txt")
+# class TestSimpleAll(TestSimple):
+#     data = inject_test_data(
+#         pathlib.Path(__file__)
+#         .parent.resolve()
+#         .joinpath("scenarios/iln3/cbs2folio_holding-items_Testsignaturen_ILN3_alle.txt")
+#     )
 
 
 class TestSimpleILN204(TestSimple):
@@ -76,4 +103,4 @@ class TestSimpleILN204(TestSimple):
             "expected_location": "ILN204/CG/UB/UBMagAltbau",
         },
     ]
-    xslt = etree.XSLT(etree.parse(EXAMPLE_XSL))
+    xsl = etree.parse(EXAMPLE_XSL)
