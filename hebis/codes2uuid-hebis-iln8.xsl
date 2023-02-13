@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:output indent="yes" method="xml" version="1.0" encoding="UTF-8"/>
@@ -39,7 +39,7 @@
   <xsl:template match="permanentLoanTypeId"> <!-- ILN -->
     <permanentLoanTypeId>
       <xsl:choose>
-        <xsl:when test=".='0 u Ausleihbar'"><xsl:text>2b94c631-fca9-4892-a730-03ee529ffe27</xsl:text></xsl:when> 
+        <xsl:when test=".='0 u Ausleihbar'"><xsl:text>2b94c631-fca9-4892-a730-03ee529ffe27</xsl:text></xsl:when>
         <xsl:when test=".='1 b Kurzausleihe'"><xsl:text>bb0ce7c4-ed32-4a12-8c33-275c3f3cb6de</xsl:text></xsl:when>
         <xsl:when test=".='2 c Lehrbuchsammlungsausleihe'"><xsl:text>0da2c71c-7433-41ce-8271-7be3317c0d83</xsl:text></xsl:when>
         <xsl:when test=".='3 s Präsenzbestand'"><xsl:text>f77564f5-f8de-4c21-8aea-c3bc40cf37e6</xsl:text></xsl:when>
@@ -67,7 +67,7 @@
             <xsl:choose>
               <xsl:when test=".='1001'">TBD</xsl:when>
               <!-- add as needed -->
-              
+
             </xsl:choose>
           </i>
         </xsl:for-each>

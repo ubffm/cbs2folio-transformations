@@ -8,7 +8,7 @@
     </xsl:copy>
   </xsl:template>
 
-  <!-- Map locations 
+  <!-- Map locations
        NOTE: Location mapping in separate file "locations2uuid-iln-<iln>.xsl" -->
 
   <!-- Map item note types -->
@@ -133,7 +133,7 @@
       </xsl:choose>
     </permanentLoanTypeId>
   </xsl:template>
-  
+
   <!-- Map material types -->
   <xsl:template match="materialTypeId">
     <materialTypeId>
@@ -163,7 +163,7 @@
       </xsl:choose>
     </materialTypeId>
   </xsl:template>
-  
+
   <!-- Map contrutor type codes to uuid-->
   <xsl:template match="contributorTypeId">
     <contributorTypeId>
@@ -535,7 +535,7 @@
       </xsl:choose>
     </identifierTypeId>
   </xsl:template>
-  
+
   <!-- Map holdings types -->
   <xsl:template match="holdingsTypeId">
     <holdingsTypeId>
@@ -545,7 +545,7 @@
       </xsl:choose>
     </holdingsTypeId>
   </xsl:template>
-  
+
   <!-- Map holdings source -->
   <xsl:template match="sourceId">
     <sourceId>
@@ -555,6 +555,6 @@
       </xsl:choose>
     </sourceId>
   </xsl:template>
-  
+
   <xsl:template match="original"/>
 </xsl:stylesheet>

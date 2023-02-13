@@ -18,7 +18,7 @@
           <delete><hrid><xsl:value-of select="./hrid" /></hrid></delete>
         </xsl:when>
         <xsl:otherwise>
-          <original>            
+          <original>
             <xsl:copy>
               <xsl:copy-of select="@*"/>
               <xsl:copy-of select="*"/>
@@ -76,7 +76,7 @@
     <xsl:if test="datafield[@tag='002@']">
       <!-- statusId -->
       <statusId>
-        <xsl:variable name="stcode" select="substring(datafield[@tag='002@']/subfield[@code='0'], 3, 1)" /> 
+        <xsl:variable name="stcode" select="substring(datafield[@tag='002@']/subfield[@code='0'], 3, 1)" />
         <xsl:choose>
           <xsl:when test="$stcode='u'">Autopsie</xsl:when>
           <xsl:when test="$stcode='v'">Bibliografisch vollständig</xsl:when>
@@ -210,7 +210,7 @@
     <!-- Identifiers -->
     <identifiers>
       <arr>
-        <xsl:for-each select="datafield[@tag='003S' or @tag='004A' or @tag='004P' or @tag='004J' or @tag='004K' or @tag='004D' 
+        <xsl:for-each select="datafield[@tag='003S' or @tag='004A' or @tag='004P' or @tag='004J' or @tag='004K' or @tag='004D'
         or @tag='005A' or @tag='005I' or @tag='005P' or @tag='005D' or @tag='004F' or @tag='004M' or @tag='004I' or @tag='006A'
         or @tag='006B' or @tag='006G' or @tag='006T' or @tag='006U' or @tag='006Z' or @tag='006S' or @tag='006L' or @tag='006'
         or @tag='006V' or @tag='006W' or @tag='006M' or @tag='004V' or @tag='004R' or @tag='004W' or @tag='004L' or @tag='004C'
@@ -227,7 +227,7 @@
                     <xsl:value-of select="./subfield[@code='f']"/>
                   </xsl:when>
                   <xsl:otherwise>
-                    <xsl:value-of select="./subfield[@code='0']"/> 
+                    <xsl:value-of select="./subfield[@code='0']"/>
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:variable>
@@ -289,7 +289,7 @@
                 <xsl:call-template name="join">
                   <xsl:with-param name="list" select="./subfield[@code='a' or @code='b' or @code='c' or @code='d']" />
                   <xsl:with-param name="separator" select="' '" />
-                </xsl:call-template> 
+                </xsl:call-template>
               </xsl:variable>
               <xsl:variable name="id-type">
                 <xsl:choose>
@@ -366,8 +366,8 @@
           <xsl:variable name="title-a" select="translate(./subfield[@code='a'], '@', '')" />
           <xsl:variable name="title-d" select="./subfield[@code='d']" />
           <xsl:variable name="title-h" select="./subfield[@code='h']" />
-          <xsl:variable name="title-dx" select="substring-after(./subfield[@code='a'], '@')" />	  
-        <xsl:variable name="title-8" select="substring-before(./subfield[@code='8'], ' ; ZDB-ID:')" />		
+          <xsl:variable name="title-dx" select="substring-after(./subfield[@code='a'], '@')" />
+        <xsl:variable name="title-8" select="substring-before(./subfield[@code='8'], ' ; ZDB-ID:')" />
           <xsl:variable name="title-l">
             <xsl:choose>
               <xsl:when test="./subfield[@code='l']"><xsl:value-of select="concat(' (', ./subfield[@code='l'], ')')"/></xsl:when>
@@ -382,7 +382,7 @@
           </xsl:variable>
           <xsl:variable name="title-p">
             <xsl:for-each select="../datafield[@tag='021C']">
-              <xsl:value-of select="normalize-space(concat(./subfield[@code='l'], ' ', ./subfield[@code='a']))" /> 
+              <xsl:value-of select="normalize-space(concat(./subfield[@code='l'], ' ', ./subfield[@code='a']))" />
                 <xsl:if test="position() != last()">
                   <xsl:value-of select="string('. ')" />
                 </xsl:if>
@@ -391,7 +391,7 @@
           <indexTitle>
             <xsl:choose>
               <xsl:when test="$title-dx">
-                <xsl:value-of select="normalize-space(concat($title-dx, ' ', $title-d, ' ', $title-h))" /> 
+                <xsl:value-of select="normalize-space(concat($title-dx, ' ', $title-d, ' ', $title-h))" />
               </xsl:when>
               <xsl:otherwise>
                 <xsl:value-of select="normalize-space(concat($title-a, ' ', $title-d, ' ', $title-h))" />
@@ -525,7 +525,7 @@
                 </i>
                 </xsl:if>
             </xsl:if>
-          </xsl:for-each> 
+          </xsl:for-each>
 
           <!-- Corporate authors-->
           <xsl:for-each select="datafield[@tag='029A' or @tag='029F']">
@@ -587,7 +587,7 @@
             </xsl:variable>
             <xsl:if test="string-length($name) &gt; 0">
               <i>
-                <name><xsl:value-of select="$name" /></name> 
+                <name><xsl:value-of select="$name" /></name>
                 <contributorNameTypeId>2e48e713-17f3-4c13-a9f8-23845bb210aa</contributorNameTypeId>
                 <xsl:if test="./subfield[@code='4']">
                   <contributorTypeId><xsl:value-of select="./subfield[@code='4']"></xsl:value-of></contributorTypeId>
@@ -634,13 +634,13 @@
                 <xsl:variable name="date-ac" select="concat($date-a, ' (', $date-c, ')')" />
                 <xsl:variable name="date-abcd" select="concat($date-ab, ' (', $date-cd, ')')" />
                 <xsl:choose>
-                  <xsl:when test="$date-d and $date-n"><xsl:value-of select="concat($date-abcd, ' (', $date-n, ')')" /></xsl:when> 
+                  <xsl:when test="$date-d and $date-n"><xsl:value-of select="concat($date-abcd, ' (', $date-n, ')')" /></xsl:when>
                   <xsl:when test="$date-d"><xsl:value-of select="$date-abcd" /></xsl:when>
-                  <xsl:when test="$date-c and $date-n"><xsl:value-of select="concat($date-ac, ' (', $date-n, ')')" /></xsl:when> 
+                  <xsl:when test="$date-c and $date-n"><xsl:value-of select="concat($date-ac, ' (', $date-n, ')')" /></xsl:when>
                   <xsl:when test="$date-c"><xsl:value-of select="$date-ac" /></xsl:when>
-                  <xsl:when test="$date-b and $date-n"><xsl:value-of select="concat($date-ab, ' (', $date-n, ')')" /></xsl:when> 
+                  <xsl:when test="$date-b and $date-n"><xsl:value-of select="concat($date-ab, ' (', $date-n, ')')" /></xsl:when>
                   <xsl:when test="$date-b"><xsl:value-of select="$date-ab" /></xsl:when>
-                  <xsl:when test="$date-a and $date-n"><xsl:value-of select="concat($date-a, ' (', $date-n, ')')" /></xsl:when> 
+                  <xsl:when test="$date-a and $date-n"><xsl:value-of select="concat($date-a, ' (', $date-n, ')')" /></xsl:when>
                   <xsl:otherwise><xsl:value-of select="$date-a"/></xsl:otherwise>
                 </xsl:choose>
               </dateOfPublication>
@@ -838,14 +838,14 @@
     <xsl:if test="item/datafield[@tag='203@']/subfield[@code='0'] | datafield[@tag='109R']">
       <holdingsRecords>
         <arr>
-          
+
           <xsl:apply-templates select="item"/>
 
           <!-- Electronic access -->
           <xsl:if test="datafield[@tag='109R']/subfield[@code='u']">
             <i>
               <hrid><xsl:value-of select="$ppn" /></hrid>
-              <permanentLocationId>Online</permanentLocationId> <!-- hardcoded : where to find in item record? --> 
+              <permanentLocationId>Online</permanentLocationId> <!-- hardcoded : where to find in item record? -->
               <electronicAccess>
                 <arr>
                   <xsl:for-each select="datafield[@tag='109R']">
@@ -893,7 +893,7 @@
       </items>
     </i>
   </xsl:template>
-  
+
   <xsl:template match="item" mode="make-item">
     <xsl:param name="hhrid" />
     <xsl:param name="bcode" select="datafield[@tag='209G']/subfield[@code='a']" />
@@ -1096,7 +1096,7 @@
         </xsl:choose>
       </discoverySuppress>
     </i>
-        
+
   </xsl:template>
 
   <xsl:template match="text()" />
@@ -1129,5 +1129,5 @@
       <xsl:value-of select="concat($year, '-', $month, '-', $day, $suffix)" />
     </xsl:if>
   </xsl:template>
-  
+
 </xsl:stylesheet>

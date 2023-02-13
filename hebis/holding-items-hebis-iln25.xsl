@@ -2,19 +2,19 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <xsl:output indent="yes" method="xml" version="1.0" encoding="UTF-8"/>
   <xsl:key name="original" match="original/item" use="@epn"/>
-     
+
   <xsl:template match="@* | node()">
     <xsl:copy>
       <xsl:apply-templates select="@* | node()"/>
     </xsl:copy>
-  </xsl:template>  
+  </xsl:template>
 
   <!-- ILN 25 UB Mainz -->
 
   <xsl:template match="permanentLocationId">
     <xsl:variable name="i" select="key('original',.)"/>
     <xsl:variable name="abt" select="$i/datafield[@tag='209A']/subfield[@code='f']"/>
-    <xsl:variable name="standort" select="$i/datafield[(@tag='209G') and (subfield[@code='x']='01')]/subfield[@code='a']"/> 
+    <xsl:variable name="standort" select="$i/datafield[(@tag='209G') and (subfield[@code='x']='01')]/subfield[@code='a']"/>
     <xsl:variable name="electronicholding" select="(substring($i/../datafield[@tag='002@']/subfield[@code='0'],1,1) = 'O') and not(substring($i/datafield[@tag='208@']/subfield[@code='b'],1,1) = 'a')"/>
     <permanentLocationId>
        <xsl:choose>
@@ -55,7 +55,7 @@
              <xsl:otherwise>MIN</xsl:otherwise>
            </xsl:choose>
          </xsl:when>
-         <xsl:when test="$abt='009'">FBMPI</xsl:when>	
+         <xsl:when test="$abt='009'">FBMPI</xsl:when>
          <xsl:when test="$abt='016'">
            <xsl:choose>
              <xsl:when test="contains($standort,'Magazin') or contains($standort,'Rara')">THRARA</xsl:when>
@@ -129,7 +129,7 @@
        </xsl:choose>
       </permanentLocationId>
   </xsl:template>
-   
+
   <xsl:template match="permanentLoanTypeId">
     <permanentLoanTypeId>
       <xsl:choose>
@@ -148,10 +148,10 @@
       </xsl:choose>
     </permanentLoanTypeId>
   </xsl:template>
-  
+
   <xsl:template match="discoverySuppress"> <!-- add: substring(., 1, 4) = 'true') or -->
     <discoverySuppress>
-      <xsl:value-of select="(substring(., 1, 4) = 'true') or (substring(., 1, 1) = 'g') or (substring(., 2, 1) = 'y') or (substring(., 2, 1) = 'z')"/>           
+      <xsl:value-of select="(substring(., 1, 4) = 'true') or (substring(., 1, 1) = 'g') or (substring(., 2, 1) = 'y') or (substring(., 2, 1) = 'z')"/>
     </discoverySuppress>
   </xsl:template>
 
@@ -188,7 +188,7 @@
           <xsl:value-of select="substring-after(.,' ')"/>
         </callNumber>
       </xsl:when>
-     
+
       <xsl:otherwise>
         <xsl:variable name="cnprefix">
           <xsl:choose>
@@ -196,7 +196,7 @@
               <xsl:value-of select="concat(substring-before(.,'°'),'°')"/>
             </xsl:when>
             <xsl:when test="contains(.,'@')">
-              <xsl:value-of select="substring-before(.,'@')"/> 
+              <xsl:value-of select="substring-before(.,'@')"/>
             </xsl:when>
           </xsl:choose>
         </xsl:variable>

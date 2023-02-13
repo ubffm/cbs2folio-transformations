@@ -2,12 +2,12 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <xsl:output indent="yes" method="xml" version="1.0" encoding="UTF-8"/>
   <xsl:key name="original" match="original/item" use="@epn"/>
-     
+
   <xsl:template match="@* | node()">
     <xsl:copy>
       <xsl:apply-templates select="@* | node()"/>
     </xsl:copy>
-  </xsl:template>  
+  </xsl:template>
 
   <!-- ILN 23 UB Kassel: holding-items-hebis-iln23.xsl -->
 
@@ -16,7 +16,7 @@
     <!-- 209A$f/209G$a ? -->
     <xsl:variable name="abt" select="$i/datafield[@tag='209A']/subfield[@code='f']"/>
     <xsl:variable name="signatur" select="$i/datafield[@tag='209A']/subfield[@code='a']"/>
-    <xsl:variable name="standort" select="$i/datafield[(@tag='209G') and (subfield[@code='x']='01')]/subfield[@code='a']"/> 
+    <xsl:variable name="standort" select="$i/datafield[(@tag='209G') and (subfield[@code='x']='01')]/subfield[@code='a']"/>
     <xsl:variable name="electronicholding" select="(substring($i/../datafield[@tag='002@']/subfield[@code='0'],1,1) = 'O') and not(substring($i/datafield[@tag='208@']/subfield[@code='b'],1,1) = 'a')"/>
     <permanentLocationId>
        <xsl:choose>
@@ -185,7 +185,7 @@
        </xsl:choose>
       </permanentLocationId>
   </xsl:template>
-   
+
   <xsl:template match="permanentLoanTypeId">
     <xsl:variable name="loantype" select="key('original',.)/datafield[@tag='209A']/subfield[@code='d']"/>
     <permanentLoanTypeId>
@@ -207,14 +207,14 @@
 
   <xsl:template match="discoverySuppress"> <!-- uses 208@$b (TBD? Kat. 4850 bzw. 247E/XY ?) -->
     <discoverySuppress>
-      <!-- MZ: <xsl:value-of select="(substring(., 1, 1) = 'g') or (substring(., 2, 1) = 'y') or (substring(., 2, 1) = 'z')"/> 
+      <!-- MZ: <xsl:value-of select="(substring(., 1, 1) = 'g') or (substring(., 2, 1) = 'y') or (substring(., 2, 1) = 'z')"/>
            DA: nicht anzeigen: Pos.2: f, p, y, z -->
       <xsl:value-of select="(substring(., 1, 4) = 'true') or (substring(., 2, 1) = 'f') or (substring(., 2, 1) = 'p') or (substring(., 2, 1) = 'y') or (substring(., 2, 1) = 'z')"/>
     </discoverySuppress>
   </xsl:template>
 
   <!-- Parsing call number for prefix - optional -->
-  
+
   <xsl:template name="prefix"> <!-- ILN 8: Auswirkungen Testen -->
     <xsl:param name="cn"/>
     <xsl:param name="cnprefixelement"/>
@@ -226,7 +226,7 @@
           <xsl:value-of select="concat(substring-before($cn,'°'),'°')"/>
         </xsl:when>
         <xsl:when test="contains($cn,'@')">
-          <xsl:value-of select="substring-before($cn,'@')"/> 
+          <xsl:value-of select="substring-before($cn,'@')"/>
         </xsl:when>
       </xsl:choose>
     </xsl:variable>
@@ -242,7 +242,7 @@
       <xsl:value-of select="normalize-space(translate(substring-after($cn,$cnprefix),'@',''))"/>
     </xsl:element>
   </xsl:template>
-  
+
   <xsl:template match="callNumber">
     <xsl:call-template name="prefix">
       <xsl:with-param name="cn" select="."/>
@@ -250,7 +250,7 @@
       <xsl:with-param name="cnelement" select="'callNumber'"/>
     </xsl:call-template>
   </xsl:template>
-  
+
   <xsl:template match="itemLevelCallNumber">
     <xsl:call-template name="prefix">
       <xsl:with-param name="cn" select="."/>

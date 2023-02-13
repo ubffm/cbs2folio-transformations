@@ -73,7 +73,7 @@
               <i>
                 <statement>
                     <xsl:if test="../subfield[@code='x']='03'">
-                       <xsl:text>Angaben zur Vollständigkeit: </xsl:text>  
+                       <xsl:text>Angaben zur Vollständigkeit: </xsl:text>
                     </xsl:if>
                   <xsl:value-of select="."/>
                 </statement>
@@ -94,7 +94,7 @@
           </arr>
   	    </xsl:if>
       </holdingsStatements>
-      
+
       <notes>
         <arr>
           <xsl:for-each select="datafield[@tag='220B' or @tag='220C' or @tag='220E' or @tag='237A']">
@@ -117,7 +117,7 @@
               </note>
               <holdingsNoteTypeId>Standort (8201)</holdingsNoteTypeId>
               <staffOnly>false</staffOnly>
-            </i>             
+            </i>
           </xsl:for-each>
           <xsl:if test="datafield[@tag='247D']">
             <i>
@@ -186,7 +186,7 @@
           <xsl:when test="datafield[@tag='247E']/subfield[@code='a']"><xsl:text>true</xsl:text></xsl:when> <!-- selectionscode != true -->
           <xsl:otherwise><xsl:call-template name="selectioncode"/></xsl:otherwise>
         </xsl:choose>
-      </discoverySuppress>   
+      </discoverySuppress>
       <sourceId>hebis</sourceId>
       <xsl:if test="not($electronicholding)">
          <items>
@@ -203,7 +203,7 @@
                    </xsl:otherwise>
                  </xsl:choose>
                </xsl:variable>
-               <xsl:message>Debug: <xsl:value-of select="concat($epn,'-',$copy)"/></xsl:message>             
+               <xsl:message>Debug: <xsl:value-of select="concat($epn,'-',$copy)"/></xsl:message>
                <xsl:apply-templates select="../.." mode="make-item">
                  <xsl:with-param name="hhrid" select="concat($epn,'-',$copy)"/>
                  <xsl:with-param name="bcode" select="substring-before(concat(.,' '),' ')"/>
@@ -213,7 +213,7 @@
                </xsl:apply-templates>
              </xsl:for-each>
              <xsl:if test="not(datafield[(@tag='209G') and (subfield[@code='x']='00')]/subfield[@code='a'])">
-               <xsl:message>Debug: EPN <xsl:value-of select="$epn"/></xsl:message>             
+               <xsl:message>Debug: EPN <xsl:value-of select="$epn"/></xsl:message>
                <xsl:apply-templates select="." mode="make-item">
                  <xsl:with-param name="hhrid" select="concat($epn,'-1')"/>
                </xsl:apply-templates>
@@ -252,7 +252,7 @@
       </statisticalCodeIds>
     </i>
   </xsl:template>
- 
+
   <xsl:template match="item" mode="make-item">
     <xsl:param name="hhrid"/>
     <xsl:param name="bcode"/>
@@ -261,8 +261,8 @@
       <hrid>
         <xsl:value-of select="$hhrid"/>
       </hrid>
-      
-      <!-- Hebis / K10plus -->  
+
+      <!-- Hebis / K10plus -->
       <materialTypeId>
         <xsl:variable name="type1" select="substring(../datafield[@tag='002@']/subfield[@code='0'], 1, 1)"/>
         <xsl:variable name="pd" select="../datafield[@tag='013H']/subfield[@code='0']"/>
@@ -280,14 +280,14 @@
           <xsl:otherwise>Sonstiges</xsl:otherwise>
         </xsl:choose>
       </materialTypeId>
- 
+
       <permanentLoanTypeId>
         <xsl:call-template name="loantype"/>
       </permanentLoanTypeId>
       <status>
         <name>
           <xsl:choose>
-            <xsl:when test="(substring(datafield[@tag='208@']/subfield[@code='b'],1,1) = 'd') or 
+            <xsl:when test="(substring(datafield[@tag='208@']/subfield[@code='b'],1,1) = 'd') or
                             (substring(datafield[@tag='208@']/subfield[@code='b'],1,1) = 'p') or
                             (substring(datafield[@tag='208@']/subfield[@code='b'],1,2) = 'gp')">Intellectual item</xsl:when>
             <xsl:when test="datafield[@tag='209A']/subfield[@code='d']='a'">On order</xsl:when>
@@ -337,13 +337,13 @@
         </xsl:for-each>
       </chronology>
 
-      <!-- no notes on item level 
+      <!-- no notes on item level
         <notes>
           <arr>
 
           </arr>
         </notes>  -->
-      
+
       <!-- No item for electronic access in hebis -->
       <accessionNumber>
         <xsl:for-each select="datafield[@tag='209C']">

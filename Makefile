@@ -12,7 +12,7 @@ test_files:=$(patsubst hebis/testexamples/%, $(OUTDIR)/%, $(wildcard hebis/teste
 
 TEST: $(test_files)
 
-BUILDDIRS: 
+BUILDDIRS:
 	mkdir --parents $(OUTDIR) $(DIFFDIR)
 
 $(OUTDIR)/%-step1.xml: hebis/testexamples/%.xml hebis/pica2instance-new.xsl BUILDDIRS
@@ -20,7 +20,7 @@ $(OUTDIR)/%-step1.xml: hebis/testexamples/%.xml hebis/pica2instance-new.xsl BUIL
 	$(FORMATTER) --output $@ $@
 
 $(OUTDIR)/%-step2.xml: hebis/testexamples/%-step1.xml hebis/relationships.xsl BUILDDIRS
-	$(TRANSFORMER) --in-file $< --out-file $@ hebis/relationships.xsl  
+	$(TRANSFORMER) --in-file $< --out-file $@ hebis/relationships.xsl
 	$(FORMATTER) --output $@ $@
 
 $(OUTDIR)/%-step3.xml: hebis/testexamples/%-step2.xml hebis/holdings-items-hebis-hrid-test.xsl BUILDDIRS
@@ -28,13 +28,13 @@ $(OUTDIR)/%-step3.xml: hebis/testexamples/%-step2.xml hebis/holdings-items-hebis
 	$(FORMATTER) --output $@ $@
 
 $(OUTDIR)/%-step4.xml: hebis/testexamples/%-step3.xml hebis/holding-items-hebis-%.xsl BUILDDIRS
-	$(TRANSFORMER) --in-file $< --out-file $@ hebis/holding-items-hebis-$*.xsl 
+	$(TRANSFORMER) --in-file $< --out-file $@ hebis/holding-items-hebis-$*.xsl
 	$(FORMATTER) --output $@ $@
 
 $(OUTDIR)/%-step5.xml: hebis/testexamples/%-step4.xml codes2uuid.xsl BUILDDIRS
-	$(TRANSFORMER) --in-file $< --out-file $@ codes2uuid.xsl  
+	$(TRANSFORMER) --in-file $< --out-file $@ codes2uuid.xsl
 	$(FORMATTER) --output $@ $@
 
 $(OUTDIR)/%-step6.xml: hebis/testexamples/%-step5.xml  hebis/codes2uuid-hebis-%.xsl BUILDDIRS
-	$(TRANSFORMER) --in-file $< --out-file $@  hebis/codes2uuid-hebis-$*.xsl 
+	$(TRANSFORMER) --in-file $< --out-file $@  hebis/codes2uuid-hebis-$*.xsl
 	$(FORMATTER) --output $@ $@

@@ -460,7 +460,7 @@
       </arr>
     </identifiers>
 
-    <!-- hebis: 
+    <!-- hebis:
        - added missing tags and subfields (parts of multipart resources with dependent title, "contained works")
        - corrected order of tags and subfields, e.g. remainder of title and statement of responsibility of titles with subsets
        - separated transcription and Non Latin script
@@ -669,7 +669,7 @@
                 <xsl:value-of select="normalize-space(substring-after($title-036C, '. '))"/>
                   <xsl:if test="$title-021A != '' and boolean(substring($title-021A, 1, 1) != ' ')">
                     <xsl:choose>
-                      <!-- hebis: TBD: Not entirely correct, but it should work in most cases. 
+                      <!-- hebis: TBD: Not entirely correct, but it should work in most cases.
                                        The last occurrence of 036C would have to be evaluated. -->
                       <xsl:when test="datafield[@tag='036C']/subfield[@code='l']">
                         <xsl:value-of select="concat(', ', $title-021A)"/>
@@ -682,10 +682,10 @@
                   <xsl:if test="$title-021A != '' and boolean(substring($title-021A, 1, 1) = ' ')">
                     <xsl:value-of select="$title-021A"/>
                   </xsl:if>
-              </xsl:when> 
+              </xsl:when>
               <!-- TBD: need for adjustment at GBV
               <xsl:when test="boolean(substring(datafield[@tag='002@']/subfield[@code='0'], 2, 1) = 'f') and datafield[@tag='036E']">036E</xsl:when>
-              <xsl:when test="boolean(substring(datafield[@tag='002@']/subfield[@code='0'], 2, 1) = 'v') and datafield[@tag='036F']/subfield[@code='8']">036F</xsl:when> 
+              <xsl:when test="boolean(substring(datafield[@tag='002@']/subfield[@code='0'], 2, 1) = 'v') and datafield[@tag='036F']/subfield[@code='8']">036F</xsl:when>
               -->
               <xsl:otherwise>
                 <xsl:value-of select="concat($title-021A, $title-021C)"/>
@@ -711,7 +711,7 @@
                   </xsl:if>
               </xsl:otherwise>
             </xsl:choose>
-          </title> 
+          </title>
 
           <indexTitle>
             <xsl:choose>
@@ -723,7 +723,7 @@
               </xsl:when>
               <!-- TBD: need for adjustment at GBV
               <xsl:when test="boolean(substring(datafield[@tag='002@']/subfield[@code='0'], 2, 1) = 'f') and datafield[@tag='036E']">036E</xsl:when>
-              <xsl:when test="boolean(substring(datafield[@tag='002@']/subfield[@code='0'], 2, 1) = 'v') and datafield[@tag='036F']/subfield[@code='8']">036F</xsl:when> 
+              <xsl:when test="boolean(substring(datafield[@tag='002@']/subfield[@code='0'], 2, 1) = 'v') and datafield[@tag='036F']/subfield[@code='8']">036F</xsl:when>
               -->
               <xsl:otherwise>
                 <xsl:value-of select="concat(translate($title-021A-idx, '&#034;&#035;&#040;&#041;&#046;', ' '), $title-021C-idx)"/>
@@ -864,9 +864,9 @@
                   <xsl:if test="$title-021A-ori  != '' and boolean(substring($title-021A-ori, 1, 1) = ' ')">
                     <xsl:value-of select="$title-021A-ori"/>
                   </xsl:if>
-                </xsl:when> 
+                </xsl:when>
                 <!-- TBD: need for adjustment at GBV
-                <xsl:when test="boolean(substring(datafield[@tag='002@']/subfield[@code='0'], 2, 1) = 'f') and datafield[@tag='036E']">036E</xsl:when> 
+                <xsl:when test="boolean(substring(datafield[@tag='002@']/subfield[@code='0'], 2, 1) = 'f') and datafield[@tag='036E']">036E</xsl:when>
                 <xsl:when test="boolean(substring(datafield[@tag='002@']/subfield[@code='0'], 2, 1) = 'v') and datafield[@tag='036F']/subfield[@code='8']">036F</xsl:when> -->
                 <xsl:otherwise>
                   <xsl:value-of select="concat($title-021A-ori, $title-021C-ori)"/>
@@ -948,7 +948,7 @@
                   </xsl:otherwise>
                 </xsl:choose>
               </alternativeTitle>
-              <alternativeTitleTypeId>Other title</alternativeTitleTypeId> 
+              <alternativeTitleTypeId>Other title</alternativeTitleTypeId>
             </i>
           </xsl:for-each>
 
@@ -999,7 +999,7 @@
                         <xsl:when test="@code='o'">
                           <xsl:value-of select="concat('; ',.)"/>
                         </xsl:when>
-                      </xsl:choose> 
+                      </xsl:choose>
                     </xsl:for-each>
                   </xsl:otherwise>
                 </xsl:choose>
@@ -1482,7 +1482,7 @@
                   <xsl:when test="@code='l'">
                     <xsl:value-of select="concat(' ; ',.)"/>
                   </xsl:when>
-                </xsl:choose> 
+                </xsl:choose>
               </xsl:for-each>
             </i>
           </xsl:for-each>

@@ -591,7 +591,7 @@
   <xsl:template match="discoverySuppress">
     <!-- uses 208@$b (und/oder Kat. 247E/XY ?) -->
     <discoverySuppress>
-      <xsl:value-of select="(substring(., 1, 1) = 'g') or (substring(., 2, 1) = 'y') or (substring(., 2, 1) = 'z')"/> 
+      <xsl:value-of select="(substring(., 1, 1) = 'g') or (substring(., 2, 1) = 'y') or (substring(., 2, 1) = 'z')"/>
       <!-- Sind die Einstellungen von MZ. Pos1 g passt aus meiner Sicht. MB für den Rest fragen. RH -->
     </discoverySuppress>
   </xsl:template>
@@ -644,13 +644,13 @@
   <xsl:template name="check-range">
     <!-- Checks if the string signature-short-lowercase is in the range defined
       by the strings range-start and range-end.
-      
+
       The three strings are getting sorted by comparing char by char with a
       predefined sort key. If each char of signature-short-lowercase
       is between the corresponding char of range-start and range-end, the
       template returns 1, otherwise 0.
-      
-      Inspired by https://weinert-automation.de/pub/XSLT1.0RangeFilter.pdf        
+
+      Inspired by https://weinert-automation.de/pub/XSLT1.0RangeFilter.pdf
     -->
 
     <xsl:param name="token"/>
@@ -693,7 +693,7 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:if test="$debug-template-logic">
-      <xsl:message>Debug: 
+      <xsl:message>Debug:
           Check range for Triple <xsl:value-of select="$range-start" />,<xsl:value-of
           select="$token" />,<xsl:value-of
           select="$range-end" /> at <xsl:value-of
@@ -701,9 +701,9 @@
       </xsl:message>
     </xsl:if>
 
-    <!-- 
+    <!--
       Cases:
-      
+
         A) len(range-start) < len(range-end)
         B) len(range-start) = len(range-end)
 
@@ -720,7 +720,7 @@
       <xsl:when test="not(string-length($range-start)=string-length($token) and string-length($token)=string-length($range-end))" >
       <!-- Case a or c -->
       <xsl:if test="$debug-template-logic">
-        <xsl:message> Debug: 
+        <xsl:message> Debug:
           len(range-start) = len(token): <xsl:value-of
             select="string-length($range-start)=string-length($token)" />
           len(token) = len(range-end): <xsl:value-of
@@ -771,8 +771,8 @@
     <xsl:param name="in-range"/>
 
     <xsl:if test="$debug-template-logic">
-      <xsl:message>Debug: 
-        Running comparison for Triple 
+      <xsl:message>Debug:
+        Running comparison for Triple
           <xsl:value-of select="$range-from" />,
           <xsl:value-of select="$signature-lowercase-trimmed" />,
           <xsl:value-of select="$range-to" />
@@ -832,14 +832,14 @@
     </xsl:variable>
 
     <xsl:if test="$debug-template-logic">
-      <xsl:message> Debug: 
-        Identical Prefix: <xsl:value-of select="$identical-prefix" /> 
-        Signature Prefix: <xsl:value-of select="$signature-prefix" /> 
-        
+      <xsl:message> Debug:
+        Identical Prefix: <xsl:value-of select="$identical-prefix" />
+        Signature Prefix: <xsl:value-of select="$signature-prefix" />
+
         comparison-token-position <xsl:value-of
-          select="$comparison-token-position" /> 
+          select="$comparison-token-position" />
         comparison-tokens <xsl:value-of
-          select="count(exsl:node-set($signature-tokens))" /> 
+          select="count(exsl:node-set($signature-tokens))" />
         from-token: <xsl:value-of
           select="exsl:node-set($range-from-tokens)/item[position() = $comparison-token-position]" />
         to-token: <xsl:value-of
@@ -861,7 +861,7 @@
         </xsl:variable>
         <xsl:variable name="signature-comparison-token">
           <xsl:if test="$debug-template-logic">
-            <xsl:message>Debug: 
+            <xsl:message>Debug:
               POSITION: <xsl:value-of select="$comparison-token-position" /> TOKENS: <xsl:value-of
                 select="$signature-tokens" /> VALUE: <xsl:value-of
                 select="
@@ -1099,7 +1099,7 @@
   <!-- Normalize a signature or range -->
   <xsl:template name="normalize-signature-or-range">
     <xsl:param name="text"/>
-      <xsl:value-of 
+      <xsl:value-of
         select="normalize-space(translate($text, ' /.:', '    '))" />
   </xsl:template>
 
@@ -1118,7 +1118,7 @@
         <item>
           <xsl:value-of select="normalize-space(substring-before($text, $separator))"/>
           <xsl:if test="$debug-template-logic">
-            <xsl:message>Debug: 
+            <xsl:message>Debug:
               ITEM: <xsl:value-of
                 select="normalize-space(substring-before($text, $separator))" />
             </xsl:message>
