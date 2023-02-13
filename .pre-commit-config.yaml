@@ -1,0 +1,59 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: debug-statements
+      - id: check-xml
+
+  - repo: https://github.com/asottile/reorder_python_imports
+    rev: v3.9.0
+    hooks:
+      - id: reorder-python-imports
+  - repo: https://github.com/psf/black
+    rev: 23.1.0
+    hooks:
+      - id: black
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.4
+    hooks:
+      - id: bandit
+        exclude: ^tests/
+  - repo: https://github.com/PyCQA/pydocstyle
+    rev: 6.3.0
+    hooks:
+      - id: pydocstyle
+        additional_dependencies:
+          - toml
+          - tomli
+        exclude: |
+          (?x)^(
+            tests/|
+            folio_isuser_api/datatypes/generated/
+            ).+.py$
+  - repo: https://github.com/pycqa/flake8
+    rev: "6.0.0"
+    hooks:
+      - id: flake8
+        additional_dependencies:
+          - flake8-black>=0.1.1
+  - repo: https://github.com/RobertCraigie/pyright-python
+    rev: v1.1.293
+    hooks:
+      - id: pyright
+        additional_dependencies:
+          - defusedxml
+          - lxml
+          - xmldiff
+          - pytest
+        exclude: |
+          (?x)^(
+            python_scripts/tests
+            ).*.py$
+
+  - repo: https://github.com/comkieffer/pre-commit-xmllint.git
+    rev: 1.0.0
+    hooks:
+      - id: xmllint
