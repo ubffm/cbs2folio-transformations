@@ -8,7 +8,7 @@
     </xsl:copy>
   </xsl:template>
 
-<!-- Map locations 
+<!-- Map locations
        NOTE: The tests are the codes returned by 209A $f, not the location names in FOLIO -->
    <xsl:template match="permanentLocationId">
     <permanentLocationId>

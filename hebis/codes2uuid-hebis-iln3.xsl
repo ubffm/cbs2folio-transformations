@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:output indent="yes" method="xml" version="1.0" encoding="UTF-8"/>
@@ -7,7 +7,7 @@
       <xsl:apply-templates select="@* | node()"/>
     </xsl:copy>
   </xsl:template>
-  
+
   <xsl:template match="permanentLocationId"> <!-- ILN -->
     <permanentLocationId>
       <xsl:choose>
@@ -26,7 +26,7 @@
   <xsl:template match="permanentLoanTypeId"> <!-- ILN -->
     <permanentLoanTypeId>
       <xsl:choose>
-        <xsl:when test=".='0 u normal ausleihbar'"><xsl:text>c943ac60-b743-4d14-92d9-69de65934af8</xsl:text></xsl:when> 
+        <xsl:when test=".='0 u normal ausleihbar'"><xsl:text>c943ac60-b743-4d14-92d9-69de65934af8</xsl:text></xsl:when>
         <xsl:when test=".='1 b Kurzausleihe'"><xsl:text>fdb6f275-b9ab-4638-9e96-02fa5bdd67ca</xsl:text></xsl:when>
         <xsl:when test=".='2 c ausleihbar, keine Fernleihe'"><xsl:text>cd7cd95f-66f7-49d5-a737-f4e001a8521c</xsl:text></xsl:when>
         <xsl:when test=".='3 s Präsenzbestand'"><xsl:text>9ec54944-4f44-460d-8791-3a76083fd31d</xsl:text></xsl:when>
@@ -52,7 +52,7 @@
             <xsl:choose>
               <xsl:when test=".='1001'">TBD</xsl:when>
               <!-- add as needed -->
-              
+
             </xsl:choose>
           </i>
         </xsl:for-each>

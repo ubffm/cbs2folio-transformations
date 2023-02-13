@@ -118,7 +118,7 @@ while (<PP>) {
           $sf->appendTextNode($txt);
         }
       }
-    } 
+    }
   }
 
   my $id_node = $doc->createElement('identifier');

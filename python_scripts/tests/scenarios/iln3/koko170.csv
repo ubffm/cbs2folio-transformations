@@ -178,7 +178,7 @@ Inf,LKZ 26 ist neu fuer LBS Geschichte im BzG.             16.01.2008,,,
 0,2 Hs,2 Hs,3,UG1
 0,2 A,2 Z,3,UG1
 ,,,,
-0,30 1,30 99999,8,ZEPC30 
+0,30 1,30 99999,8,ZEPC30
 0,40 1,44 99999,8,ZEPC30
 ,,,,
 330,305,305,460,BZG460
@@ -242,7 +242,7 @@ Inf,Die Signaturengruppe steht in BRuW im Kompaktmagazin und muss vor Ort bestel
 330,70 00 000,77 99 999,460,BZG460
 330,72 Aa@@@,77 Zz@@@,460,BZG460
 ,,,,
-0,80 200 00,80 999 99,8,ZEPC30 
+0,80 200 00,80 999 99,8,ZEPC30
 ,,,,
 Inf,"ZB-Bestand, der an SKW abgegeben und im UG2 zwischengelagert wird (derzeit nur HB 23), soll das LKZ 87 erhalten und bestellbar sein. 11.11.2020 hn",,,
 0,87 Aa@@@,87 Zz@@@,2,UG2
@@ -312,7 +312,7 @@ Inf,"darin enthalten ""A.obstr"" und ""A. obstr"" ",,,
 0,AB Zs@@@,AB Zs@@@,11,OM30
 Inf,"betrifft den Altbestand Zeitschriften, der nicht nach Marburg ausgelagert wurde (Bestand vor 1871). Zsf steht aber ohnehin der ZB. 30.11.2021 hn",,,
 0,Aeul,Aeul,108,ZC30LS
-0,Ak,Ak,8,ZEPC30  
+0,Ak,Ak,8,ZEPC30
 0,Amer,Amer,104,ZB30LS
 0,Anat,Anat,4,ZEPB30
 6,Arbeitslehre 42,Arbeitslehre 42,245,BSPMAG
@@ -372,7 +372,7 @@ Inf,Ab Februar 2003 wird die Signatur AVP ... u. AVPM ... auch von SeB benutzt.,
 0,Bundesbibl,Bundesbibl@@@,108,ZC30LS
 ,,,,
 0,Cat libr Ff,Cat libr Ff,7,OG3GM
-0,Chem,Chir,8,ZEPC30 
+0,Chem,Chir,8,ZEPC30
 0,Congr Ff,Congr Ff@@@,7,OG3GM
 ,,,,
 0,Cz,Cz,9,ZEPF1
@@ -557,8 +557,8 @@ Inf,Reihenfolge beachten:,,,
 0,HB 1: Z@@@,HB 1: Z@@@,91,EGHB
 0,HB 1,HB 1,92,ZGEHB
 ,,,,
-0,HB 11,HB 11,93,OG1  
-0,HB 12,HB 12,92,ZGEHB 
+0,HB 11,HB 11,93,OG1
+0,HB 12,HB 12,92,ZGEHB
 ,,,,
 Inf,Reihenfolge beachten:,,,
 0,HB 13: Hc 22,HB 13: Hc 22,91,EGHB

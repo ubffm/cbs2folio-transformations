@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:output indent="yes" method="xml" version="1.0" encoding="UTF-8"/>
@@ -81,7 +81,7 @@
   <xsl:template match="permanentLoanTypeId"> <!-- ILN -->
     <permanentLoanTypeId>
       <xsl:choose>
-        <xsl:when test=".='0 u Ausleihbar'"><xsl:text>fe9cea09-7e93-4c44-b411-3be611478db8</xsl:text></xsl:when> 
+        <xsl:when test=".='0 u Ausleihbar'"><xsl:text>fe9cea09-7e93-4c44-b411-3be611478db8</xsl:text></xsl:when>
         <xsl:when test=".='1 b Fernleihe - passiv'"><xsl:text>c008217e-e88f-48da-aa53-6857c2922fff</xsl:text></xsl:when>
         <xsl:when test=".='2 c Filme (KHS)'"><xsl:text>af408d3d-5b7c-4808-a81e-81706fc0de0f</xsl:text></xsl:when>
         <xsl:when test=".='3 s Präsenzbestand'"><xsl:text>31d3f7b2-5a57-4352-8d54-293c396af4c1</xsl:text></xsl:when>

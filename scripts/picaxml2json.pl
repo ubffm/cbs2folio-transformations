@@ -41,7 +41,7 @@ my $parser = XML::LibXML->new();
 my $xslt = XML::LibXSLT->new();
 my $stylesheet = $xslt->parse_stylesheet_file($style_file);
 my $stylesheet2 = $xslt->parse_stylesheet_file($style_file2);
-   
+
 foreach my $file ( @source_files ) {
   my $path = $file;
   $path =~ s/^(.+)\..*/$1/;
@@ -92,7 +92,7 @@ foreach my $file ( @source_files ) {
       print HOLDS $holds;
       print ITEMS $items;
     }
-  } 
+  }
 }
 
 sub getElements {
@@ -114,7 +114,7 @@ sub getElements {
             push @{ $out->{$name} }, getElements($item);
           }
         }
-        
+
       }
     } elsif ($cn[0]) {
       $out->{$name} = {};

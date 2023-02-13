@@ -471,7 +471,7 @@
       </arr>
     </identifiers>
 
-    <!-- hebis: 
+    <!-- hebis:
        - added missing tags and subfields (parts of multipart resources with dependent title, "contained works")
        - corrected order of tags and subfields, e.g. remainder of title and statement of responsibility of titles with subsets
        - separated transcription and Non Latin script
@@ -704,7 +704,7 @@
                   <xsl:if test="$title-021A != '' and boolean(substring($title-021A, 1, 1) = ' ')">
                     <xsl:value-of select="$title-021A"/>
                   </xsl:if>
-              </xsl:when> 
+              </xsl:when>
 
               <!-- TBD: need for adjustment at GBV? Not sure about the subfields in PXB-format -->
               <xsl:when test="boolean(substring(datafield[@tag='002@']/subfield[@code='0'], 2, 1) = 'f' or substring(datafield[@tag='002@']/subfield[@code='0'], 2, 1) = 'v') and datafield[@tag='036E'] and $title-021A = ''">
@@ -724,7 +724,7 @@
                     </xsl:when>
                   </xsl:choose>
                 </xsl:for-each>
-              </xsl:when> 
+              </xsl:when>
 
               <xsl:when test="$title-021A != ''">
                 <xsl:value-of select="concat($title-021A, $title-021C)"/>
@@ -751,7 +751,7 @@
               </xsl:when>
               <xsl:otherwise>KEIN TITEL, IM CBS PRÜFEN</xsl:otherwise>
             </xsl:choose>
-          </title> 
+          </title>
 
           <indexTitle>
             <xsl:choose>
@@ -781,7 +781,7 @@
                     </xsl:when>
                   </xsl:choose>
                 </xsl:for-each>
-              </xsl:when> 
+              </xsl:when>
 
               <xsl:when test="$title-021A-idx != ''">
                 <xsl:value-of select="concat(translate($title-021A-idx, '&#034;&#035;&#040;&#041;&#046;', ' '), $title-021C-idx)"/>
@@ -829,7 +829,7 @@
                   <xsl:if test="$title-021A-ori != '' and boolean(substring($title-021A-ori, 1, 1) = ' ')">
                     <xsl:value-of select="$title-021A-ori"/>
                   </xsl:if>
-                </xsl:when> 
+                </xsl:when>
                 <!-- f-record and tag 036E: Non Latin Script in the "series statement" section -->
                 <xsl:otherwise>
                   <xsl:value-of select="concat($title-021A-ori, $title-021C-ori)"/>
@@ -912,7 +912,7 @@
                   </xsl:otherwise>
                 </xsl:choose>
               </alternativeTitle>
-              <alternativeTitleTypeId>Other title</alternativeTitleTypeId> 
+              <alternativeTitleTypeId>Other title</alternativeTitleTypeId>
             </i>
           </xsl:for-each>
 
@@ -965,7 +965,7 @@
                         <xsl:when test="@code='p' or @code='s'">
                           <xsl:value-of select="concat('. ',.)"/>
                         </xsl:when>
-                      </xsl:choose> 
+                      </xsl:choose>
                     </xsl:for-each>
                   </xsl:otherwise>
                 </xsl:choose>
@@ -977,7 +977,7 @@
                     <xsl:when test="@code='o'">
                       <xsl:value-of select="concat('; ',.)"/>
                     </xsl:when>
-                  </xsl:choose> 
+                  </xsl:choose>
                 </xsl:for-each>
               </xsl:variable>
               <xsl:value-of select="$con-name"/>
@@ -1004,7 +1004,7 @@
                     <xsl:value-of select="./subfield[@code='8']"/>
                   </xsl:when>
                   <!-- hebis: added missing subfields and corrected ISBD punctuation -->
-                  <!-- TBD: Need for clarification/discussion 
+                  <!-- TBD: Need for clarification/discussion
                             Expansion and capital letters D, C, N, especially L -->
                   <xsl:when test="./subfield[@code='a' or @code='P']">
                     <xsl:value-of select="./subfield[@code='a' or @code='P']"/>
@@ -1052,7 +1052,7 @@
           </xsl:for-each>
           <!-- Corporate authors-->
           <!-- hebis: added missing subfields and corrected ISBD punctuation -->
-          <!-- TBD: Need for clarification/discussion 
+          <!-- TBD: Need for clarification/discussion
                     Expansion and capital letters A, B, D, G, N, X in original code
           -->
           <xsl:for-each select="datafield[@tag='029A' or @tag='029F']">
@@ -1077,7 +1077,7 @@
                           <xsl:when test="@code='b'">
                             <xsl:value-of select="concat('. ',.)"/>
                           </xsl:when>
-                      </xsl:choose> 
+                      </xsl:choose>
                     </xsl:for-each>
                           <xsl:choose>
                             <xsl:when test="./subfield[@code='n']">
@@ -1247,7 +1247,7 @@
     <!-- Electronic access -->
     <electronicAccess>
       <arr>
-        <!-- hebis: took out "or @tag='017M' or @tag='017R'" --> 
+        <!-- hebis: took out "or @tag='017M' or @tag='017R'" -->
         <xsl:for-each select="datafield[@tag='009P' or @tag='017C']">
           <xsl:if test="./@tag='009P' and ./subfield[@code='a']">
             <i>
@@ -1290,10 +1290,10 @@
 			  <linkText>
 				<xsl:value-of select="./subfield[@code='a']"/>
 			  </linkText>
-              <relationshipId>0ce08069-8f5f-411b-b622-46674aa66a45</relationshipId> 
+              <relationshipId>0ce08069-8f5f-411b-b622-46674aa66a45</relationshipId>
             </i>
           </xsl:if> -->
-          <!-- hebis: moved to notes (Terms Governing Use and Reproduction Note) 
+          <!-- hebis: moved to notes (Terms Governing Use and Reproduction Note)
 		  <xsl:if test="./@tag='017M' and ./subfield[@code='u']">
             <i>
               <uri>
@@ -1305,7 +1305,7 @@
 			  <linkText>
 				<xsl:value-of select="./subfield[@code='a']"/>
 			  </linkText>
-              <relationshipId>f781cb3d-af16-40f6-9d02-c24204ac6fdc</relationshipId> 
+              <relationshipId>f781cb3d-af16-40f6-9d02-c24204ac6fdc</relationshipId>
             </i>
           </xsl:if> -->
         </xsl:for-each>
@@ -1398,7 +1398,7 @@
                               </xsl:otherwise>
                             </xsl:choose>
                           </xsl:when>
-                        </xsl:choose> 
+                        </xsl:choose>
                       </xsl:otherwise>
                     </xsl:choose>
                    </xsl:for-each>
@@ -1430,7 +1430,7 @@
                         <xsl:when test="@code='g'">
                           <xsl:value-of select="concat(' (',.,')')"/>
                         </xsl:when>
-                      </xsl:choose> 
+                      </xsl:choose>
                     </xsl:for-each>
                   </note>
                   <instanceNoteTypeId>Dissertation note</instanceNoteTypeId>
@@ -1579,7 +1579,7 @@
       </xsl:if>
 
       <!-- hebis: added series statement for parts of multipart resources with independent title
-                  and series statement for the second multipart resource (hebis-special-feature) 
+                  and series statement for the second multipart resource (hebis-special-feature)
       -->
       <xsl:if test="boolean(substring(datafield[@tag='002@']/subfield[@code='0'], 2, 1) != 'f') and datafield[@tag='036C']">
         <i>
@@ -1682,9 +1682,9 @@
       </editions>
     </xsl:if>
   </xsl:template>
-  
+
   <xsl:template match="text()"/>
-  
+
   <xsl:template name="join">
     <xsl:param name="list"/>
     <xsl:param name="separator"/>
@@ -1695,7 +1695,7 @@
       </xsl:if>
     </xsl:for-each>
   </xsl:template>
-  
+
   <xsl:template name="pica-to-iso-date">
     <xsl:param name="input"/>
     <xsl:param name="suffix"/>
@@ -1713,6 +1713,5 @@
       <xsl:value-of select="concat($year, '-', $month, '-', $day, $suffix)"/>
     </xsl:if>
   </xsl:template>
-  
-</xsl:stylesheet>
 
+</xsl:stylesheet>

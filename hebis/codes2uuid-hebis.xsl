@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:output indent="yes" method="xml" version="1.0" encoding="UTF-8"/>
@@ -7,7 +7,7 @@
       <xsl:apply-templates select="@* | node()"/>
     </xsl:copy>
   </xsl:template>
-    
+
   <!-- Note: <xsl:text> Elements mark the UUIDs that are added by K10plus/hebis and are used to generate the reference records -->
 
   <!-- Map item note types -->
@@ -25,7 +25,7 @@
       </xsl:choose>
     </itemNoteTypeId>
   </xsl:template>
-  
+
    <!-- Map holding note types -->
   <xsl:template match="holdingsNoteTypeId"> <!-- Level 2: FOLIO/hebis-wide -->
     <holdingsNoteTypeId>
@@ -37,7 +37,7 @@
         <xsl:when test=".='Action note'">d6510242-5ec3-42ed-b593-3585d2e48fd6</xsl:when>
         <xsl:when test=".='Copy note'">c4407cc7-d79f-4609-95bd-1cefb2e2b5c5</xsl:when>
         <xsl:when test=".='Provenance'">db9b4787-95f0-4e78-becf-26748ce6bdeb</xsl:when>
-        <xsl:when test=".='Lizenzindikator'"><xsl:text>d1d99196-8904-4b2e-9125-9f7bbbf54cc1</xsl:text></xsl:when> <!-- hebis-wide -->       
+        <xsl:when test=".='Lizenzindikator'"><xsl:text>d1d99196-8904-4b2e-9125-9f7bbbf54cc1</xsl:text></xsl:when> <!-- hebis-wide -->
         <xsl:when test=".='Lokaler Schlüssel'"><xsl:text>49050d37-2d82-452c-a963-2645ffc0b9a9</xsl:text></xsl:when> <!-- hebis-wide -->
         <xsl:when test=".='Text zur Ausleihbarkeit'"><xsl:text>f862da41-4a7a-4864-8a52-befa58ab210b</xsl:text></xsl:when> <!-- hebis-wide -->
         <xsl:when test=".='Standort (8201)'"><xsl:text>013e0b2c-2259-4ee8-8d15-f463f1aeb0b1</xsl:text></xsl:when> <!-- hebis-wide -->
@@ -128,12 +128,12 @@
       </xsl:choose>
     </alternativeTitleTypeId>
   </xsl:template>
-  
+
   <!-- Map material types -->
   <xsl:template match="materialTypeId"> <!-- Level 0/2: hebis wide -->
     <materialTypeId>
       <xsl:choose>
-        <xsl:when test=".='Druckschrift'"><xsl:text>24080190-7539-4520-bde1-762f57d006fc</xsl:text></xsl:when> 
+        <xsl:when test=".='Druckschrift'"><xsl:text>24080190-7539-4520-bde1-762f57d006fc</xsl:text></xsl:when>
         <xsl:when test=".='Audiovisuelles Material'"><xsl:text>e378db32-4422-405d-bf08-89efd33335fd</xsl:text></xsl:when>
         <xsl:when test=".='Blindenschriftträger'"><xsl:text>e7a305fc-3409-4c6a-95fe-7d220e773144</xsl:text></xsl:when>
         <xsl:when test=".='Tonträger'"><xsl:text>baed4206-eef1-4c00-8126-d159a2113a71</xsl:text></xsl:when>
@@ -147,7 +147,7 @@
       </xsl:choose>
     </materialTypeId>
   </xsl:template>
-  
+
   <!-- Map contrutor type codes to uuid (closed list with marcrelator) FOLIO -->
   <xsl:template match="contributorTypeId">
     <contributorTypeId>
@@ -521,7 +521,7 @@
       </xsl:choose>
     </identifierTypeId>
   </xsl:template>
-  
+
   <!-- Map holdings types -->
   <xsl:template match="holdingsTypeId"> <!-- Level 0: FOLIO -->
     <holdingsTypeId>
@@ -541,7 +541,7 @@
       </xsl:choose>
     </sourceId>
   </xsl:template>
-  
+
   <!-- Re-map instance source -->
   <xsl:template match="source">
     <source>hebis</source>
