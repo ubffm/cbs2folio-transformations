@@ -26,25 +26,6 @@ from pydantic import Field
 logger = logging.getLogger()
 
 
-def pytest_addoption(parser):
-    parser.addoption(
-        "--runslow",
-        action="store_true",
-        help="Allow slow tests.",
-    )
-
-
-def pytest_configure(config):
-    # register an additional marker
-    config.addinivalue_line("markers", "slow: mark test as slow.")
-
-
-def pytest_runtest_setup(item):
-    if "slow" in [mark.name for mark in item.iter_markers()]:
-        if not item.config.getoption("--runslow", default=False):
-            pytest.skip(f"Skipping slow tests unless explicitly forced to.")
-
-
 # https://www.testcult.com/handle-test-data-the-right-way-in-pytest/
 TEST_FIELD_NAME = Literal[
     "department_code",
