@@ -48,6 +48,7 @@ repos:
           - lxml
           - xmldiff
           - pytest
+          - pydantic
         exclude: |
           (?x)^(
             python_scripts/tests
