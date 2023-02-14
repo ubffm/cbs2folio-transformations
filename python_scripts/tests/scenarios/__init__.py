@@ -3,7 +3,6 @@ from collections.abc import Iterable
 from pathlib import Path
 from typing import Optional
 
-import pytest
 from cbs2folio_transformations._helpers import reraise
 from defusedxml import ElementTree
 from lxml import etree  # nosec blacklist
@@ -68,9 +67,6 @@ def logstring_for_department(
     )
 
 
-@pytest.mark.usefixtures(
-    "create_example_and_apply",
-)
 class Scenario:
     """Base class for test scenarios.
 
@@ -109,7 +105,8 @@ class Scenario:
             epn (int | str): Indentifier of the "exemplar"
             expected_location (str): expected location of the "exemplar"
             xsl (ElementTree): XML tree containing the transformation
-            create_example_and_apply (etree.Element): transformed entry
+            create_example_and_apply_for_step_4 (etree.Element):
+                transformed entry
             xslt (etree._XSLTProcessingInstruction): Transformation
             hrid (Optional[int]): HEBIS wide identifier. Defaults to None.
         """
@@ -151,7 +148,7 @@ class Scenario:
         epn: int | str,
         expected_location: str,
         xsl: ElementTree,
-        create_example_and_apply,
+        create_example_and_apply_for_step_4,
         hrid: Optional[int],
         xslt,
     ):
@@ -164,11 +161,12 @@ class Scenario:
             epn (int | str): Indentifier of the "exemplar"
             expected_location (str): expected location of the "exemplar"
             xsl (ElementTree): XML tree containing the transformation
-            create_example_and_apply (etree.Element): transformed entry
+            create_example_and_apply_for_step_4 (etree.Element):
+                transformed entry
             xslt (etree._XSLTProcessingInstruction): Transformation
             hrid (Optional[int]): HEBIS wide identifier. Defaults to None.
         """
-        _result: etree.Element = create_example_and_apply
+        _result: etree.Element = create_example_and_apply_for_step_4
         try:
             _location_node = _result.find(
                 "//record/holdingsRecords/arr/i/permanentLocationId"
