@@ -426,6 +426,110 @@ def record(
 TreeOrElement = TypeVar("TreeOrElement", etree.Element, etree.ElementTree)
 
 
+@pytest.fixture()
+def xslt_step1() -> etree.XSLT:
+    """Return the transformation for the 1st step.
+
+    Returns:
+        etree.XSLT: Transformation for the 1st step
+    """
+    with open(
+        pathlib.Path(__file__)
+        .parent.resolve()
+        .joinpath("../../hebis/pica2instance-new.xsl")
+    ) as f:
+        _xslt: etree.XSLT = etree.XSLT(etree.parse(f))
+    return _xslt
+
+
+@pytest.fixture()
+def xslt_step2() -> etree.XSLT:
+    """Return the transformation for the 2nd step.
+
+    Returns:
+        etree.XSLT: Transformation for the 2nd step
+    """
+    with open(
+        pathlib.Path(__file__)
+        .parent.resolve()
+        .joinpath("../../hebis/relationships.xsl")
+    ) as f:
+        _xslt: etree.XSLT = etree.XSLT(etree.parse(f))
+    return _xslt
+
+
+@pytest.fixture()
+def xslt_step3() -> etree.XSLT:
+    """Return the transformation for the 3rd step.
+
+    Returns:
+        etree.XSLT: Transformation for the 3rd step
+    """
+    with open(
+        pathlib.Path(__file__)
+        .parent.resolve()
+        .joinpath(
+            "../../hebis/holdings-items-hebis.xsl"
+        ),  # TODO Check "hebis/holdings-items-hebis-hrid-test.xsl"
+    ) as f:
+        _xslt: etree.XSLT = etree.XSLT(etree.parse(f))
+    return _xslt
+
+
+@pytest.fixture()
+def xslt_step4(iln: int) -> etree.XSLT:
+    """Return the transformation for the 4th step.
+
+    Args:
+        iln (int): ILN of the library to apply for
+
+    Returns:
+        etree.XSLT: Transformation for the 4th step
+    """
+    with open(
+        pathlib.Path(__file__)
+        .parent.resolve()
+        .joinpath(f"../../hebis/holding-items-hebis-iln{iln}.xsl"),
+    ) as f:
+        _xslt: etree.XSLT = etree.XSLT(etree.parse(f))
+    return _xslt
+
+
+@pytest.fixture()
+def xslt_step5() -> etree.XSLT:
+    """Return the transformation for the 5th step.
+
+    Returns:
+        etree.XSLT: Transformation for the 5th step
+    """
+    with open(
+        pathlib.Path(__file__)
+        .parent.resolve()
+        .joinpath("../../hebis/codes2uuid-hebis.xsl"),
+    ) as f:
+        _xslt: etree.XSLT = etree.XSLT(etree.parse(f))
+    return _xslt
+
+
+@pytest.fixture()
+def xslt_step6(iln: int) -> etree.XSLT:
+    """Return the transformation for the 6th step.
+
+    Args:
+        iln (int): ILN of the library to apply for
+
+    Returns:
+        etree.XSLT: Transformation for the 6th step
+    """
+    with open(
+        pathlib.Path(__file__)
+        .parent.resolve()
+        .joinpath(f"../../hebis/codes2uuid-hebis-iln{iln}.xsl"),
+    ) as f:
+        _xslt: etree.XSLT = etree.XSLT(etree.parse(f))
+    return _xslt
+
+
 def apply_xslt(
     data: TreeOrElement, filename: str | PathLike | pathlib.Path
 ) -> TreeOrElement:
