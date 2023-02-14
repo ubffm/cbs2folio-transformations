@@ -68,12 +68,7 @@ def logstring_for_department(
 
 
 class Scenario:
-    """Base class for test scenarios.
-
-    Raises:
-        Exception: _description_
-        Exception: _description_
-    """
+    """Base class for test scenarios."""
 
     data_csv_path: Optional[str | Path] = None
     data: Optional[Iterable] = None
