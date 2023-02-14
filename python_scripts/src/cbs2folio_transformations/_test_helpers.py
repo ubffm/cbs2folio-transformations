@@ -202,7 +202,7 @@ def create_signature(
 EXAMPLE_XML = (
     pathlib.Path(__file__)
     .parent.resolve()
-    .joinpath("../../hebis/testexamples/iln204.xml")
+    .joinpath("../../../hebis/testexamples/iln204.xml")
 )
 
 
