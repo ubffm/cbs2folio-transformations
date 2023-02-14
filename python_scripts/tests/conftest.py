@@ -616,7 +616,6 @@ def apply_transformations(
     """
     # makes debugging easier
     intermediate: dict[int, etree._ElementTree] = {}
-    # _input: etree._ElementTree = create_collection([record_from_example])
 
     for i, _xslt in enumerate(transformations):
         intermediate[i] = deepcopy(_input)
