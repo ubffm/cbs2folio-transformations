@@ -96,7 +96,7 @@ class Scenario:
         epn: int | str,
         expected_location: str,
         xsl: ElementTree,
-        create_example_and_apply: etree.Element,
+        create_example_and_apply_for_step_4: etree.Element,
         xslt: etree._XSLTProcessingInstruction,
         hrid: Optional[int],
     ):
@@ -114,7 +114,7 @@ class Scenario:
             hrid (Optional[int]): HEBIS wide identifier. Defaults to None.
         """
         try:
-            _result = create_example_and_apply
+            _result = create_example_and_apply_for_step_4
             _location_node = _result.find(
                 "//record/holdingsRecords/arr/i/permanentLocationId"
             )

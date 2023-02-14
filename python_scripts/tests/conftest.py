@@ -549,68 +549,6 @@ def apply_xslt(
     return transform(data)
 
 
-def _apply_step1(collection: TreeOrElement) -> TreeOrElement:
-    transformed = apply_xslt(
-        collection,
-        pathlib.Path(__file__)
-        .parent.resolve()
-        .joinpath("../../hebis/pica2instance-new.xsl"),
-    )
-    return transformed
-
-
-def _apply_step2(collection: TreeOrElement) -> TreeOrElement:
-    transformed = apply_xslt(
-        collection,
-        pathlib.Path(__file__)
-        .parent.resolve()
-        .joinpath("../../hebis/relationships.xsl"),
-    )
-    return transformed
-
-
-def _apply_step3(collection: TreeOrElement) -> TreeOrElement:
-    transformed = apply_xslt(
-        collection,
-        pathlib.Path(__file__)
-        .parent.resolve()
-        .joinpath(
-            "../../hebis/holdings-items-hebis.xsl"
-        ),  # TODO Check "hebis/holdings-items-hebis-hrid-test.xsl"
-    )
-    return transformed
-
-
-def _apply_step4(collection: TreeOrElement, iln: int) -> TreeOrElement:
-    transformed = apply_xslt(
-        collection,
-        pathlib.Path(__file__)
-        .parent.resolve()
-        .joinpath(f"../../hebis/holding-items-hebis-iln{iln}.xsl"),
-    )
-    return transformed
-
-
-def _apply_step5(collection: TreeOrElement) -> TreeOrElement:
-    transformed = apply_xslt(
-        collection,
-        pathlib.Path(__file__)
-        .parent.resolve()
-        .joinpath("../../hebis/codes2uuid-hebis.xsl"),
-    )
-    return transformed
-
-
-def _apply_step6(collection: TreeOrElement, iln: int) -> TreeOrElement:
-    transformed = apply_xslt(
-        collection,
-        pathlib.Path(__file__)
-        .parent.resolve()
-        .joinpath(f"../../hebis/codes2uuid-hebis-iln{iln}.xsl"),
-    )
-    return transformed
-
-
 def logstring_for_xsl(
     xslt: etree._XSLTProcessingInstruction, result: etree.Element
 ) -> str:
@@ -660,8 +598,38 @@ def hrid() -> Optional[int]:
     return None
 
 
+def apply_transformations(
+    _input: etree._ElementTree | etree._Element,
+    transformations: list[etree.XSLT],
+) -> etree._ElementTree:
+    """Apply a list of transformations to the input.
+
+    Args:
+        _input (etree._ElementTree | etree._Element):
+            Data to transform
+
+        transformations (list[etree.XSLT]):
+            List of transformations
+
+    Returns:
+        etree._ElementTree: Transformed data
+    """
+    # makes debugging easier
+    intermediate: dict[int, etree._ElementTree] = {}
+    # _input: etree._ElementTree = create_collection([record_from_example])
+
+    for i, _xslt in enumerate(transformations):
+        intermediate[i] = deepcopy(_input)
+        try:
+            _input = _xslt(_input)
+        except etree.XSLTApplyError as e:
+            reraise(e=e, info=xslt.error_log)
+
+    return _input
+
+
 @pytest.fixture()
-def create_example_and_apply(
+def create_example_and_apply_for_step_4(
     xslt: etree._XSLTProcessingInstruction,
     department_code: str,
     signature: str,
@@ -669,6 +637,9 @@ def create_example_and_apply(
     epn: int | str,
     expected_location: str,
     record_from_example: etree._Element,
+    xslt_step1: etree.XSLT,
+    xslt_step2: etree.XSLT,
+    xslt_step3: etree.XSLT,
     hrid: Optional[int] = None,
 ) -> etree.Element:
     """Create an example using the parameters and apply the transformation.
@@ -681,6 +652,9 @@ def create_example_and_apply(
         epn (int | str): Indentifier of the "exemplar"
         expected_location (str): expected location of the "exemplar"
         record_from_example (etree._Element): XML record
+        xslt_step1 (etree.XSLT): transformation for 1st step
+        xslt_step2 (etree.XSLT): transformation for 2nd step
+        xslt_step3 (etree.XSLT): transformation for 3rd step
         hrid (Optional[int]): HEBIS wide identifier. Defaults to None.
 
     Raises:
@@ -689,19 +663,7 @@ def create_example_and_apply(
     Returns:
         etree.Element: transformed entry
     """
-    # makes debugging easier
-    intermediate = {}
     _input = create_collection([record_from_example])
-
-    i: int = 0
-    intermediate[i] = deepcopy(_input)
-
-    for f in [_apply_step1, _apply_step2, _apply_step3]:
-        _input = f(_input)
-        i += 1
-        intermediate[i] = deepcopy(_input)
-
-    try:
-        return xslt(_input)
-    except etree.XSLTApplyError as e:
-        reraise(e=e, info=xslt.error_log)
+    return apply_transformations(
+        _input, [xslt_step1, xslt_step2, xslt_step3, xslt]
+    )
