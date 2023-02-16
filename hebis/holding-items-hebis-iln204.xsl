@@ -1096,11 +1096,37 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template name="replace-with-space">
+    <xsl:param name="text"/>
+    <xsl:choose>
+    <xsl:when test="normalize-space($text)">
+      <xsl:call-template name="replace-with-space">
+        <xsl:with-param name="text" select="translate($text, substring(normalize-space($text),1,1),' ')"/>
+      </xsl:call-template>
+    </xsl:when><xsl:otherwise><xsl:value-of select="$text"/></xsl:otherwise>
+  </xsl:choose>
+  </xsl:template>
+
   <!-- Normalize a signature or range -->
   <xsl:template name="normalize-signature-or-range">
     <xsl:param name="text"/>
+    <xsl:param name="token-markers" select="' /.:'" />
+    <xsl:variable name="token-replacement">
+      <xsl:call-template name="replace-with-space">
+        <xsl:with-param name="text" select="$token-markers"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:if test="$debug-template-logic-verbosity">
+      <xsl:message>Debug:
+        Text: "<xsl:value-of select="$text"/>"
+        Normalized: "<xsl:value-of
+        select="normalize-space(translate($text, $token-markers, $token-replacement ))" />"
+        Markers: "<xsl:value-of select="$token-markers"/>"
+        Replacement: "<xsl:value-of select="$token-replacement"/>"
+      </xsl:message>
+    </xsl:if>
       <xsl:value-of
-        select="normalize-space(translate($text, ' /.:', '    '))" />
+      select="normalize-space(translate($text, $token-markers, $token-replacement ))" />
   </xsl:template>
 
   <!-- Tokenize a string that's pipe separated -->
