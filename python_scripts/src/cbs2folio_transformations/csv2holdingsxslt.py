@@ -112,7 +112,7 @@ def rangesXML2LimitDictList(ranges: etree.Element) -> Iterable[LimitDict]:
 
 def limitDictList2rangesXML(
     reader: DictReader | Iterable[LimitDict], use_numerical: bool = False
-) -> etree.Element:
+) -> etree._Element:
     """Create the 'ranges' node of a 'holdings.xsl' file.
 
     Args:
@@ -125,7 +125,7 @@ def limitDictList2rangesXML(
         ValueError: department_code unsupported
 
     Returns:
-        etree.Element: _description_
+        etree._Element: Ranges element for use in the template
     """
     _ranges = etree.Element("ranges")
     for r in reader:
