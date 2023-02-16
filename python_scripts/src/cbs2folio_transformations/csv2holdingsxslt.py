@@ -122,7 +122,7 @@ def limitDictList2rangesXML(
             Defaults to False.
 
     Raises:
-        Exception: _description_
+        ValueError: department_code unsupported
 
     Returns:
         etree.Element: _description_
@@ -142,7 +142,7 @@ def limitDictList2rangesXML(
             _department_code = f"{int(_department_code):03d}"
 
         if _department_code and len(_department_code) != 3:
-            raise Exception(f"Invalid data: {_department_code}")
+            raise ValueError(f"Invalid data: {_department_code}")
 
         _department: etree.Element = (
             _d
