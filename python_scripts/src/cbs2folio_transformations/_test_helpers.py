@@ -206,8 +206,22 @@ EXAMPLE_XML = (
 )
 
 
+def get_initial_record() -> etree.Element:
+    """Create an record Element from the EXAMPLE_XML.
+
+    Returns:
+        etree.Element: 'record'-Element
+    """
+    parser = etree.XMLParser(remove_blank_text=True)
+
+    with open(EXAMPLE_XML) as f:
+        _tree: ElementTree = ElementTree.parse(f, parser=parser)
+
+    _record = _tree.find(".//record")
+    return _record
+
+
 def create_record_from_example(
-    initial_record,
     department_code: str,
     signature: str,
     indicator: str,
@@ -217,7 +231,6 @@ def create_record_from_example(
     """Replace the minimum parameters of the record.
 
     Args:
-        initial_record (etree.Element): Example record
         department_code (str): Identifier of the department
         signature (str): Signature of the record
         indicator (str): Status indicator
@@ -227,7 +240,7 @@ def create_record_from_example(
     Returns:
         etree._Element: Element containing the information
     """
-    _record = initial_record
+    _record = get_initial_record()
 
     if hrid:
         _record.find("hrid").text = f"{hrid}"
