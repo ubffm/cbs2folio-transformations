@@ -2,7 +2,6 @@
 """Module for creating a 'holdings.xslt' from a csv of ranges."""
 import io
 import logging
-import pathlib
 from argparse import ArgumentParser
 from argparse import FileType
 from collections.abc import Iterable
@@ -14,16 +13,10 @@ from typing import TypedDict
 from defusedxml import ElementTree
 from lxml import etree  # nosec blacklist
 
+from ._const import EXAMPLE_XSL
 from ._helpers import reraise
 
 logger = logging.getLogger()
-
-
-EXAMPLE_XSL = (
-    pathlib.Path(__file__)
-    .parent.resolve()
-    .joinpath("../../../hebis/holding-items-hebis-iln204.xsl")
-)
 
 
 class LimitDict(TypedDict):
