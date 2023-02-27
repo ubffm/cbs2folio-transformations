@@ -4,6 +4,8 @@ from typing import TypeVar
 
 from lxml import etree  # nosec blacklist
 
+from ._const import MARKERS
+
 _ExceptionType = TypeVar("_ExceptionType", bound=Exception)
 
 
@@ -106,3 +108,19 @@ def get_param_default_from_xsl(
                 return _value.strip("'")
 
     raise ValueError(f"{param_name} not defined in XSL")
+
+
+# TODO: evaluate using the tokenize function defined in the XML
+def tokenize(  # nosec hardcoded_password_default
+    text: str,
+    markers=MARKERS,
+    token_marker="|",
+) -> list[str]:
+    """Create a list of tokens from a string.
+
+    Args:
+        text (str): Text to tokenize
+    """
+    for marker in markers:
+        text = text.replace(marker, token_marker)
+    return [_token for _token in text.split(token_marker) if _token]
