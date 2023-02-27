@@ -127,7 +127,6 @@ def initial_record() -> etree.Element:
 
 @pytest.fixture()
 def record_from_example(
-    initial_record,
     department_code: str,
     signature: str,
     indicator: str,
@@ -137,7 +136,6 @@ def record_from_example(
     """Replace the minimum parameters of the record.
 
     Args:
-        initial_record (etree.Element): Example record
         department_code (str): Identifier of the department
         signature (str): Signature of the record
         indicator (str): Status indicator
@@ -148,7 +146,6 @@ def record_from_example(
         etree._Element: Element containing the information
     """
     return create_record_from_example(
-        initial_record,
         department_code,
         signature,
         indicator,
