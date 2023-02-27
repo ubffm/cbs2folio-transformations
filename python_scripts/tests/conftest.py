@@ -109,7 +109,7 @@ def pytest_generate_tests(metafunc: pytest.Metafunc):
     )
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def initial_record() -> etree.Element:
     """Create an record Element from the EXAMPLE_XML.
 
@@ -184,7 +184,7 @@ def record(
 TreeOrElement = TypeVar("TreeOrElement", etree.Element, etree.ElementTree)
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def xslt_step1() -> etree.XSLT:
     """Return the transformation for the 1st step.
 
@@ -200,7 +200,7 @@ def xslt_step1() -> etree.XSLT:
     return _xslt
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def xslt_step2() -> etree.XSLT:
     """Return the transformation for the 2nd step.
 
@@ -216,7 +216,7 @@ def xslt_step2() -> etree.XSLT:
     return _xslt
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def xslt_step3() -> etree.XSLT:
     """Return the transformation for the 3rd step.
 
@@ -234,7 +234,7 @@ def xslt_step3() -> etree.XSLT:
     return _xslt
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def xslt_step4(iln: int) -> etree.XSLT:
     """Return the transformation for the 4th step.
 
@@ -253,7 +253,7 @@ def xslt_step4(iln: int) -> etree.XSLT:
     return _xslt
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def xslt_step5() -> etree.XSLT:
     """Return the transformation for the 5th step.
 
@@ -269,7 +269,7 @@ def xslt_step5() -> etree.XSLT:
     return _xslt
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def xslt_step6(iln: int) -> etree.XSLT:
     """Return the transformation for the 6th step.
 
@@ -301,7 +301,7 @@ def xslt(xsl: etree.Element) -> etree.XSLT:
     return etree.XSLT(xsl)
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def hrid() -> Optional[int]:
     """Fixture to ensure an hrid is always provided.
 
