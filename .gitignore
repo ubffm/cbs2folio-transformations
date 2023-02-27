@@ -1,0 +1,4 @@
+.venv/*
+
+# ignore hypothesis examples
+**/.hypothesis/*
