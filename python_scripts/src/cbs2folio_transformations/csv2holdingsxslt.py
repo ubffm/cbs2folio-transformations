@@ -5,16 +5,20 @@ import logging
 from argparse import ArgumentParser
 from argparse import FileType
 from collections.abc import Iterable
+from contextlib import suppress
 from csv import DictReader
 from sys import stdin
 from sys import stdout
+from typing import Optional
 from typing import TypedDict
 
 from defusedxml import ElementTree
 from lxml import etree  # nosec blacklist
 
 from ._const import EXAMPLE_XSL
+from ._const import VALIDATION_REGEX
 from ._helpers import reraise
+from ._helpers import tokenize
 
 logger = logging.getLogger()
 
@@ -149,6 +153,78 @@ def limitDictList2rangesXML(
             "location_numerical" if use_numerical else "location_code"
         ]
 
+        def _validate_ranges(sig_start: str, sig_end: str):
+            """Check if the range is valid.
+
+            Args:
+                sig_start (str): Start of the signature range
+                sig_end (str): End of the signature range
+            """
+            if not (VALIDATION_REGEX.match(sig_start)):
+                raise ValueError(
+                    f"'{sig_start}' contains invalid characters \
+                        (RegEx: {VALIDATION_REGEX.pattern})"
+                )
+            if not (VALIDATION_REGEX.match(sig_end)):
+                raise ValueError(
+                    f"'{sig_end}' contains invalid characters \
+                        (RegEx: {VALIDATION_REGEX.pattern})"
+                )
+
+            _tokenized_start = tokenize(sig_start)
+            _tokenized_end = tokenize(sig_end)
+
+            if len(_tokenized_start) != len(_tokenized_end):
+                raise ValueError(
+                    f"'{sig_start}' has a different length from '{sig_end}'\
+                        ({_tokenized_start,_tokenized_end})"
+                )
+
+            def _validate_tokens(token_start: str, token_end: str):
+                """Validate wether the tokens are ok for comparison.
+
+                Args:
+                    token_start (str): Token from start of signature range
+                    token_end (str): Token from end of signature range
+                """
+                _token_start_as_int: Optional[int] = None
+                with suppress(ValueError):
+                    _token_start_as_int = int(sig_start)
+
+                _token_end_as_int: Optional[int] = None
+                with suppress(ValueError):
+                    _token_end_as_int = int(sig_end)
+
+                if _token_start_as_int is None and _token_end_as_int is None:
+                    # check for alphabet order
+                    ...
+
+                elif _token_start_as_int is None or _token_end_as_int is None:
+                    raise ValueError(
+                        f"Mixing alphabetical and \
+                            numerical tokens is not supported: \
+                            {token_start} and {token_end} \
+                                in ({sig_start}, {sig_end})"
+                    )
+
+                else:
+                    if _token_end_as_int < _token_start_as_int:
+                        raise ValueError(
+                            f"The upper end of the range \
+                                should not be smaller than the lower end. \
+                                    ({sig_start},{sig_end})"
+                        )
+
+            for token_idx in range(len(_tokenized_start)):
+                if _tokenized_start[token_idx] == _tokenized_end[token_idx]:
+                    continue
+                else:
+                    _validate_tokens(
+                        _tokenized_start[token_idx], _tokenized_end[token_idx]
+                    )
+
+        _validate_ranges(r["sig_start"], r["sig_end"])
+
         if r["sig_start"] == r["sig_end"] == "":
             logger.warning(
                 f"""Setting default-location for {
@@ -256,7 +332,9 @@ def create_holdings_items_xsl_from_csv(
         reraise(
             e=e,
             info=f"""Error handling the provided koko{
-                (' (' + koko.name + ')' ) if koko.name else ''
+                (' (' + koko.name + ')' )
+                if hasattr(koko,"name") and koko.name
+                else ''
             }""",
         )
     # TODO remove entries
