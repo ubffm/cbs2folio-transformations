@@ -1,10 +1,16 @@
 """Module for reusable codesnippets."""
+import pathlib
+import re
 from typing import NoReturn
 from typing import TypeVar
 
 from lxml import etree  # nosec blacklist
 
-from ._const import MARKERS
+EXAMPLE_XSL = (
+    pathlib.Path(__file__)
+    .parent.resolve()
+    .joinpath("../../../hebis/holding-items-hebis-iln204.xsl")
+)
 
 _ExceptionType = TypeVar("_ExceptionType", bound=Exception)
 
@@ -110,6 +116,27 @@ def get_param_default_from_xsl(
     raise ValueError(f"{param_name} not defined in XSL")
 
 
+MARKERS = get_param_default_from_xsl(
+    param_name="token-markers", xsl=etree.parse(EXAMPLE_XSL)
+)  # Mark segments of signatures to be considered tokens
+
+VALIDATION_REGEX = re.compile(
+    r"|"
+    + r"^\w+"  # Allow empty ranges  # FIXME
+    + r"(?:"  # Additional parts
+    + r"(?:"  # Seperator
+    + r"["
+    + ",".join([re.escape(marker) for marker in MARKERS])
+    + r"]+"
+    + r")"
+    + r"\w+"
+    + r")*"
+    + r"(?:@@@)?"  # Prefix marker
+    + r"\s*"  # Allow trailing whitespace  # FIXME
+    + r"$"
+)
+
+
 # TODO: evaluate using the tokenize function defined in the XML
 def tokenize(  # nosec hardcoded_password_default
     text: str,
@@ -124,3 +151,7 @@ def tokenize(  # nosec hardcoded_password_default
     for marker in markers:
         text = text.replace(marker, token_marker)
     return [_token for _token in text.split(token_marker) if _token]
+
+
+NAMESPACES = {"xsl": "http://www.w3.org/1999/XSL/Transform"}
+XML_MAX_INT = int("2147483647")
