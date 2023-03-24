@@ -117,7 +117,8 @@ def get_param_default_from_xsl(
 
 
 MARKERS = get_param_default_from_xsl(
-    param_name="token-markers", xsl=etree.parse(EXAMPLE_XSL)
+    param_name="token-markers",
+    xsl=etree.parse(EXAMPLE_XSL),  # nosec B320 # this is a trusted XML file
 )  # Mark segments of signatures to be considered tokens
 
 VALIDATION_REGEX = re.compile(
