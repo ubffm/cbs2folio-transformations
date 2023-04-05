@@ -45,3 +45,6 @@ line-length = 79
 
 [tool.pyright]
 #venvPath="python_scripts/.venv"
+
+[tool.isort]
+profile = "black"
