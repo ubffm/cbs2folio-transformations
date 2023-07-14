@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Module for creating a 'holdings.xslt' from a csv of ranges."""
+from __future__ import annotations
+
 import io
 import logging
 from argparse import ArgumentParser
@@ -9,22 +11,47 @@ from contextlib import suppress
 from csv import DictReader
 from sys import stdin
 from sys import stdout
+from typing import Iterator
 from typing import Optional
-from typing import TypedDict
+from typing import Text
 
-from defusedxml import ElementTree
-from lxml import etree  # nosec blacklist
+from lxml import etree  # nosec: ignore [blacklist]
+from pydantic import BaseModel
+from pydantic import ConstrainedStr
 
-from ._const import EXAMPLE_XSL
-from ._const import VALIDATION_REGEX
+from ._helpers import EXAMPLE_XSL
 from ._helpers import reraise
 from ._helpers import tokenize
+from ._helpers import VALIDATION_REGEX
 
 logger = logging.getLogger()
 
 
-class LimitDict(TypedDict):
+class LimitDict(BaseModel):
     """Dictionary to describe either a prefix or a range of signatures."""
+
+    def __getitem__(self, item):
+        """Access the model fields in a dictionary like way."""
+        return getattr(self, item)
+
+    # def __iter__(self) -> "TupleGenerator":
+    #     return super().__iter__()
+
+    # def copy(
+    #     self: Self,
+    #     *,
+    #     include: Optional[
+    #         Union["AbstractSetIntStr", "MappingIntStrAny"]
+    #     ] = None,
+    #     exclude: Optional[
+    #         Union["AbstractSetIntStr", "MappingIntStrAny"]
+    #     ] = None,
+    #     update: Optional["DictStrAny"] = None,
+    #     deep: bool = False,
+    # ) -> Self:
+    #     return super().copy(
+    #         include=include, exclude=exclude, update=update, deep=deep
+    #     )
 
     department_code: str
     sig_start: str
@@ -40,7 +67,7 @@ def rangesXML2LimitDictList(ranges: etree.Element) -> Iterable[LimitDict]:
         ranges (etree.Element): 'ranges' element of a 'holdings.xml'
 
     Raises:
-        ValueError: unparseable tag
+        ValueError: unparsable tag
 
     Returns:
         Iterable[LimitDict]: Limits as list
@@ -78,8 +105,8 @@ def rangesXML2LimitDictList(ranges: etree.Element) -> Iterable[LimitDict]:
                     )
 
                 _ranges.append(
-                    LimitDict(
-                        **{
+                    LimitDict.parse_obj(
+                        {
                             "department_code": department_code,
                             "sig_start": sig_start,
                             "sig_end": sig_end,
@@ -91,8 +118,8 @@ def rangesXML2LimitDictList(ranges: etree.Element) -> Iterable[LimitDict]:
 
             if "default-location" in _department.attrib:
                 _ranges.append(
-                    LimitDict(
-                        **{
+                    LimitDict.parse_obj(
+                        {
                             "department_code": department_code,
                             "sig_start": "",
                             "sig_end": "",
@@ -107,9 +134,52 @@ def rangesXML2LimitDictList(ranges: etree.Element) -> Iterable[LimitDict]:
     return _ranges
 
 
+class OneCharacterString(
+    ConstrainedStr  # pyright: ignore [reportGeneralTypeIssues]
+):
+    """Class for strings containing only one character."""
+
+    min_length = 1
+    max_length = 1
+
+
+class LimitDictReader:
+    """Adapted DictReader returning LimitDict instances."""
+
+    reader: DictReader
+
+    def __init__(self, f: Iterable[Text], delimiter: OneCharacterString):
+        """Initialize the LimitDictReader.
+
+        Args:
+            f (Iterable[Text]): Iterable text to parse as csv.
+            delimiter (OneCharacterString): Delimiter for the fields.
+        """
+        self.reader = DictReader(
+            f,
+            delimiter=delimiter,
+            fieldnames=[
+                "department_code",
+                "sig_start",
+                "sig_end",
+                "location_numerical",
+                "location_code",
+            ],
+        )
+
+    def __iter__(self) -> "Iterator[LimitDict]":
+        """Return an Iterator of LimitDicts."""
+        return map(LimitDict.parse_obj, self.reader)
+
+    # def __next__(self) -> LimitDict:
+    #     return
+    #     return LimitDict.parse_obj(super().__next__())
+
+
 def limitDictList2rangesXML(
-    reader: DictReader | Iterable[LimitDict], use_numerical: bool = False
-) -> etree._Element:
+    reader: Iterable[LimitDict],
+    use_numerical: bool = False,
+) -> "etree._Element":
     """Create the 'ranges' node of a 'holdings.xsl' file.
 
     Args:
@@ -293,8 +363,10 @@ def limitDictList2rangesXML(
 
 
 def create_holdings_items_xsl_from_csv(
-    koko: io.TextIOWrapper, use_numerical: bool = False, delimiter: str = ","
-) -> ElementTree:
+    koko: io.TextIOWrapper,
+    use_numerical: bool = False,
+    delimiter: OneCharacterString = OneCharacterString(","),
+) -> etree.ElementTree:
     """Create a 'holdings.xsl' from csv of limits.
 
     Args:
@@ -311,19 +383,10 @@ def create_holdings_items_xsl_from_csv(
     Returns:
         ElementTree: 'holdings.xsl' as XML
     """
-    import csv
-
     # TODO Fix handling of files if provided via args
-    reader = csv.DictReader(
+    reader = LimitDictReader(
         koko,
         delimiter=delimiter,
-        fieldnames=[
-            "department_code",
-            "sig_start",
-            "sig_end",
-            "location_numerical",
-            "location_code",
-        ],
     )
 
     try:
@@ -340,7 +403,7 @@ def create_holdings_items_xsl_from_csv(
     # TODO remove entries
     with open(EXAMPLE_XSL) as f:
         # TODO: Check why defusedxml has no getparent
-        _tree: ElementTree = etree.parse(f)  # nosec blacklist
+        _tree: etree.ElementTree = etree.parse(f)  # nosec blacklist
         _r = _tree.find(".//ranges")
         _r.getparent().replace(_r, _ranges)
 
