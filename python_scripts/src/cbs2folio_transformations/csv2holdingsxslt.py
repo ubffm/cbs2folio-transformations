@@ -11,13 +11,20 @@ from contextlib import suppress
 from csv import DictReader
 from sys import stdin
 from sys import stdout
+from typing import Annotated
 from typing import Iterator
+from typing import List
 from typing import Optional
 from typing import Text
+from typing import Union
 
-from lxml import etree  # nosec: ignore [blacklist]
+from annotated_types import Len
+from lxml import etree  # type: ignore [import] # nosec: ignore [blacklist]
 from pydantic import BaseModel
-from pydantic import ConstrainedStr
+from pydantic import field_validator
+from pydantic import model_validator
+from pydantic import ValidationError
+from pydantic_core import PydanticCustomError
 
 from ._helpers import EXAMPLE_XSL
 from ._helpers import reraise
@@ -54,9 +61,67 @@ class LimitDict(BaseModel):
     #     )
 
     department_code: str
+
+    @field_validator("department_code")
+    def _validate_department_code(cls, v, values) -> str | None:
+        _department_code = v
+        if _department_code.upper() in [
+            "INF",  # Information
+            "",  # Malformed Entry
+            "BIK",  # Header
+        ]:
+            logger.warning(values)
+        else:
+            _department_code = f"{int(_department_code):03d}"
+
+        if _department_code and len(_department_code) != 3:
+            raise ValueError(f"Invalid data: {_department_code}")
+
+        return _department_code
+
     sig_start: str
     sig_end: str
-    location_numerical: str
+
+    @field_validator("sig_start", "sig_end")
+    def _validate_signature_regexp(cls, v) -> str:
+        if not (VALIDATION_REGEX.match(v)):
+            raise ValueError(
+                f"'{v}' contains invalid characters \
+                            (RegEx: {VALIDATION_REGEX.pattern})"
+            )
+        return v
+
+    @model_validator(mode="after")
+    def _validate_range(self: "LimitDict") -> "LimitDict":
+        _tokenized_start = tokenize(sig_start := self["sig_start"])
+        _tokenized_end = tokenize(sig_end := self["sig_end"])
+
+        if len(_tokenized_start) != len(_tokenized_end):
+            raise PydanticCustomError(
+                "mismatching_token_lengths",
+                "'{sig_start}' has a different length from '{sig_end}'\
+                        ({_tokenized_start,_tokenized_end})",
+                {
+                    "sig_start": sig_start,
+                    "sig_end": sig_end,
+                    "_tokenized_start": _tokenized_start,
+                    "_tokenized_end": _tokenized_end,
+                },
+            )
+
+        for token_idx in range(len(_tokenized_start)):
+            if _tokenized_start[token_idx] == _tokenized_end[token_idx]:
+                continue
+            else:
+                _validate_tokens(
+                    _tokenized_start[token_idx],
+                    _tokenized_end[token_idx],
+                    sig_start=sig_start,
+                    sig_end=sig_end,
+                )
+        return self
+
+    location_numerical: str | None
     location_code: str
 
 
@@ -97,50 +162,57 @@ def rangesXML2LimitDictList(ranges: etree.Element) -> Iterable[LimitDict]:
 
                 else:
                     raise ValueError(
-                        f"""Unsupported tag {
-                            limit.tag
-                        } in {
-                            etree.tostring(limit)
-                        }"""
+                        f"Unsupported tag {limit.tag} in {etree.tostring(limit)}"  # noqa: ignore[E501]
                     )
 
-                _ranges.append(
-                    LimitDict.parse_obj(
-                        {
-                            "department_code": department_code,
-                            "sig_start": sig_start,
-                            "sig_end": sig_end,
-                            "location_numerical": None,
-                            "location_code": location,
-                        }
+                try:
+                    _ranges.append(
+                        LimitDict.model_validate(
+                            {
+                                "department_code": department_code,
+                                "sig_start": sig_start,
+                                "sig_end": sig_end,
+                                "location_numerical": None,
+                                "location_code": location,
+                            }
+                        )
                     )
-                )
+                except ValidationError as e:
+                    _error = e.errors()[0]
+                    _error_context = _error["ctx"] if "ctx" in _error else None
+                    if _error["type"] == "mixed_tokens":
+                        logger.warning(
+                            f"Please split the following range into a numeric and an alphabetic range: {_error_context}, {etree.tostring(limit)}"  # noqa: ignore[E501]
+                        )
+                    elif _error["type"] == "mismatching_token_lengths":
+                        logger.warning(
+                            f"This range is not a valid one; both limits need to have the same length after tokenization: {_error_context}, {etree.tostring(limit)}"  # noqa: ignore[E501]
+                        )
+                    else:
+                        logger.error(f"Error Validating {limit}: {e}")
 
             if "default-location" in _department.attrib:
-                _ranges.append(
-                    LimitDict.parse_obj(
-                        {
-                            "department_code": department_code,
-                            "sig_start": "",
-                            "sig_end": "",
-                            "location_numerical": None,
-                            "location_code": _department.attrib[
-                                "default-location"
-                            ],
-                        }
+                try:
+                    _ranges.append(
+                        LimitDict.model_validate(
+                            {
+                                "department_code": department_code,
+                                "sig_start": "",
+                                "sig_end": "",
+                                "location_numerical": None,
+                                "location_code": _department.attrib[
+                                    "default-location"
+                                ],
+                            }
+                        )
                     )
-                )
+                except ValidationError as e:
+                    logger.error(f"Error Validating {_department}: {e}")
 
     return _ranges
 
 
-class OneCharacterString(
-    ConstrainedStr  # pyright: ignore [reportGeneralTypeIssues]
-):
-    """Class for strings containing only one character."""
-
-    min_length = 1
-    max_length = 1
+OneCharacterString = Annotated[str, Len(min_length=1, max_length=1)]
 
 
 class LimitDictReader:
@@ -169,11 +241,116 @@ class LimitDictReader:
 
     def __iter__(self) -> "Iterator[LimitDict]":
         """Return an Iterator of LimitDicts."""
-        return map(LimitDict.parse_obj, self.reader)
+        return map(LimitDict.model_validate, self.reader)
 
     # def __next__(self) -> LimitDict:
     #     return
     #     return LimitDict.parse_obj(super().__next__())
+
+
+def _validate_tokens(
+    token_start: str, token_end: str, sig_start: str, sig_end: str
+) -> None:
+    """Validate wether the tokens are ok for comparison.
+
+    Args:
+        token_start (str): Token from start of signature range
+        token_end (str): Token from end of signature range
+        sig_start (str): Start of the signature range
+        sig_end (str): End of the signature range
+    """
+    _token_start_as_int: Optional[int] = None
+    with suppress(ValueError):
+        _token_start_as_int = int(sig_start)
+
+    _token_end_as_int: Optional[int] = None
+    with suppress(ValueError):
+        _token_end_as_int = int(sig_end)
+
+    if _token_start_as_int is None and _token_end_as_int is None:
+        # check for alphabet order
+        ...
+
+    elif _token_start_as_int is None or _token_end_as_int is None:
+        raise PydanticCustomError(
+            "mixed_tokens",
+            "Mixing alphabetical and \
+                        numerical tokens is not supported: \
+                        {token_start} and {token_end} \
+                            in ({sig_start}, {sig_end})",
+            {
+                "sig_end": sig_end,
+                "sig_start": sig_start,
+                "token_end": token_end,
+                "token_start": token_start,
+            },
+        )
+
+    else:
+        if _token_end_as_int < _token_start_as_int:
+            raise ValueError(
+                f"The upper end of the range \
+                            should not be smaller than the lower end. \
+                                ({sig_start},{sig_end})"
+            )
+
+
+def _validate_range(sig_start: str, sig_end: str):
+    """Check if the range is valid.
+
+    Args:
+        sig_start (str): Start of the signature range
+        sig_end (str): End of the signature range
+    """
+    if not (VALIDATION_REGEX.match(sig_start)):
+        raise PydanticCustomError(
+            "string_pattern_mismatch",
+            "'{sig_start}' contains invalid characters \
+                        (RegEx: {pattern})",
+            {
+                "sig_end": sig_end,
+                "sig_start": sig_start,
+                "pattern": VALIDATION_REGEX.pattern,
+            },
+        )
+    if not (VALIDATION_REGEX.match(sig_end)):
+        raise PydanticCustomError(
+            "string_pattern_mismatch",
+            "'{sig_end}' contains invalid characters \
+                        (RegEx: {pattern})",
+            {
+                "sig_end": sig_end,
+                "sig_start": sig_start,
+                "pattern": VALIDATION_REGEX.pattern,
+            },
+        )
+
+    _tokenized_start = tokenize(sig_start)
+    _tokenized_end = tokenize(sig_end)
+
+    if len(_tokenized_start) != len(_tokenized_end):
+        raise PydanticCustomError(
+            "mismatching_token_lengthss",
+            "'{sig_start}' has a different length from '{sig_end}'\
+                        ({_tokenized_start,_tokenized_end})",
+            {
+                "sig_start": sig_start,
+                "sig_end": sig_end,
+                "_tokenized_start": _tokenized_start,
+                "_tokenized_end": _tokenized_end,
+            },
+        )
+
+    for token_idx in range(len(_tokenized_start)):
+        if _tokenized_start[token_idx] == _tokenized_end[token_idx]:
+            continue
+        else:
+            _validate_tokens(
+                _tokenized_start[token_idx],
+                _tokenized_end[token_idx],
+                sig_start=sig_start,
+                sig_end=sig_end,
+            )
 
 
 def limitDictList2rangesXML(
@@ -194,8 +371,10 @@ def limitDictList2rangesXML(
     Returns:
         etree._Element: Ranges element for use in the template
     """
+    _errors: List[Union[LimitDict, int, ValueError]] = []
+
     _ranges = etree.Element("ranges")
-    for r in reader:
+    for idx, r in enumerate(reader):
         # TODO ensure type
         _department_code: str = r["department_code"]
 
@@ -222,79 +401,10 @@ def limitDictList2rangesXML(
         _location: str = r[
             "location_numerical" if use_numerical else "location_code"
         ]
-
-        def _validate_ranges(sig_start: str, sig_end: str):
-            """Check if the range is valid.
-
-            Args:
-                sig_start (str): Start of the signature range
-                sig_end (str): End of the signature range
-            """
-            if not (VALIDATION_REGEX.match(sig_start)):
-                raise ValueError(
-                    f"'{sig_start}' contains invalid characters \
-                        (RegEx: {VALIDATION_REGEX.pattern})"
-                )
-            if not (VALIDATION_REGEX.match(sig_end)):
-                raise ValueError(
-                    f"'{sig_end}' contains invalid characters \
-                        (RegEx: {VALIDATION_REGEX.pattern})"
-                )
-
-            _tokenized_start = tokenize(sig_start)
-            _tokenized_end = tokenize(sig_end)
-
-            if len(_tokenized_start) != len(_tokenized_end):
-                raise ValueError(
-                    f"'{sig_start}' has a different length from '{sig_end}'\
-                        ({_tokenized_start,_tokenized_end})"
-                )
-
-            def _validate_tokens(token_start: str, token_end: str):
-                """Validate wether the tokens are ok for comparison.
-
-                Args:
-                    token_start (str): Token from start of signature range
-                    token_end (str): Token from end of signature range
-                """
-                _token_start_as_int: Optional[int] = None
-                with suppress(ValueError):
-                    _token_start_as_int = int(sig_start)
-
-                _token_end_as_int: Optional[int] = None
-                with suppress(ValueError):
-                    _token_end_as_int = int(sig_end)
-
-                if _token_start_as_int is None and _token_end_as_int is None:
-                    # check for alphabet order
-                    ...
-
-                elif _token_start_as_int is None or _token_end_as_int is None:
-                    raise ValueError(
-                        f"Mixing alphabetical and \
-                            numerical tokens is not supported: \
-                            {token_start} and {token_end} \
-                                in ({sig_start}, {sig_end})"
-                    )
-
-                else:
-                    if _token_end_as_int < _token_start_as_int:
-                        raise ValueError(
-                            f"The upper end of the range \
-                                should not be smaller than the lower end. \
-                                    ({sig_start},{sig_end})"
-                        )
-
-            for token_idx in range(len(_tokenized_start)):
-                if _tokenized_start[token_idx] == _tokenized_end[token_idx]:
-                    continue
-                else:
-                    _validate_tokens(
-                        _tokenized_start[token_idx], _tokenized_end[token_idx]
-                    )
-
-        _validate_ranges(r["sig_start"], r["sig_end"])
-
+        try:
+            _validate_range(r["sig_start"], r["sig_end"])
+        except ValueError as e:
+            _errors.append(e)
         if r["sig_start"] == r["sig_end"] == "":
             logger.warning(
                 f"""Setting default-location for {
