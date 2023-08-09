@@ -3,8 +3,10 @@ import logging
 from typing import Optional
 
 import pytest
-from lxml import etree  # nosec blacklist
-from xmldiff import main as xmldiffmain
+from lxml import (  # nosec blacklist
+    etree,  # pyright: ignore [reportGeneralTypeIssues]
+)
+from xmldiff import main as xmldiffmain  # type: ignore [import]
 
 logger = logging.getLogger()
 
@@ -70,7 +72,7 @@ def test_create_record_initial(
     indicator: str,
     epn: int | str,
     hrid: Optional[int],
-    record_from_example: etree.Element,
+    record_from_example: etree._Element,
 ):
     _record_string = etree.tostring(
         record_from_example, encoding="utf-8", pretty_print=True
@@ -85,18 +87,15 @@ def test_create_record_initial(
     _datafield_string = etree.tostring(
         _datafield, encoding="utf-8", pretty_print=True
     ).decode("utf-8")
-    assert (  # nosec assert_used
-        _datafield.find('subfield[@code="d"]') is not None
-    ), _datafield_string
-    assert (  # nosec assert_used
-        _datafield.find("subfield[@code='d']").text == indicator
-    )
-    assert (  # nosec assert_used
-        _datafield.find("subfield[@code='a']").text == signature
-    )
-    assert (  # nosec assert_used
-        _datafield.find("subfield[@code='f']").text == department_code
-    )
+    _field_d = _datafield.find('subfield[@code="d"]')
+    assert _field_d is not None, _datafield_string  # nosec assert_used
+    assert _field_d.text == indicator  # nosec assert_used
+    _field_a = _datafield.find("subfield[@code='a']")
+    assert _field_a is not None  # nosec assert_used
+    assert _field_a.text == signature  # nosec assert_used
+    _field_f = _datafield.find("subfield[@code='f']")
+    assert _field_f is not None  # nosec assert_used
+    assert _field_f.text == department_code  # nosec assert_used
 
 
 @pytest.mark.xfail
