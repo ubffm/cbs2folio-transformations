@@ -1,11 +1,14 @@
 """Module for reusable codesnippets."""
+import logging
 import pathlib
 import re
+from typing import Iterable
 from typing import NoReturn
 from typing import TypeVar
 
-from lxml import etree  # nosec blacklist
+from lxml import etree  # nosec: ignore[blacklist]
 
+logger = logging.getLogger(__name__)
 EXAMPLE_XSL = (
     pathlib.Path(__file__)
     .parent.resolve()
@@ -17,8 +20,8 @@ _ExceptionType = TypeVar("_ExceptionType", bound=Exception)
 
 # Source: https://stackoverflow.com/questions/9157210/how-do-i-raise-the-same-exception-with-a-custom-message-in-python  # noqa: E501
 def reraise(
-    e: _ExceptionType, info: str
-) -> NoReturn:  # pyright: reportInvalidTypeVarUse=false
+    e: "_ExceptionType", info: str  # pyright: ignore [reportInvalidTypeVarUse]
+) -> NoReturn:
     """Reraise an exception after adding information.
 
     Args:
@@ -44,32 +47,59 @@ def get_variable_from_xsl(variable_name: str, xsl: etree._ElementTree) -> str:
         xsl (etree._ElementTree): XSL Tree to search in
 
     Raises:
-        ValueError: Unkmown variable
+        ValueError: Unknown variable
 
     Returns:
         str: Value of the variable
     """
-    xpath_results = xsl.xpath(
+    xpath_results: etree._XPathObject = xsl.xpath(
         "//xsl:variable[@name=$name]",
         name=variable_name,
         namespaces={"xsl": "http://www.w3.org/1999/XSL/Transform"},
     )
 
+    if not isinstance(xpath_results, Iterable):
+        raise ValueError(
+            f"Expected an iterable as result, but got {xpath_results}"
+        )
+
     for xpath_result in xpath_results:
+        if not isinstance(xpath_result, etree._Element):
+            raise ValueError(
+                f"Expected an etree._Element as result, but got {xpath_result!r}"  # noqa: ignore[E501]
+            )
         if xpath_result.get("name") == variable_name:
-            for xpath_child in xpath_result.xpath(
+            xpath_result_children = xpath_result.xpath(
                 "xsl:value-of",
                 namespaces={"xsl": "http://www.w3.org/1999/XSL/Transform"},
+            )
+            if isinstance(xpath_result_children, Iterable):
+                for xpath_child in xpath_result_children:
+                    if not isinstance(xpath_child, etree._Element):
+                        raise ValueError(
+                            f"Expected an etree._Element as result, but got {xpath_child!r}"  # noqa: ignore[E501]
+                        )
+                    if (
+                        "select" in xpath_child.keys()
+                        and (_select_text := xpath_child.get("select"))
+                        is not None
+                    ):
+                        return _select_text.strip("'")
+                    if (
+                        "text" in xpath_child.keys()
+                        and (_text := xpath_child.text) is not None
+                    ):
+                        return _text.strip("'")
+
+            if (
+                hasattr(xpath_result, "text")
+                and (_text := xpath_result.text) is not None
             ):
-                if "select" in xpath_child.keys():
-                    return xpath_child.get("select").strip("'")
-                if "text" in xpath_child.keys():
-                    return xpath_child.text.strip("'")
+                return _text.strip("'")
 
-            if hasattr(xpath_result, "text"):
-                _value: str = xpath_result.text
-                return _value.strip("'")
-
+            logger.warning(
+                f"Expected an iterable or etree._Element as result, but got {xpath_result}"  # noqa: ignore[E501]
+            )
     raise ValueError(f"{variable_name} not defined in XSL")
 
 
@@ -84,7 +114,7 @@ def get_param_default_from_xsl(
         xsl (etree._ElementTree): XSL Tree to search in
 
     Raises:
-        ValueError: Unkmown variable
+        ValueError: Unknown variable
 
     Returns:
         str: Value of the variable
@@ -95,23 +125,48 @@ def get_param_default_from_xsl(
         namespaces={"xsl": "http://www.w3.org/1999/XSL/Transform"},
     )
 
+    if not isinstance(xpath_results, Iterable):
+        raise ValueError(
+            f"Expected an iterable as result, but got {xpath_results}"
+        )
+
     for xpath_result in xpath_results:
+        if not isinstance(xpath_result, etree._Element):
+            raise ValueError(
+                f"Expected an etree._Element as result, but got {xpath_result!r}"  # noqa: ignore[E501]
+            )
         if xpath_result.get("name") == param_name:
-            for xpath_child in xpath_result.xpath(
+            xpath_result_children = xpath_result.xpath(
                 "xsl:value-of",
                 namespaces={"xsl": "http://www.w3.org/1999/XSL/Transform"},
+            )
+            if isinstance(xpath_result_children, Iterable):
+                for xpath_child in xpath_result_children:
+                    if not isinstance(xpath_child, etree._Element):
+                        raise ValueError(
+                            f"Expected an etree._Element as result, but got {xpath_child!r}"  # noqa: ignore[E501]
+                        )
+                    if (
+                        "select" in xpath_child.keys()
+                        and (_select_text := xpath_child.get("select"))
+                        is not None
+                    ):
+                        return _select_text.strip("'")
+                    if (
+                        "text" in xpath_child.keys()
+                        and (_text := xpath_child.text) is not None
+                    ):
+                        return _text.strip("'")
+
+            if (
+                hasattr(xpath_result, "text")
+                and (_text := xpath_result.text) is not None
             ):
-                if "select" in xpath_child.keys():
-                    return xpath_child.get("select").strip("'")
-                if "text" in xpath_child.keys():
-                    return xpath_child.text.strip("'")
+                return _text.strip("'")
 
-            if "select" in xpath_result.attrib:
-                return xpath_result.attrib["select"].strip("'")
-
-            if hasattr(xpath_result, "text") and (_value := xpath_result.text):
-                # _value: str = xpath_result.text
-                return _value.strip("'")
+            logger.warning(
+                f"Expected an iterable or etree._Element as result, but got {xpath_result}"  # noqa: ignore[E501]
+            )
 
     raise ValueError(f"{param_name} not defined in XSL")
 
