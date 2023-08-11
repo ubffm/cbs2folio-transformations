@@ -19,12 +19,13 @@ from typing import Text
 from typing import Union
 
 from annotated_types import Len
-from lxml import etree  # type: ignore [import] # nosec: ignore [blacklist]
+from lxml import etree  # nosec: ignore[B410]
 from pydantic import BaseModel
 from pydantic import field_validator
 from pydantic import model_validator
 from pydantic import ValidationError
 from pydantic_core import PydanticCustomError
+from typing_extensions import Self
 
 from ._helpers import EXAMPLE_XSL
 from ._helpers import reraise
@@ -40,25 +41,6 @@ class LimitDict(BaseModel):
     def __getitem__(self, item):
         """Access the model fields in a dictionary like way."""
         return getattr(self, item)
-
-    # def __iter__(self) -> "TupleGenerator":
-    #     return super().__iter__()
-
-    # def copy(
-    #     self: Self,
-    #     *,
-    #     include: Optional[
-    #         Union["AbstractSetIntStr", "MappingIntStrAny"]
-    #     ] = None,
-    #     exclude: Optional[
-    #         Union["AbstractSetIntStr", "MappingIntStrAny"]
-    #     ] = None,
-    #     update: Optional["DictStrAny"] = None,
-    #     deep: bool = False,
-    # ) -> Self:
-    #     return super().copy(
-    #         include=include, exclude=exclude, update=update, deep=deep
-    #     )
 
     department_code: str
 
@@ -91,8 +73,12 @@ class LimitDict(BaseModel):
             )
         return v
 
-    @model_validator(mode="after")
-    def _validate_range(self: "LimitDict") -> "LimitDict":
+    @model_validator(  # type: ignore[arg-type]
+        # pyright: ignore[reportGeneralTypeIssues]
+        mode="after"
+    )
+    # FIXME: Find out, why this does not match ModelAfterValidatorWithoutInfo
+    def _validate_range(self: Self) -> Self:
         _tokenized_start = tokenize(sig_start := self["sig_start"])
         _tokenized_end = tokenize(sig_end := self["sig_end"])
 
@@ -125,7 +111,7 @@ class LimitDict(BaseModel):
     location_code: str
 
 
-def rangesXML2LimitDictList(ranges: etree.Element) -> Iterable[LimitDict]:
+def rangesXML2LimitDictList(ranges: etree._Element) -> Iterable[LimitDict]:
     """Parse the 'ranges' node of a 'holdings.xsl' to a list.
 
     Args:
@@ -144,7 +130,7 @@ def rangesXML2LimitDictList(ranges: etree.Element) -> Iterable[LimitDict]:
         if len(_department) == 0:
             logger.warning(
                 f"""Default only locations are not yet fully implemented.
-                    {department_code} might not be mapped"""
+                    {department_code!r} might not be mapped"""
             )
             continue
         else:
@@ -152,17 +138,21 @@ def rangesXML2LimitDictList(ranges: etree.Element) -> Iterable[LimitDict]:
                 location = limit.attrib["location"]
 
                 if limit.tag == "prefix":
+                    if limit.text is None:
+                        raise ValueError(
+                            f"Found empty limit node: {etree.tostring(limit).decode()}"  # noqa: ignore[E501]
+                        )
                     _prefix: str = limit.text + "@@@"
                     sig_start = _prefix
                     sig_end = _prefix
 
                 elif limit.tag == "range":
-                    sig_start = limit.attrib["from"]
-                    sig_end = limit.attrib["to"]
+                    sig_start = str(limit.attrib["from"])
+                    sig_end = str(limit.attrib["to"])
 
                 else:
                     raise ValueError(
-                        f"Unsupported tag {limit.tag} in {etree.tostring(limit)}"  # noqa: ignore[E501]
+                        f"Unsupported tag {limit.tag!r} in {etree.tostring(limit).decode()}"  # noqa: ignore[E501]
                     )
 
                 try:
@@ -182,11 +172,11 @@ def rangesXML2LimitDictList(ranges: etree.Element) -> Iterable[LimitDict]:
                     _error_context = _error["ctx"] if "ctx" in _error else None
                     if _error["type"] == "mixed_tokens":
                         logger.warning(
-                            f"Please split the following range into a numeric and an alphabetic range: {_error_context}, {etree.tostring(limit)}"  # noqa: ignore[E501]
+                            f"Please split the following range into a numeric and an alphabetic range: {_error_context}, {etree.tostring(limit).decode()}"  # noqa: ignore[E501]
                         )
                     elif _error["type"] == "mismatching_token_lengths":
                         logger.warning(
-                            f"This range is not a valid one; both limits need to have the same length after tokenization: {_error_context}, {etree.tostring(limit)}"  # noqa: ignore[E501]
+                            f"This range is not a valid one; both limits need to have the same length after tokenization: {_error_context}, {etree.tostring(limit).decode()}"  # noqa: ignore[E501]
                         )
                     else:
                         logger.error(f"Error Validating {limit}: {e}")
@@ -242,10 +232,6 @@ class LimitDictReader:
     def __iter__(self) -> "Iterator[LimitDict]":
         """Return an Iterator of LimitDicts."""
         return map(LimitDict.model_validate, self.reader)
-
-    # def __next__(self) -> LimitDict:
-    #     return
-    #     return LimitDict.parse_obj(super().__next__())
 
 
 def _validate_tokens(
@@ -330,7 +316,7 @@ def _validate_range(sig_start: str, sig_end: str):
 
     if len(_tokenized_start) != len(_tokenized_end):
         raise PydanticCustomError(
-            "mismatching_token_lengthss",
+            "mismatching_token_lengths",
             "'{sig_start}' has a different length from '{sig_end}'\
                         ({_tokenized_start,_tokenized_end})",
             {
@@ -390,7 +376,7 @@ def limitDictList2rangesXML(
         if _department_code and len(_department_code) != 3:
             raise ValueError(f"Invalid data: {_department_code}")
 
-        _department: etree.Element = (
+        _department: etree._Element = (
             _d
             if (_d := _ranges.find(f"department[@code='{_department_code}']"))
             is not None
@@ -476,7 +462,7 @@ def create_holdings_items_xsl_from_csv(
     koko: io.TextIOWrapper,
     use_numerical: bool = False,
     delimiter: OneCharacterString = OneCharacterString(","),
-) -> etree.ElementTree:
+) -> etree._ElementTree:
     """Create a 'holdings.xsl' from csv of limits.
 
     Args:
@@ -513,9 +499,17 @@ def create_holdings_items_xsl_from_csv(
     # TODO remove entries
     with open(EXAMPLE_XSL) as f:
         # TODO: Check why defusedxml has no getparent
-        _tree: etree.ElementTree = etree.parse(f)  # nosec blacklist
+        _tree: etree._ElementTree = etree.parse(f)  # nosec blacklist
         _r = _tree.find(".//ranges")
-        _r.getparent().replace(_r, _ranges)
+        if _r is None:
+            raise ValueError(
+                f"Got XSL without ranges: {etree.tostring(_tree).decode()}"
+            )
+        _parent = _r.getparent()
+        assert (  # nosec: ignore[B101]
+            _parent is not None
+        )  # There will be a parent, because it is a subelement of _tree
+        _parent.replace(_r, _ranges)
 
     return _tree
 
