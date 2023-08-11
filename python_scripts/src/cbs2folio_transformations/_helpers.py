@@ -2,7 +2,6 @@
 import logging
 import pathlib
 import re
-from typing import Iterable
 from typing import NoReturn
 from typing import TypeVar
 
@@ -38,6 +37,29 @@ def reraise(
     raise e.with_traceback(e.__traceback__)
 
 
+def _get_string_value_of_element(element: etree._Element) -> str:
+    # check for nested nodes first
+    _xsl_value_of = element.find(
+        "./" "xsl:value-of",
+        namespaces={"xsl": "http://www.w3.org/1999/XSL/Transform"},
+    )
+    if _xsl_value_of is not None:
+        return _get_string_value_of_element(_xsl_value_of)
+
+    if "select" in element.attrib:
+        if (_select_text := element.attrib["select"]) is None:
+            raise ValueError("Element with empty select value")
+        return str(_select_text).strip("'")
+    if hasattr(element, "text"):
+        if (_text := element.text) is None:
+            raise ValueError("Element with empty text")
+        return str(_text).strip("'")
+
+    raise ValueError(
+        f"Could not extract value from {etree.tostring(element).decode()}"
+    )
+
+
 # Based on: https://www.mail-archive.com/lxml@python.org/msg00011.html
 def get_variable_from_xsl(variable_name: str, xsl: etree._ElementTree) -> str:
     """Get the value of an XSL variable.
@@ -52,55 +74,15 @@ def get_variable_from_xsl(variable_name: str, xsl: etree._ElementTree) -> str:
     Returns:
         str: Value of the variable
     """
-    xpath_results: etree._XPathObject = xsl.xpath(
-        "//xsl:variable[@name=$name]",
-        name=variable_name,
+    xpath_results = xsl.find(
+        f"//xsl:variable[@name='{variable_name}']",
         namespaces={"xsl": "http://www.w3.org/1999/XSL/Transform"},
     )
-
-    if not isinstance(xpath_results, Iterable):
+    if xpath_results is None:
         raise ValueError(
-            f"Expected an iterable as result, but got {xpath_results}"
+            f"{variable_name} not defined in XSL: {etree.tostring(xsl).decode()}"  # noqa: ignore[E501]
         )
-
-    for xpath_result in xpath_results:
-        if not isinstance(xpath_result, etree._Element):
-            raise ValueError(
-                f"Expected an etree._Element as result, but got {xpath_result!r}"  # noqa: ignore[E501]
-            )
-        if xpath_result.get("name") == variable_name:
-            xpath_result_children = xpath_result.xpath(
-                "xsl:value-of",
-                namespaces={"xsl": "http://www.w3.org/1999/XSL/Transform"},
-            )
-            if isinstance(xpath_result_children, Iterable):
-                for xpath_child in xpath_result_children:
-                    if not isinstance(xpath_child, etree._Element):
-                        raise ValueError(
-                            f"Expected an etree._Element as result, but got {xpath_child!r}"  # noqa: ignore[E501]
-                        )
-                    if (
-                        "select" in xpath_child.keys()
-                        and (_select_text := xpath_child.get("select"))
-                        is not None
-                    ):
-                        return _select_text.strip("'")
-                    if (
-                        "text" in xpath_child.keys()
-                        and (_text := xpath_child.text) is not None
-                    ):
-                        return _text.strip("'")
-
-            if (
-                hasattr(xpath_result, "text")
-                and (_text := xpath_result.text) is not None
-            ):
-                return _text.strip("'")
-
-            logger.warning(
-                f"Expected an iterable or etree._Element as result, but got {xpath_result}"  # noqa: ignore[E501]
-            )
-    raise ValueError(f"{variable_name} not defined in XSL")
+    return _get_string_value_of_element(xpath_results)
 
 
 # Based on: https://www.mail-archive.com/lxml@python.org/msg00011.html
@@ -119,56 +101,16 @@ def get_param_default_from_xsl(
     Returns:
         str: Value of the variable
     """
-    xpath_results = xsl.xpath(
-        "//xsl:param[@name=$name]",
-        name=param_name,
+    xpath_results = xsl.find(
+        f"//xsl:param[@name='{param_name}']",
         namespaces={"xsl": "http://www.w3.org/1999/XSL/Transform"},
     )
-
-    if not isinstance(xpath_results, Iterable):
+    if xpath_results is None:
         raise ValueError(
-            f"Expected an iterable as result, but got {xpath_results}"
+            f"{param_name} not defined in XSL: {etree.tostring(xsl).decode()}"
         )
 
-    for xpath_result in xpath_results:
-        if not isinstance(xpath_result, etree._Element):
-            raise ValueError(
-                f"Expected an etree._Element as result, but got {xpath_result!r}"  # noqa: ignore[E501]
-            )
-        if xpath_result.get("name") == param_name:
-            xpath_result_children = xpath_result.xpath(
-                "xsl:value-of",
-                namespaces={"xsl": "http://www.w3.org/1999/XSL/Transform"},
-            )
-            if isinstance(xpath_result_children, Iterable):
-                for xpath_child in xpath_result_children:
-                    if not isinstance(xpath_child, etree._Element):
-                        raise ValueError(
-                            f"Expected an etree._Element as result, but got {xpath_child!r}"  # noqa: ignore[E501]
-                        )
-                    if (
-                        "select" in xpath_child.keys()
-                        and (_select_text := xpath_child.get("select"))
-                        is not None
-                    ):
-                        return _select_text.strip("'")
-                    if (
-                        "text" in xpath_child.keys()
-                        and (_text := xpath_child.text) is not None
-                    ):
-                        return _text.strip("'")
-
-            if (
-                hasattr(xpath_result, "text")
-                and (_text := xpath_result.text) is not None
-            ):
-                return _text.strip("'")
-
-            logger.warning(
-                f"Expected an iterable or etree._Element as result, but got {xpath_result}"  # noqa: ignore[E501]
-            )
-
-    raise ValueError(f"{param_name} not defined in XSL")
+    return _get_string_value_of_element(xpath_results)
 
 
 MARKERS = get_param_default_from_xsl(
