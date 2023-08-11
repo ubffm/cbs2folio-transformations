@@ -8,20 +8,30 @@ from copy import deepcopy
 from os import PathLike
 from typing import Any
 from typing import Collection
+from typing import Dict
 from typing import get_args
+from typing import List
 from typing import Literal
 from typing import Optional
+from typing import Set
 from typing import TypeVar
 from typing import Union
 
 import pytest
 from cbs2folio_transformations._helpers import reraise
-from defusedxml import ElementTree
-from lxml import etree  # nosec blacklist
+from defusedxml import ElementTree  # type: ignore[import]
+from lxml import etree  # nosec: ignore[blacklist]
 from pydantic import BaseModel
+from pydantic import ConfigDict
 from pydantic import Field
+from pydantic import field_validator
+from pydantic import ValidationError
+from pytest import Mark
+from pytest import MarkDecorator
 
 logger = logging.getLogger()
+
+_TreeOrElement = TypeVar("_TreeOrElement", etree._Element, etree._ElementTree)
 
 # https://www.testcult.com/handle-test-data-the-right-way-in-pytest/
 TEST_FIELD_NAME = Literal[
@@ -44,9 +54,17 @@ class SignatureExample(BaseModel):
     example_id: str = Field(..., alias="id")
     marks: Collection[pytest.MarkDecorator]
 
-    class Config:  # noqa: D106
-        arbitrary_types_allowed = True
-        allow_population_by_field_name = True
+    @field_validator("epn", mode="before")
+    def _to_str(cls, v: int | str) -> str:
+        if isinstance(v, str):
+            return v
+        if isinstance(v, int):
+            return str(v)
+        raise TypeError(f"Unsupported type {type(v)}")
+
+    model_config = ConfigDict(
+        arbitrary_types_allowed=True, populate_by_name=True
+    )
 
 
 def yield_signature_example_from_data_iterable(
@@ -71,10 +89,8 @@ def yield_signature_example_from_data_iterable(
         Generator[SignatureExample, None, None]: Generator for examples
     """
     for d in data:
-        _marks = (
-            [marks]
-            if isinstance(marks, pytest.MarkDecorator)
-            else [m for m in marks]
+        _marks: "List[MarkDecorator|Mark]" = (
+            [marks] if isinstance(marks, MarkDecorator) else [m for m in marks]
         )
 
         if "signature" in d:
@@ -103,13 +119,16 @@ def yield_signature_example_from_data_iterable(
                     pytest.mark.xfail(reason=f"'{_sig}' is known bad example")
                 )
 
-            yield SignatureExample.parse_obj(
-                {
-                    **d,
-                    "id": f"{_sig}@{_dep}->{_loc}",
-                    "marks": _marks,
-                }
-            )
+            try:
+                yield SignatureExample.model_validate(
+                    {
+                        **d,
+                        "id": f"{_sig}@{_dep}->{_loc}",
+                        "marks": _marks,
+                    }
+                )
+            except ValidationError as e:
+                logger.error(f"Error Validating {d}: {e}")
 
 
 def inject_test_data(
@@ -140,7 +159,7 @@ def inject_test_data(
 Record = Any
 
 
-def create_collection(elements: list[Record]) -> etree.ElementTree:
+def create_collection(elements: list[Record]) -> etree._ElementTree:
     """Create an XML-Collection of records.
 
     Args:
@@ -206,7 +225,7 @@ EXAMPLE_XML = (
 )
 
 
-def get_initial_record() -> etree.Element:
+def get_initial_record() -> etree._Element:
     """Create an record Element from the EXAMPLE_XML.
 
     Returns:
@@ -215,9 +234,13 @@ def get_initial_record() -> etree.Element:
     parser = etree.XMLParser(remove_blank_text=True)
 
     with open(EXAMPLE_XML) as f:
-        _tree: ElementTree = ElementTree.parse(f, parser=parser)
+        _tree: etree._ElementTree = ElementTree.parse(f, parser=parser)
 
     _record = _tree.find(".//record")
+    if _record is None:
+        raise ValueError(
+            f"Could not find record in {etree.tostring(_tree).decode()}"
+        )
     return _record
 
 
@@ -243,22 +266,61 @@ def create_record_from_example(
     _record = get_initial_record()
 
     if hrid:
-        _record.find("hrid").text = f"{hrid}"
-        _record.find(
+        _hrid_field = _record.find("hrid")
+        if _hrid_field is None:
+            raise ValueError(
+                f"Initial record without hrid: {etree.tostring(_record).decode()}"  # noqa: ignore[E501]
+            )
+        _hrid_field.text = f"{hrid}"
+        _hrid_subfield = _record.find(  # TODO: Find better name
             "metadata/datafield[@tag='003@']/subfield[@code='0']"
-        ).text = f"{hrid}"
+        )
+        if _hrid_subfield is None:
+            raise ValueError(
+                f"Initial record without field 003@ 0: {etree.tostring(_record).decode()}"  # noqa: ignore[E501]
+            )
+        _hrid_subfield.text = f"{hrid}"
 
-    _record.find("metadata/item[@epn='184727820']").attrib.update(
-        {"epn": f"{epn}"}
-    )
-    _record.find(
+    _metadata_item_by_epn = _record.find(
+        "metadata/item[@epn='184727820']"
+    )  # FIXME: check if hardcoding the EPN is sensible
+    if _metadata_item_by_epn is None:
+        raise ValueError(
+            f"Initial record without EPN: {etree.tostring(_record).decode()}"
+        )
+    _metadata_item_by_epn.attrib.update({"epn": f"{epn}"})
+
+    _metadata_item_datafield_epn = _record.find(
         "metadata/item/datafield[@tag='203@']/subfield[@code='0']"
-    ).text = f"{epn}"
+    )
+    if _metadata_item_datafield_epn is None:
+        raise ValueError(
+            f"Initial record without field 203@ 0: {etree.tostring(_record).decode()}"  # noqa: ignore[E501]
+        )
+    _metadata_item_datafield_epn.text = f"{epn}"
 
-    _datafield = _record.find("metadata/item/datafield[@tag='209A']")
-    _datafield.find("subfield[@code='a']").text = signature
-    _datafield.find("subfield[@code='d']").text = indicator
-    _datafield.find("subfield[@code='f']").text = department_code
+    _datafield = _record.find(
+        "metadata/item/datafield[@tag='209A']"
+    )  # TODO: Find better name
+    if _datafield is None:
+        raise ValueError(
+            f"Initial record without field 209A: {etree.tostring(_record).decode()}"  # noqa: ignore[E501]
+        )
+
+    _subfields_dict: Dict[Literal["a", "d", "f"], etree._Element] = {}
+    _subfields: Set[Literal["a", "d", "f"]] = {"a", "d", "f"}
+    for _subfield_key in _subfields:
+        _subfield = _datafield.find(f"subfield[@code='{_subfield_key}']")
+        if _subfield is not None:
+            _subfields_dict[_subfield_key] = _subfield
+
+    if len(_missing_subfields := _subfields - _subfields_dict.keys()) > 0:
+        raise ValueError(
+            f"Datafield 209A without subfields {_missing_subfields}: {etree.tostring(_datafield).decode()}"  # noqa: ignore[E501]
+        )
+    _subfields_dict["a"].text = signature
+    _subfields_dict["d"].text = indicator
+    _subfields_dict["f"].text = department_code
 
     return _record
 
@@ -270,7 +332,7 @@ def create_record(
     signature: str,
     indicator: str,
     location: Optional[str] = "LOCATION",
-) -> etree.Element:
+) -> etree._Element:
     """Create a record from nothing.
 
     Args:
@@ -331,12 +393,12 @@ def create_record(
     return _record
 
 
-TreeOrElement = TypeVar("TreeOrElement", etree.Element, etree.ElementTree)
+TreeOrElement = TypeVar("TreeOrElement", etree._Element, etree._ElementTree)
 
 
 def apply_xslt(
     data: TreeOrElement, filename: str | PathLike | pathlib.Path
-) -> TreeOrElement:
+) -> etree._XSLTResultTree:
     """Apply an XSL-transformation from a file.
 
     Args:
@@ -353,9 +415,7 @@ def apply_xslt(
     return transform(data)
 
 
-def logstring_for_xsl(
-    xslt: etree._XSLTProcessingInstruction, result: etree.Element
-) -> str:
+def logstring_for_xsl(xslt: etree.XSLT, result: etree._Element) -> str:
     """Create logging information for transformation and data.
 
     Args:
@@ -365,21 +425,24 @@ def logstring_for_xsl(
     Returns:
         str: logging information
     """
-    return f"""
-    XSLT:
-    {xslt.error_log}
-
-    XML RESULT:
-    {
-        etree
-        .tostring(result, encoding="utf-8", pretty_print=True)
-        .decode("utf-8")
+    # FIXME: Fix typing to show error_log is defined
+    _error_log = xslt.error_log  # type: ignore[attr-defined] # pyright: ignore[reportGeneralTypeIssues]# noqa: ignore[E501]
+    _xml_result = (
+        etree.tostring(result, encoding="utf-8", pretty_print=True).decode(
+            "utf-8"
+        )
         if False
         else "XML SUPPRESSED"
-    }"""
+    )
+    return f"""
+    XSLT:
+    {_error_log}
+
+    XML RESULT:
+    {_xml_result}"""
 
 
-def _apply_step1(collection: TreeOrElement) -> TreeOrElement:
+def _apply_step1(collection: TreeOrElement) -> etree._XSLTResultTree:
     transformed = apply_xslt(
         collection,
         pathlib.Path(__file__)
@@ -389,7 +452,7 @@ def _apply_step1(collection: TreeOrElement) -> TreeOrElement:
     return transformed
 
 
-def _apply_step2(collection: TreeOrElement) -> TreeOrElement:
+def _apply_step2(collection: TreeOrElement) -> etree._XSLTResultTree:
     transformed = apply_xslt(
         collection,
         pathlib.Path(__file__)
@@ -399,7 +462,7 @@ def _apply_step2(collection: TreeOrElement) -> TreeOrElement:
     return transformed
 
 
-def _apply_step3(collection: TreeOrElement) -> TreeOrElement:
+def _apply_step3(collection: TreeOrElement) -> etree._XSLTResultTree:
     transformed = apply_xslt(
         collection,
         pathlib.Path(__file__)
@@ -411,7 +474,9 @@ def _apply_step3(collection: TreeOrElement) -> TreeOrElement:
     return transformed
 
 
-def _apply_step4(collection: TreeOrElement, iln: int) -> TreeOrElement:
+def _apply_step4(
+    collection: _TreeOrElement, iln: int
+) -> etree._XSLTResultTree:
     transformed = apply_xslt(
         collection,
         pathlib.Path(__file__)
@@ -421,7 +486,7 @@ def _apply_step4(collection: TreeOrElement, iln: int) -> TreeOrElement:
     return transformed
 
 
-def _apply_step5(collection: TreeOrElement) -> TreeOrElement:
+def _apply_step5(collection: TreeOrElement) -> etree._XSLTResultTree:
     transformed = apply_xslt(
         collection,
         pathlib.Path(__file__)
@@ -431,7 +496,7 @@ def _apply_step5(collection: TreeOrElement) -> TreeOrElement:
     return transformed
 
 
-def _apply_step6(collection: TreeOrElement, iln: int) -> TreeOrElement:
+def _apply_step6(collection: TreeOrElement, iln: int) -> etree._XSLTResultTree:
     transformed = apply_xslt(
         collection,
         pathlib.Path(__file__)
@@ -450,7 +515,7 @@ def create_example_and_apply(
     expected_location: str,
     record_from_example: etree._Element,
     hrid: Optional[int] = None,
-) -> etree.Element:
+) -> etree._ElementTree:
     """Create an example using the parameters and apply the transformation.
 
     Args:
@@ -488,7 +553,7 @@ def create_example_and_apply(
 
 
 def apply_transformations(
-    _input: etree._ElementTree | etree._Element,
+    _input: etree._ElementTree,
     transformations: list[etree.XSLT],
 ) -> etree._ElementTree:
     """Apply a list of transformations to the input.
@@ -511,6 +576,10 @@ def apply_transformations(
         try:
             _input = _xslt(_input)
         except etree.XSLTApplyError as e:
-            reraise(e=e, info=_xslt.error_log)
+            # FIXME: Fix typing to show error_log is defined
+            reraise(
+                e=e,
+                info=_xslt.error_log,  # type: ignore[attr-defined]  # pyright: ignore[reportGeneralTypeIssues]# noqa: ignore[E501]
+            )
 
     return _input
