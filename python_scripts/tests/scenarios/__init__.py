@@ -4,11 +4,10 @@ from pathlib import Path
 from typing import Optional
 
 from cbs2folio_transformations._helpers import reraise
-from defusedxml import ElementTree
 from lxml import etree  # nosec blacklist
 
 
-def logstring_for_xsl(xslt: etree.XSLT, result: etree.Element) -> str:
+def logstring_for_xsl(xslt: etree.XSLT, result: etree._Element) -> str:
     """Create logging information for transformation and data.
 
     Args:
@@ -18,8 +17,11 @@ def logstring_for_xsl(xslt: etree.XSLT, result: etree.Element) -> str:
     Returns:
         str: logging information
     """
+    # TODO: Fix the type
+    _error_log: str = xslt.error_log  # type: ignore[attr-defined]
+
     return f"""
-    XSLT: {xslt.error_log}
+    XSLT: {_error_log}
 
     XML RESULT:
     {
@@ -33,7 +35,7 @@ def logstring_for_xsl(xslt: etree.XSLT, result: etree.Element) -> str:
 
 
 def logstring_for_department(
-    ranges: etree.Element, department_code: str
+    ranges: etree._Element, department_code: str
 ) -> str:
     """Create logging information for mapping.
 
@@ -75,7 +77,7 @@ class Scenario:
 
     use_numerical: bool = False
     delimiter: str = ";"
-    xsl: Optional[etree.ElementTree] = None
+    xsl: Optional[etree._ElementTree] = None
     koko_string: Optional[str] = None
     koko_path: Optional[str | Path] = None
 
@@ -86,8 +88,8 @@ class Scenario:
         indicator: str,
         epn: int | str,
         expected_location: str,
-        xsl: ElementTree,
-        create_example_and_apply_for_step_4: etree.Element,
+        xsl: etree._ElementTree,
+        create_example_and_apply_for_step_4: etree._Element,
         xslt: etree._XSLTProcessingInstruction,
         hrid: Optional[int],
     ):
@@ -97,7 +99,7 @@ class Scenario:
             department_code (str): Identifier of the department
             signature (str): Signature of the record
             indicator (str): Status indicator
-            epn (int | str): Indentifier of the "exemplar"
+            epn (int | str): Identifier of the "exemplar"
             expected_location (str): expected location of the "exemplar"
             xsl (ElementTree): XML tree containing the transformation
             create_example_and_apply_for_step_4 (etree.Element):
@@ -128,10 +130,12 @@ class Scenario:
                 )
 
         except AssertionError as e:
+            ranges = xsl.find("//ranges")
+            assert ranges is not None  # nosec assert_used
             reraise(
                 e=e,
                 info=logstring_for_department(
-                    xsl.find("//ranges"), department_code
+                    ranges=ranges, department_code=department_code
                 ),
             )
 
@@ -142,7 +146,7 @@ class Scenario:
         indicator: str,
         epn: int | str,
         expected_location: str,
-        xsl: ElementTree,
+        xsl: etree._ElementTree,
         create_example_and_apply_for_step_4,
         hrid: Optional[int],
         xslt,
@@ -153,7 +157,7 @@ class Scenario:
             department_code (str): Identifier of the department
             signature (str): Signature of the record
             indicator (str): Status indicator
-            epn (int | str): Indentifier of the "exemplar"
+            epn (int | str): Identifier of the "exemplar"
             expected_location (str): expected location of the "exemplar"
             xsl (ElementTree): XML tree containing the transformation
             create_example_and_apply_for_step_4 (etree.Element):
@@ -161,21 +165,24 @@ class Scenario:
             xslt (etree._XSLTProcessingInstruction): Transformation
             hrid (Optional[int]): HEBIS wide identifier. Defaults to None.
         """
-        _result: etree.Element = create_example_and_apply_for_step_4
+        _result: etree._Element = create_example_and_apply_for_step_4
         try:
             _location_node = _result.find(
                 "//record/holdingsRecords/arr/i/permanentLocationId"
             )
+            assert _location_node is not None  # nosec assert_used
             assert (  # nosec assert_used
                 _location_node.text == expected_location
             )
 
         except AssertionError as e:
+            ranges = xsl.find("//ranges")
+            assert ranges is not None  # nosec assert_used
             reraise(
                 e=e,
                 info=logstring_for_xsl(xslt, _result)
                 if _result
                 else logstring_for_department(
-                    xsl.find("//ranges"), department_code
+                    ranges=ranges, department_code=department_code
                 ),
             )
