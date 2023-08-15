@@ -1,6 +1,6 @@
 import pytest
 from cbs2folio_transformations.csv2holdingsxslt import EXAMPLE_XSL
-from defusedxml import ElementTree
+from defusedxml import ElementTree  # type: ignore[import]
 from lxml import etree  # nosec blacklist
 
 
