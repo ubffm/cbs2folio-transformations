@@ -25,6 +25,10 @@ lxml = "^4.9.1"
 pytest = "^7.2.1"
 pydeps = "^1.11.1"
 
+[tool.poetry.group.typechecking.dependencies]
+lxml-stubs = "^0.4.0"
+flake8 = "^6.1.0"
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
