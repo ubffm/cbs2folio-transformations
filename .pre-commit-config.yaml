@@ -46,6 +46,7 @@ repos:
         additional_dependencies:
           - defusedxml
           - lxml
+          - lxml-stubs
           - xmldiff
           - pytest
           - pydantic
