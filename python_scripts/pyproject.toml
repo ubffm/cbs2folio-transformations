@@ -10,7 +10,7 @@ python = "^3.10"
 rtfparse = "^0.7.8"
 beautifulsoup4 = "^4.11.1"
 pandas = "^1.5.1"
-pydantic = "^1.10.4"
+pydantic = "^2.3.0"
 dict2xml = "^1.7.2"
 black = "^22.12.0"
 xmldiff = "^2.5"
@@ -19,6 +19,8 @@ hypothesis = { extras = ["all"], version = "^6.67.1" }
 defusedxml = "^0.7.1"
 lxml = "^4.9.2"
 pytest-xdist = "^3.2.0"
+annotated-types = "^0.5.0"
+typing-extensions = "^4.7.1"
 
 [tool.poetry.dev-dependencies]
 lxml = "^4.9.1"
