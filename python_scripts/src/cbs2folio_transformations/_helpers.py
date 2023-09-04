@@ -122,7 +122,7 @@ VALIDATION_REGEX = re.compile(
     r"|"
     + r"^\w+"  # Allow empty ranges  # FIXME
     + r"(?:"  # Additional parts
-    + r"(?:"  # Seperator
+    + r"(?:"  # Separator
     + r"["
     + ",".join([re.escape(marker) for marker in MARKERS])
     + r"]+"
