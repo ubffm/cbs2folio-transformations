@@ -515,7 +515,7 @@ def create_example_and_apply(
     expected_location: str,
     record_from_example: etree._Element,
     hrid: Optional[int] = None,
-) -> etree._ElementTree:
+) -> etree._ElementTree | etree._Element:
     """Create an example using the parameters and apply the transformation.
 
     Args:
@@ -553,9 +553,9 @@ def create_example_and_apply(
 
 
 def apply_transformations(
-    _input: etree._ElementTree,
+    _input: etree._ElementTree | etree._Element,
     transformations: list[etree.XSLT],
-) -> etree._ElementTree:
+) -> etree._ElementTree | etree._Element:
     """Apply a list of transformations to the input.
 
     Args:
@@ -569,7 +569,9 @@ def apply_transformations(
         etree._ElementTree: Transformed data
     """
     # makes debugging easier
-    intermediate: dict[int, etree._ElementTree] = {}
+    intermediate: dict[
+        int, etree._ElementTree | etree._Element | etree._XSLTResultTree
+    ] = {}
 
     for i, _xslt in enumerate(transformations):
         intermediate[i] = deepcopy(_input)
