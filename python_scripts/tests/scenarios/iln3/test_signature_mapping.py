@@ -87,7 +87,7 @@ class TestDoubleLetter(Scenario):
     ]
 
 
-def department2ranges(department: etree.Element):
+def department2ranges(department: etree._Element):
     _ranges = etree.Element("ranges")
     _ranges.append(department)
 
