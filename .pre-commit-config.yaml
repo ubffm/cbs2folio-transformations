@@ -50,6 +50,7 @@ repos:
           - xmldiff
           - pytest
           - pydantic
+          - typing-extensions>=4.9.0
         exclude: |
           (?x)^(
             python_scripts/tests

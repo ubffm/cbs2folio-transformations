@@ -6,7 +6,6 @@ from collections.abc import Generator
 from collections.abc import Iterable
 from copy import deepcopy
 from os import PathLike
-from typing import Any
 from typing import Collection
 from typing import Dict
 from typing import get_args
@@ -28,6 +27,8 @@ from pydantic import field_validator
 from pydantic import ValidationError
 from pytest import Mark
 from pytest import MarkDecorator
+from typing_extensions import Annotated
+from typing_extensions import Doc  # type: ignore[attr-defined] # TODO Remove
 
 logger = logging.getLogger()
 
@@ -97,14 +98,14 @@ def yield_signature_example_from_data_iterable(
             _sig: str = d["signature"]
             _dep: str = d["department_code"]
             _loc: str = d["expected_location"]
-            if len(_dep) != 3:
+            if len(_dep) != 3:  # TODO: Remove this logic
                 _marks.append(
                     pytest.mark.xfail(
                         reason=f"'{_dep}' is not a proper department code"
                     )
                 )
 
-            if _sig.startswith("Ausgesondert"):
+            if _sig.startswith("Ausgesondert"):  # TODO: Remove this logic
                 _marks.append(
                     pytest.mark.xfail(reason=f"'{_sig}' is Ausgesondert")
                 )
@@ -154,19 +155,21 @@ def inject_test_data(
         yield from yield_signature_example_from_data_iterable(reader)
 
 
-# TODO add stricter typing
-# Collection = object
-Record = Any
+XML_Record = Annotated[etree._Element, Doc("etree._Element with record tag")]
+XML_Collection = Annotated[
+    etree._Element | etree._ElementTree,
+    Doc("etree._Element or etree._ElementTree with collection tag"),
+]
 
 
-def create_collection(elements: list[Record]) -> etree._ElementTree:
+def create_collection(elements: list[XML_Record]) -> XML_Collection:
     """Create an XML-Collection of records.
 
     Args:
-        elements (list[Record]): Records to be used
+        elements (list[XML_Record]): Records to be used
 
     Returns:
-        etree.ElementTree: XML-tree containing the records
+        XML_Collection: XML-tree containing the records
     """
     collection = etree.Element("collection")
 
@@ -225,7 +228,7 @@ EXAMPLE_XML = (
 )
 
 
-def get_initial_record() -> etree._Element:
+def get_initial_record() -> XML_Record:
     """Create an record Element from the EXAMPLE_XML.
 
     Returns:
@@ -250,7 +253,7 @@ def create_record_from_example(
     indicator: str,
     epn: int | str,
     hrid: Optional[int] = None,
-) -> etree._Element:
+) -> XML_Record:
     """Replace the minimum parameters of the record.
 
     Args:
