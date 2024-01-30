@@ -173,7 +173,7 @@ class Scenario:
             assert _location_node is not None  # nosec assert_used
             assert (  # nosec assert_used
                 _location_node.text == expected_location
-            )
+            ), f"Expected {expected_location} as location for {signature}@{department_code}, but got {_location_node.text}"  # noqa: ignore[E501]
 
         except AssertionError as e:
             ranges = xsl.find("//ranges")
