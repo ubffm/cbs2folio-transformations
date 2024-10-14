@@ -950,7 +950,7 @@
         </xsl:call-template>
       </xsl:variable>
       <xsl:if test="$debug-template-logic-verbosity > 3">
-        <xsl:message>Debug: <xsl:value-of  select="exsl:node-set($signature-tokens)/item[position() = $current-token-position]"/>            <xsl:value-of select="if($current-token-in-range) then 'between' else 'not between'" /> <xsl:value-of  select="exsl:node-set($range-from-tokens)/item[position() = $current-token-position]"/> and <xsl:value-of select="exsl:node-set($range-to-tokens)/item[position() = $current-token-position]"/>    </xsl:message>
+        <xsl:message>Debug: <xsl:value-of  select="exsl:node-set($signature-tokens)/item[position() = $current-token-position]"/> <xsl:if test="($current-token-in-range = 0)"> not </xsl:if> between <xsl:value-of  select="exsl:node-set($range-from-tokens)/item[position() = $current-token-position]"/> and <xsl:value-of select="exsl:node-set($range-to-tokens)/item[position() = $current-token-position]"/> </xsl:message>
       </xsl:if>
       <xsl:choose>
         <xsl:when test="count(exsl:node-set($signature-tokens)/item) > $current-token-position">
