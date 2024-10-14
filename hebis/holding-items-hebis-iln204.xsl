@@ -12,7 +12,7 @@
   </xsl:template>
 
   <!-- Global settings -->
-  <xsl:param name="debug-template-logic-verbosity" select="0"/>
+  <xsl:param name="debug-template-logic-verbosity" select="1"/>
   <!--
   0: Only errors are reported
   1: Debug template calls
@@ -668,27 +668,42 @@
         Check range for Triple <xsl:value-of select="$range-start" />,<xsl:value-of
                     select="$token" />,<xsl:value-of
                     select="$range-end" /> at <xsl:value-of
-                    select="$i" /> and <xsl:value-of select="$o"></xsl:value-of></xsl:message>
+                    select="$i" /> and <xsl:value-of select="$o"></xsl:value-of> as strings </xsl:message>
     </xsl:if>
     <xsl:variable name="sortChar">'0123456789aäbcdefghijklmnoöpqrsßtuüvwxyz'</xsl:variable>
+    <!-- Extract the current characters -->
     <xsl:variable name="frmFrst">
       <xsl:value-of select="substring($range-start, $i, 1)"/>
     </xsl:variable>
+    <xsl:if test="$debug-template-logic-verbosity > 3">
+      <xsl:message> Debug: <xsl:value-of select="$frmFrst"/>(frmFrst) </xsl:message>
+    </xsl:if>
     <xsl:variable name="befFrst">
       <xsl:value-of select="substring($range-end, $i, 1)"/>
     </xsl:variable>
+    <xsl:if test="$debug-template-logic-verbosity > 3">
+      <xsl:message> Debug: <xsl:value-of select="$befFrst"/>(befFrst) </xsl:message>
+    </xsl:if>
+
+    <!-- Extract the sort values -->
     <xsl:variable name="frmCmp">
       <xsl:value-of select="
           string-length(
           substring-before($sortChar, $frmFrst))"/>
       <!-- get index of frmFrst in sortChar => get the sort value -->
     </xsl:variable>
+    <xsl:if test="$debug-template-logic-verbosity > 3">
+      <xsl:message> Debug: <xsl:value-of select="$frmFrst"/>(frmFrst) -&gt; <xsl:value-of select="$frmCmp"/>(frmCmp)  </xsl:message>
+    </xsl:if>
     <xsl:variable name="befTmp">
       <xsl:value-of select="
           string-length(
           substring-before($sortChar, $befFrst))"/>
       <!-- get index of befTmp in sortChar => get the sort value -->
     </xsl:variable>
+    <xsl:if test="$debug-template-logic-verbosity > 3">
+      <xsl:message> Debug: <xsl:value-of select="$befFrst"/>(befFrst) -&gt; <xsl:value-of select="$befTmp"/>(befTmp)  </xsl:message>
+    </xsl:if>
     <xsl:variable name="befCmp">
       <xsl:choose>
         <xsl:when test="$befTmp = 0">99</xsl:when>
@@ -697,10 +712,12 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+    <xsl:if test="$debug-template-logic-verbosity > 3">
+      <xsl:message> Debug: <xsl:value-of select="$befTmp"/>(befTmp) -&gt; <xsl:value-of select="$befCmp"/>(befCmp)  </xsl:message>
+    </xsl:if>
     <xsl:if test="$debug-template-logic-verbosity">
-      <xsl:message>Debug:
-          Check range for Triple <xsl:value-of select="$range-start" />,<xsl:value-of
-          select="$token" />,<xsl:value-of
+      <xsl:message>Debug DEBUG: Check range for Triple <xsl:value-of select="$range-start" />&lt;=<xsl:value-of
+          select="$token" />&lt;=<xsl:value-of
           select="$range-end" /> at <xsl:value-of
           select="$i" /> and <xsl:value-of select="$o"></xsl:value-of>
       </xsl:message>
@@ -717,9 +734,18 @@
         B: Cases:
             a) len(token) < len(range-start)=len(range-end) => not in range
             b) len(token) = len(range-start)=len(range-end) => range-start[i] <= token[i] <= range-end[i]
+
+                1) range-start[i] <= token[i] <= range-end[i]
+
+                    i) i == len(token) => in range
+                    ii) recursive call
+
+                2) (range-start[i] > token[i] || token[i] < range-end[i])  => not in range
+
+
             c) len(token) > len(range-start)=len(range-end) => not in range
 
-        TODO evaluate checking for '@@@' in ramge limits
+        TODO evaluate checking for '@@@' in range limits
     -->
     <xsl:choose>
       <xsl:when test="not(string-length($range-start)=string-length($token) and string-length($token)=string-length($range-end))" >
@@ -738,31 +764,62 @@
         test="$i > string-length($token) and $o > string-length($token)">
         <!-- Pointer out of range for token -->
         <!-- TODO Evaluate if this can happen -->
-        <xsl:value-of select="1"/>
+        <xsl:if test="$debug-template-logic-verbosity > 2">
+          <xsl:message> Debug: Indices outside string lengths </xsl:message>
+        </xsl:if>
+        <xsl:value-of select="-1"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="idFrst">
           <xsl:value-of select="substring($token, $i, 1)"/>
           <!-- get next char -->
         </xsl:variable>
+        <xsl:if test="$debug-template-logic-verbosity > 3">
+          <!-- <xsl:message> Debug: <xsl:value-of select="$substring($token, $i, 1)"/>(token) -&gt; <xsl:value-of select="$idFrst"/>(idFrst)  </xsl:message> -->
+        </xsl:if>
         <xsl:variable name="idCmp">
           <xsl:value-of select="string-length(substring-before($sortChar, $idFrst))"/>
           <!-- get index of idFrst in sortChar => get the sort value -->
         </xsl:variable>
+        <xsl:if test="$debug-template-logic-verbosity > 3">
+          <!-- <xsl:message> Debug: <xsl:value-of select="$substring-before($sortChar, $idFrst)"/>(token) -&gt; <xsl:value-of select="$idCmp"/>(idCmp)  </xsl:message> -->
+        </xsl:if>
         <xsl:choose>
           <xsl:when test="$idCmp >= $frmCmp and $befCmp >= $idCmp">
+            <!-- 1 -->
+            <xsl:if test="$debug-template-logic-verbosity > 3">
+              <xsl:message> Debug: len(token) = len(range-start)=len(range-end) =&gt; range-start[i] &lt;= token[i] &lt;= range-end[i]</xsl:message>
+            </xsl:if>
+            <xsl:choose>
+              <xsl:when test="$i = string-length($token)" >
+                <xsl:value-of select="1"/>
+                <!-- Between limits-->
+                <xsl:if test="$debug-template-logic-verbosity > 3">
+                  <xsl:message>Debug: <xsl:value-of
+                  select="$token" /> is between <xsl:value-of select="$range-start" /> and <xsl:value-of
+                  select="$range-end" /> </xsl:message>
+                </xsl:if>
+              </xsl:when>
+              <xsl:otherwise>
+                <!-- Recursive call -->
             <xsl:call-template name="check-range">
               <xsl:with-param name="token" select="$token"/>
               <xsl:with-param name="range-start" select="$range-start"/>
               <xsl:with-param name="range-end" select="$range-end"/>
               <xsl:with-param name="i" select="$i + 1"/>
               <xsl:with-param name="o" select="$o + 1"/>
-              <!-- Recursive call -->
             </xsl:call-template>
+          </xsl:otherwise>
+        </xsl:choose>
           </xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="0"/>
             <!-- Not between limits-->
+            <xsl:if test="$debug-template-logic-verbosity > 3">
+              <xsl:message>Debug: <xsl:value-of
+              select="$token" /> is not between <xsl:value-of select="$range-start" /> and <xsl:value-of
+              select="$range-end" /> </xsl:message>
+            </xsl:if>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:otherwise>
@@ -774,12 +831,10 @@
     <xsl:param name="range-from"/>
     <xsl:param name="range-to"/>
     <xsl:param name="current-token-position" select="1"/>
-
-    <xsl:if test="$debug-template-logic-verbosity">
-      <xsl:message>Debug:
-          <xsl:value-of select="$range-from" />,
-          <xsl:value-of select="$signature-lowercase-trimmed" />,
-          <xsl:value-of select="$range-to" />
+    <xsl:if test="$debug-template-logic-verbosity > 0">
+      <xsl:message>Debug: Compare tokens
+   <xsl:value-of select="$range-from" /> &lt;= <xsl:value-of select="$signature-lowercase-trimmed" /> &lt;= <xsl:value-of select="$range-to" />
+        at position <xsl:value-of select="$current-token-position" />
       </xsl:message>
     </xsl:if>
     <xsl:variable name="range-from-tokens">
@@ -819,8 +874,7 @@
         current-token-position <xsl:value-of
         select="$current-token-position" />
 
-        from-token: <xsl:value-of
-          select="exsl:node-set($range-from-tokens)/item[position() = $current-token-position]" />
+        from-token: <xsl:value-of select="exsl:node-set($range-from-tokens)/item[position() = $current-token-position]" />
         to-token: <xsl:value-of
           select="exsl:node-set($range-to-tokens)/item[position() = $current-token-position]" />
         signature-token: <xsl:value-of
@@ -836,7 +890,14 @@
           select="$range-to-tokens" />
         signature-tokens: <xsl:value-of
           select="$signature-tokens" />
-      </xsl:message>
+
+
+          <xsl:value-of select="exsl:node-set($range-from-tokens)/item[position() = $current-token-position]" /> @ <xsl:value-of select="$current-token-position" />/<xsl:value-of select="count(exsl:node-set($range-from-tokens)/item)"/> in <xsl:value-of select="$range-from-tokens" />
+          &lt;=
+          <xsl:value-of select="exsl:node-set($signature-tokens)/item[position() = $current-token-position]" /> @ <xsl:value-of select="$current-token-position" />/<xsl:value-of select="count(exsl:node-set($signature-tokens)/item)"/> in <xsl:value-of select="$signature-tokens" />
+          &lt;=
+          <xsl:value-of select="exsl:node-set($range-to-tokens)/item[position() = $current-token-position]" /> @ <xsl:value-of select="$current-token-position" />/<xsl:value-of select="count(exsl:node-set($range-to-tokens)/item)"/> in <xsl:value-of select="$range-to-tokens" />
+        </xsl:message>
   </xsl:if>
     <xsl:choose><!-- Generate the return value -->
     <!--
@@ -869,7 +930,7 @@
       $current-token-position > count(exsl:node-set($range-from-tokens)/item)">
       <!-- A -->
       <xsl:if test="$debug-template-logic-verbosity > 2">
-        <xsl:message> Debug: current position outside of ranges
+        <xsl:message> Debug: current token position outside of ranges
         </xsl:message>
       </xsl:if>
       <xsl:value-of select="1"/>
@@ -879,21 +940,26 @@
       count(exsl:node-set($range-from-tokens)/item) >= $current-token-position">
       <!-- B -->
       <xsl:if test="$debug-template-logic-verbosity > 2">
-        <xsl:message> Debug: current position inside ranges
-        </xsl:message>
+        <xsl:message> Debug: current token index inside ranges <xsl:value-of select="count(exsl:node-set($signature-tokens)/item)" />  &gt; <xsl:value-of select="$current-token-position" /></xsl:message>
+      </xsl:if>
+      <xsl:variable name="current-token-in-range">
+        <xsl:call-template name="compare-token">
+          <xsl:with-param name="signature-comparison-token"  select="exsl:node-set($signature-tokens)/item[position() = $current-token-position]"/>
+          <xsl:with-param name="range-from-comparison-token"  select="exsl:node-set($range-from-tokens)/item[position() = $current-token-position]"/>
+          <xsl:with-param name="range-to-comparison-token" select="exsl:node-set($range-to-tokens)/item[position() = $current-token-position]"/>
+        </xsl:call-template>
+      </xsl:variable>
+      <xsl:if test="$debug-template-logic-verbosity > 3">
+        <xsl:message>Debug: <xsl:value-of  select="exsl:node-set($signature-tokens)/item[position() = $current-token-position]"/>            <xsl:value-of select="if($current-token-in-range) then 'between' else 'not between'" /> <xsl:value-of  select="exsl:node-set($range-from-tokens)/item[position() = $current-token-position]"/> and <xsl:value-of select="exsl:node-set($range-to-tokens)/item[position() = $current-token-position]"/>    </xsl:message>
       </xsl:if>
       <xsl:choose>
         <xsl:when test="count(exsl:node-set($signature-tokens)/item) > $current-token-position">
-          <xsl:variable name="current-token-in-range">
-            <xsl:call-template name="compare-token">
-              <xsl:with-param name="signature-comparison-token"  select="exsl:node-set($signature-tokens)/item[position() = $current-token-position]"/>
-              <xsl:with-param name="range-from-comparison-token"  select="exsl:node-set($range-from-tokens)/item[position() = $current-token-position]"/>
-              <xsl:with-param name="range-to-comparison-token" select="exsl:node-set($range-to-tokens)/item[position() = $current-token-position]"/>
-            </xsl:call-template>
-          </xsl:variable>
+          <xsl:if test="$debug-template-logic-verbosity > 2">
+            <xsl:message> Debug: current token index inside ranges </xsl:message>
+          </xsl:if>
           <xsl:choose>
             <xsl:when test="$current-token-in-range = 1">
-              <xsl:if test="$debug-template-logic-verbosity">
+              <xsl:if test="$debug-template-logic-verbosity > 2">
                 <xsl:message>Debug: Current token in range ? <xsl:value-of select="$current-token-in-range"/> </xsl:message>
               </xsl:if>
               <!-- a -->
@@ -939,12 +1005,12 @@
           </xsl:choose>
         </xsl:when>
         <xsl:otherwise>
+          <xsl:value-of select="$current-token-in-range" />
           <xsl:message>ERROR:
             This case also should never be reached.
-            Current Token Position: <xsl:value-of select="$current-token-position"/>
-            <xsl:value-of select="count(exsl:node-set($signature-tokens)/item)"/>
+            Current Token Position: <xsl:value-of select="$current-token-position"/>/<xsl:value-of select="count(exsl:node-set($signature-tokens)/item)"/>
           </xsl:message>
-          <xsl:value-of select="-1"/>
+          <!-- <xsl:value-of select="-1"/> -->
         </xsl:otherwise>
       </xsl:choose>
     </xsl:when>
@@ -975,14 +1041,9 @@
     <xsl:param name="signature-comparison-token"/>
     <xsl:param name="range-from-comparison-token"/>
     <xsl:param name="range-to-comparison-token"/>
-    <!-- Compare a single token to single token limits -->
-    <xsl:if test="$debug-template-logic-verbosity">
-      <xsl:message>Debug:
-        Token comparison:
-        "<xsl:value-of select="$range-from-comparison-token"/>"
-        &#60; = "<xsl:value-of select="$signature-comparison-token"/>"
-        &#60; = "<xsl:value-of select="$range-to-comparison-token"/>"
-      </xsl:message>
+    <!-- Compare a single token to single token limits and return 1 for a success and 0 otherwise -->
+    <xsl:if test="$debug-template-logic-verbosity > 0">
+      <xsl:message>Debug: Compare tokens "<xsl:value-of select="$range-from-comparison-token"/>"&#60;= "<xsl:value-of select="$signature-comparison-token"/>"&#60;= "<xsl:value-of select="$range-to-comparison-token"/>"</xsl:message>
     </xsl:if>
   <xsl:choose>
     <xsl:when test="
@@ -993,9 +1054,8 @@
         can be converted to a number. Therefore a numeric comparison decides whether the signature
         token fits in the range. -->
         <xsl:if test="$debug-template-logic-verbosity">
-          <xsl:message>Debug:
-            Running numeric comparison for Triple <xsl:value-of select="$range-from-comparison-token" />,<xsl:value-of
-            select="$signature-comparison-token" />,<xsl:value-of
+          <xsl:message>Debug: Running numeric comparison for Triple <xsl:value-of select="$range-from-comparison-token" />&lt;=<xsl:value-of
+            select="$signature-comparison-token" />&lt;=<xsl:value-of
             select="$range-to-comparison-token" /></xsl:message>
         </xsl:if>
       <xsl:choose>
@@ -1003,17 +1063,23 @@
             number($range-from-comparison-token) &lt;= number($signature-comparison-token) and
             number($signature-comparison-token) &lt;= number($range-to-comparison-token)">
           <xsl:value-of select="1"/>
+          <xsl:if test="$debug-template-logic-verbosity > 3">
+            <xsl:message>Debug: Number between limits </xsl:message>
+          </xsl:if>
         </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="0"/>
+          <xsl:if test="$debug-template-logic-verbosity > 3">
+            <xsl:message>Debug: Number not between limits </xsl:message>
+          </xsl:if>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:when>
     <xsl:otherwise>
       <xsl:if test="$debug-template-logic-verbosity">
         <xsl:message>Debug: Running string comparison for Triple <xsl:value-of
-            select="$range-from-comparison-token" />,<xsl:value-of
-            select="$signature-comparison-token" />,<xsl:value-of
+            select="$range-from-comparison-token" />&lt;=<xsl:value-of
+            select="$signature-comparison-token" />&lt;=<xsl:value-of
             select="$range-to-comparison-token" /></xsl:message>
       </xsl:if>
       <xsl:call-template name="check-range">
