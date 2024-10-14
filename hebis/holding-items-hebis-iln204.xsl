@@ -613,8 +613,8 @@
         </xsl:when>
       </xsl:choose>
     </xsl:variable>
-    <xsl:message>Debug: <xsl:value-of select="$cnelement"/> Prefix "<xsl:value-of select="$cnprefix"
-      />"</xsl:message>
+    <xsl:message>Debug: Element: "<xsl:value-of select="$cnelement"/>" Prefix: "<xsl:value-of select="$cnprefix"
+      />" CN: "<xsl:value-of select="$cn"/>"</xsl:message>
     <xsl:if test="string-length($cnprefix) > 0">
       <xsl:element name="{$cnprefixelement}">
         <xsl:value-of select="normalize-space(translate($cnprefix, '@', ''))"/>
@@ -873,6 +873,10 @@
       count(exsl:node-set($range-from-tokens)/item) >= $current-token-position and
       count(exsl:node-set($range-from-tokens)/item) >= $current-token-position">
       <!-- B -->
+      <xsl:if test="$debug-template-logic-verbosity > 2">
+        <xsl:message> Debug: current position inside ranges
+        </xsl:message>
+      </xsl:if>
       <xsl:choose>
         <xsl:when test="count(exsl:node-set($signature-tokens)/item) > $current-token-position">
           <xsl:variable name="current-token-in-range">
@@ -905,7 +909,7 @@
                   </xsl:if>
                   <xsl:call-template name="compare-tokens">
                     <xsl:with-param name="current-token-position">
-                      <xsl:value-of select="number($current-token-position) + 1"/>
+                      <xsl:value-of select="number(number($current-token-position) + 1)"/>
                     </xsl:with-param>
                     <xsl:with-param name="signature-lowercase-trimmed" select="$signature-lowercase-trimmed"/>
                     <xsl:with-param name="range-from" select="$range-from"/>
@@ -931,7 +935,9 @@
         </xsl:when>
         <xsl:otherwise>
           <xsl:message>ERROR:
-            This case also should never be reached
+            This case also should never be reached.
+            Current Token Position: <xsl:value-of select="$current-token-position"/>
+            <xsl:value-of select="count(exsl:node-set($signature-tokens)/item)"/>
           </xsl:message>
           <xsl:value-of select="-1"/>
         </xsl:otherwise>
@@ -1035,7 +1041,7 @@
         <xsl:call-template name="get-first-non-identical-token">
           <xsl:with-param name="range-from-tokens" select="$range-from-tokens-rest"/>
           <xsl:with-param name="range-to-tokens" select="$range-to-tokens-rest"/>
-          <xsl:with-param name="current-position" select="$current-position + 1"/>
+          <xsl:with-param name="current-position" select="number(number($current-position) + 1)"/>
         </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
