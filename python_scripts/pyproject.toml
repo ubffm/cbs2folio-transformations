@@ -33,6 +33,10 @@ pydeps = "^1.11.1"
 lxml-stubs = "^0.4.0"
 flake8 = "^6.1.0"
 
+
+[tool.poetry.group.dev.dependencies]
+poethepoet = "^0.29.0"
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
@@ -56,3 +60,74 @@ venvPath = ".venv"
 
 [tool.isort]
 profile = "black"
+
+
+[tool.poe.tasks.test]
+help = "Run the test suite"
+cmd = "pytest"
+
+[tool.poe.tasks.format]
+help = "Run all formatters"
+sequence = [{ ref = "_autoflake" }, { ref = "_isort" }, { ref = "_black" }]
+args = [{ name = "target", positional = true, default = ".", multiple = true }]
+
+[tool.poe.tasks._isort]
+cmd = "isort ${target}"
+args = [{ name = "target", positional = true, default = ".", multiple = true }]
+
+[tool.poe.tasks._black]
+cmd = "black ${target}"
+args = [{ name = "target", positional = true, default = ".", multiple = true }]
+
+[tool.poe.tasks._autoflake]
+cmd = "autoflake --recursive --in-place ${target}"
+args = [{ name = "target", positional = true, default = ".", multiple = true }]
+
+[tool.poe.tasks.mypy]
+help = "Run mypy"
+cmd = "mypy ${target}"
+args = [
+    { name = "target", positional = true, default = "src tests", multiple = true },
+]
+
+[tool.poe.tasks.pyright]
+help = "Run pyright"
+cmd = "pyright ${target}"
+args = [
+    { name = "target", positional = true, default = "src tests", multiple = true },
+]
+
+[tool.poe.tasks.type_check]
+help = "Run all type-checkers"
+args = [
+    { name = "target", positional = true, default = "src tests", multiple = true },
+]
+sequence = [{ ref = "pyright ${target}" }, { ref = "mypy ${target}" }]
+ignore_fail = "return_non_zero"
+
+[tool.poe.tasks.list_outdated]
+help = "List outdated packages"
+cmd = "poetry show --outdated --top-level"
+
+[tool.poe.tasks.list_all_outdated]
+help = "List outdated packages"
+cmd = "poetry show --outdated"
+
+[tool.poe.tasks.lock]
+help = "Lock installed package versions"
+cmd = "poetry lock"
+
+[tool.poe.tasks.export_requirements]
+help = "Export the package requirements as requirements.txt"
+cmd = "poetry export --format=requirements.txt --output=requirements.txt"
+
+[tool.poe.tasks.export_dev_requirements]
+help = "Export the package requirements including the dev group as requirements_dev.txt"
+cmd = "poetry export --format=requirements.txt --with=dev --output=requirements_dev.txt"
+
+[tool.poe.tasks.export]
+help = "Export all package requirements"
+sequence = [
+    { ref = "export_requirements" },
+    { ref = "export_dev_requirements" },
+]
