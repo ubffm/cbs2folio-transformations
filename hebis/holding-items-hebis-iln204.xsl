@@ -13,6 +13,11 @@
 
   <!-- Global settings -->
   <xsl:param name="debug-template-logic-verbosity" select="0"/>
+  <!--
+  0: Only errors are reported
+  1: Debug template calls
+  2: Report steps
+  -->
 
   <!-- ILN 204 UB Gießen: holding-items-hebis-iln204.xsl -->
   <!-- ================================================= -->
