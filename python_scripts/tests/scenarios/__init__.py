@@ -1,10 +1,23 @@
+#!/usr/bin/env python3
 """Module for test scenarios."""
+import json
+import logging
 from collections.abc import Iterable
 from pathlib import Path
+from typing import cast
 from typing import Optional
 
 from cbs2folio_transformations._helpers import reraise
 from lxml import etree  # nosec blacklist
+
+logger = logging.getLogger("scenario.logger")
+xslt_logger = logging.getLogger("scenario.xslt.logger")
+xslt_logger.addHandler(
+    logging.FileHandler(filename="scenario.xslt.log", mode="w")
+)
+xslt_logger.setLevel(
+    logging.DEBUG
+)  # TODO: Collect log levels at a central place
 
 
 def logstring_for_xsl(xslt: etree.XSLT, result: etree._Element) -> str:
@@ -170,19 +183,47 @@ class Scenario:
             _location_node = _result.find(
                 "//record/holdingsRecords/arr/i/permanentLocationId"
             )
+            __ranges = cast("etree._ElementTree", self.xsl).find("//ranges")
+            assert __ranges is not None
+            _xsl_ranges = etree.tostring(  # noqa: F841,E501 # pyright: ignore[reportUnusedVariable] # used for easier debugging
+                __ranges, pretty_print=True
+            ).decode()  #
             assert _location_node is not None  # nosec assert_used
-            assert (  # nosec assert_used
-                _location_node.text == expected_location
-            ), f"Expected {expected_location} as location for {signature}@{department_code}, but got {_location_node.text}"  # noqa: ignore[E501]
+            __location_node = etree.tostring(  # noqa: F841,E501 # pyright: ignore[reportUnusedVariable] # used for easier debugging
+                _location_node, pretty_print=True
+            )
 
-        except AssertionError as e:
+            try:
+                assert (  # nosec assert_used
+                    _location_node.text == expected_location
+                ), f"Expected {expected_location} as location for {signature}@{department_code}, but got {_location_node.text}"  # noqa: ignore[E501]
+            except AssertionError:
+                with open(
+                    ".".join(
+                        [
+                            "test",
+                            self.__class__.__name__,
+                            "test_correct_location_assigned",
+                            "log",
+                        ]
+                    ),
+                    mode="a",
+                ) as f:
+                    f.writelines(
+                        json.dumps(
+                            {
+                                "expected_location": expected_location,
+                                "signature": signature,
+                                "department_code": department_code,
+                                "calculated_location": f"{_location_node.text}",  # noqa: E501
+                            }
+                        )
+                        + "\n"
+                    )
+                raise
+        except AssertionError:
             ranges = xsl.find("//ranges")
             assert ranges is not None  # nosec assert_used
-            reraise(
-                e=e,
-                info=logstring_for_xsl(xslt, _result)
-                if _result
-                else logstring_for_department(
-                    ranges=ranges, department_code=department_code
-                ),
-            )
+            logger.error(etree.tostring(ranges, pretty_print=True).decode())
+            xslt_logger.debug(etree.tostring(xsl, pretty_print=True).decode())
+            raise
