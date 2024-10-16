@@ -6,6 +6,25 @@ from lxml import etree  # nosec blacklist
 from .. import Scenario
 
 
+class TestJuBuFoILN3(Scenario):
+    """Set of special testcases."""
+
+    data_csv_path = (
+        pathlib.Path(__file__)
+        .parent.resolve()
+        .joinpath("abt152_2024-01-21_lbsstat.csv")
+    )
+    data_encoding = "ISO-8859-1"
+    use_numerical = True
+
+    koko_path, delimiter = (
+        pathlib.Path(__file__)
+        .parent.resolve()
+        .joinpath("kokoV182_24.11.2023.csv"),
+        ";",
+    )
+
+
 class TestSimpleILN3(Scenario):
     """Small set of general testcases."""
 
