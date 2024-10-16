@@ -20,6 +20,7 @@ from cbs2folio_transformations._helpers import XML_MAX_INT
 from cbs2folio_transformations._test_helpers import apply_transformations
 from cbs2folio_transformations._test_helpers import create_collection
 from cbs2folio_transformations._test_helpers import create_record_from_example
+from cbs2folio_transformations._test_helpers import XML_Collection
 from cbs2folio_transformations.csv2holdingsxslt import (
     create_holdings_items_xsl_from_csv,
 )
@@ -41,6 +42,11 @@ from lxml import etree  # nosec B410
 SignatureTuple = Tuple[str, List[str]]
 
 logger = logging.getLogger()
+xslt_logger = logging.getLogger("fuzz.xslt.logger")
+xslt_logger.addHandler(logging.FileHandler(filename="fuzz.xslt.log", mode="w"))
+xslt_logger.setLevel(
+    logging.DEBUG
+)  # TODO: Collect log levels at a central place
 
 
 def get_sort_chars() -> str:
@@ -305,7 +311,7 @@ def xsl_strategy(draw: DrawFn) -> etree._ElementTree:  # type: ignore[return]
     )
     range_example = draw(shared(range_strategy(), key="Simple Example"))
     try:
-        return create_holdings_items_xsl_from_csv(
+        _xsl = create_holdings_items_xsl_from_csv(
             io.StringIO(
                 f"""
                 {department_code};{range_example.range_lower};{range_example.range_upper};111;MATCH
@@ -314,6 +320,8 @@ def xsl_strategy(draw: DrawFn) -> etree._ElementTree:  # type: ignore[return]
             use_numerical=True,
             delimiter=";",
         )
+        xslt_logger.debug(etree.tostring(_xsl, pretty_print=True).decode())
+        return _xsl
     except Exception as e:
         reraise(
             e=e,
@@ -371,7 +379,7 @@ def test_match(
         1001,
         hrid,
     )
-    _input: etree._ElementTree = create_collection(
+    _input: XML_Collection = create_collection(
         [
             example_after,
             example_before,
@@ -433,24 +441,32 @@ def test_match(
                     for _item in sorted_list
                 ]
             )
+            + f"""\n{'='*10}RANGE{'='*10}\n"""
+            + f"""{range_example}"""
+            + f"""\n{'='*10}XSLT{'='*10}\n"""
+            + etree.tostring(xsl, pretty_print=True).decode()
         )
 
         expected_results = [
-            "111"
-            if tokenize(range_example.before_range)
-            == tokenize(range_example.range_lower)
-            else None,
+            (
+                "111"
+                if tokenize(range_example.before_range)
+                == tokenize(range_example.range_lower)
+                else None
+            ),
             "111",
-            "111"
-            if tokenize(range_example.after_range)
-            == tokenize(range_example.range_upper)
-            else None,
+            (
+                "111"
+                if tokenize(range_example.after_range)
+                == tokenize(range_example.range_upper)
+                else None
+            ),
         ]
         assert [  # nosec: B101
             _node.text for _node in sorted_list
         ] == expected_results
     except AssertionError as e:
-        _error_log: str = xslt.error_log  # type: ignore[attr-defined]
+        _error_log: str = str(xslt.error_log)  # type: ignore[attr-defined]
         note(_error_log)
         reraise(e=e, info="")
 
@@ -458,5 +474,4 @@ def test_match(
 class Fuzz:
     ...
 
-    def test_lower(self):
-        ...
+    def test_lower(self): ...
