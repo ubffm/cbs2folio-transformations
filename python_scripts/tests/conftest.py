@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Testtooling."""
 import io
 import logging
@@ -63,7 +64,10 @@ def pytest_generate_tests(metafunc: pytest.Metafunc):
         and metafunc.cls.koko_path is not None
     ):
         try:
-            with open(metafunc.cls.koko_path, encoding="utf-8") as f:
+            with open(
+                metafunc.cls.koko_path,
+                encoding=getattr(metafunc.cls, "koko_encoding", "utf-8"),
+            ) as f:
                 _xsl = create_holdings_items_xsl_from_csv(
                     f,
                     use_numerical=metafunc.cls.use_numerical,
@@ -79,12 +83,17 @@ def pytest_generate_tests(metafunc: pytest.Metafunc):
     else:
         raise ValueError("No XSL specified.")
 
+    metafunc.cls.xsl = _xsl
+
     _data: Iterable[SignatureExample]
     if (
         hasattr(metafunc.cls, "data_csv_path")
         and metafunc.cls.data_csv_path is not None
     ):
-        _data = inject_test_data(metafunc.cls.data_csv_path)
+        _data = inject_test_data(
+            metafunc.cls.data_csv_path,
+            encoding=getattr(metafunc.cls, "data_encoding", "utf-8"),
+        )
     elif hasattr(metafunc.cls, "data") and metafunc.cls.data is not None:
         _data = yield_signature_example_from_data_iterable(metafunc.cls.data)
     else:
@@ -311,6 +320,12 @@ def hrid() -> Optional[int]:
     return None
 
 
+@pytest.fixture
+def xslt_debug_level():
+    """Set the debug level for the XSL transformation."""
+    return etree.XSLT.strparam("0")
+
+
 @pytest.fixture()
 def create_example_and_apply_for_step_4(
     xslt: etree._XSLTProcessingInstruction,
@@ -323,8 +338,9 @@ def create_example_and_apply_for_step_4(
     xslt_step1: etree.XSLT,
     xslt_step2: etree.XSLT,
     xslt_step3: etree.XSLT,
+    xslt_debug_level,
     hrid: Optional[int] = None,
-) -> etree._ElementTree:
+) -> etree._ElementTree | etree._Element:
     """Create an example using the parameters and apply the transformation.
 
     Args:
@@ -347,9 +363,22 @@ def create_example_and_apply_for_step_4(
         etree.Element: transformed entry
     """
     _input = create_collection([record_from_example])
-    return apply_transformations(
-        _input, [xslt_step1, xslt_step2, xslt_step3, xslt]
+    _tmp = apply_transformations(
+        _input,
+        [xslt_step1, xslt_step2, xslt_step3],
     )
+    try:
+        _result = xslt(
+            _tmp, **{"debug-template-logic-verbosity": xslt_debug_level}
+        )
+        if hasattr(xslt, "error_log"):
+            logger.error(xslt.error_log)
+        return _result
+    except etree.XSLTApplyError as e:
+        logger.error(e.args)
+
+        logger.error(e)
+        raise
 
 
 def _compare_eq_etree_Element_department(
